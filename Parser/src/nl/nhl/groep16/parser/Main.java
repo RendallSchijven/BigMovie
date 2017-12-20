@@ -1,5 +1,6 @@
 package nl.nhl.groep16.parser;
 
+import nl.nhl.groep16.parser.input.ActorFile;
 import nl.nhl.groep16.parser.util.Config;
 
 import java.io.*;
@@ -19,7 +20,7 @@ public class Main {
 
     static Parser parser;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         System.out.println(Config.NAME + " " + Config.VERSION);
         scanner = new Scanner(System.in);
         parser = new Parser();
@@ -27,6 +28,12 @@ public class Main {
         while (running) {
             mainLoop();
         }
+//        BufferedReader br = new BufferedReader(new FileReader("/home/human/Documents/BigData/actors.list"));
+//        ActorFile a = new ActorFile(br);
+//        while(true) {
+//            System.out.println(a.getNextActor());
+//        }
+
     }
 
     //Main loop of the console
