@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/BigMovie.iml" filepath="$PROJECT_DIR$/.idea/BigMovie.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Chatbot/Chatbot.iml" filepath="$PROJECT_DIR$/Chatbot/Chatbot.iml" />
       <module fileurl="file://$PROJECT_DIR$/Parser/Parser.iml" filepath="$PROJECT_DIR$/Parser/Parser.iml" />
     </modules>
   </component>
