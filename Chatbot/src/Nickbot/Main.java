@@ -12,7 +12,6 @@ public class Main {
     /**
      * @param args the command line arguments
      */
-    @SuppressWarnings("CallToPrintStackTrace")
     public static void main(String[] args) {
         // Initialize Api Context
         ApiContextInitializer.init();
