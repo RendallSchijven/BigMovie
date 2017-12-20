@@ -1,16 +1,19 @@
 package Nickbot;
 
-import com.rivescript.RiveScript;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 /**
- *
  * @author Groep 16
  */
 public class Nickbot extends TelegramLongPollingBot {
+
     @Override
     public void onUpdateReceived(Update update) {
 
@@ -23,6 +26,7 @@ public class Nickbot extends TelegramLongPollingBot {
             SendMessage message = new SendMessage() // Create a message object object
                     .setChatId(chat_id)
                     .setText(message_text);
+            System.out.println(message_text);
             try {
                 execute(message); // Sending our message object to user
             } catch (TelegramApiException e) {
