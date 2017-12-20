@@ -6,7 +6,7 @@ SQL
 - Welke regisseur heeft de meeste films met Jim Carrey in de hoofdrol geregisseerd?
 - Welke film is het duurst geweest om op te nemen? Bonus: houd hierbij rekening met de inflatie. 
 - Welke acteur (m/v) heeft de langste filmcarrière? (dus geen series)
-- Welke regisseur heeft de meeste films met Jim Carrey in de hoofdrol geregisseerd?
+- Welke Nederlandse film heeft het meeste opgebracht in de bioscoop?
 
 Visualazation
 - Maak een kaart (b.v. google maps / openstreetview) met landen waar een flim speelt. 
