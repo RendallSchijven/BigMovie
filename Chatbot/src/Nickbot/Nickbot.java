@@ -11,19 +11,7 @@ import org.telegram.telegrambots.exceptions.TelegramApiException;
  * @author Groep 16
  */
 public class Nickbot extends TelegramLongPollingBot {
-    private RiveScript bot = new RiveScript();
-
-/*    public Nickbot() {
-        super();
-        bot.setSubroutine("system", new SystemSubroutine());
-        bot.setSubroutine("jdbc", new JdbcSubroutine());
-        bot.setSubroutine("send", new SendSubroutine(this));
-        bot.loadDirectory("resources/rivescript");
-        bot.sortReplies();
-    }*/
-
     @Override
-    @SuppressWarnings("CallToPrintStackTrace")
     public void onUpdateReceived(Update update) {
 
         // We check if the update has a message and the message has text
@@ -32,12 +20,9 @@ public class Nickbot extends TelegramLongPollingBot {
             String message_text = update.getMessage().getText();
             long chat_id = update.getMessage().getChatId();
 
-            // Get reply
-            String reply = bot.reply(String.valueOf(chat_id), message_text);
-
             SendMessage message = new SendMessage() // Create a message object object
                     .setChatId(chat_id)
-                    .setText(reply);
+                    .setText(message_text);
             try {
                 execute(message); // Sending our message object to user
             } catch (TelegramApiException e) {
@@ -49,6 +34,7 @@ public class Nickbot extends TelegramLongPollingBot {
     @Override
     public String getBotUsername() {
         // Return bot username
+        // If bot username is @MyAmazingBot, it must return 'MyAmazingBot'
         return "Nicky_B_Bot";
     }
 
@@ -57,5 +43,4 @@ public class Nickbot extends TelegramLongPollingBot {
         // Return bot token from BotFather
         return "504474641:AAHRSD9huFwZApje8nJBzK_tNIC4ZEg-tqs";
     }
-
 }
