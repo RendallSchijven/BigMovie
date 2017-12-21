@@ -1,6 +1,6 @@
 package nl.nhl.groep16.parser;
 
-import nl.nhl.groep16.parser.input.ActorFile;
+import nl.nhl.groep16.parser.parsers.ActorParser;
 
 import java.io.*;
 import java.math.BigDecimal;
@@ -15,7 +15,7 @@ public class Main {
 
     static Parser parser;
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws IOException {
 //        System.out.println(Config.NAME + " " + Config.VERSION);
 //        scanner = new Scanner(System.in);
 //        parser = new Parser();
@@ -23,11 +23,18 @@ public class Main {
 //        while (running) {
 //            mainLoop();
 //        }
+
         BufferedReader br = new BufferedReader(new FileReader("/home/human/Documents/BigData/actors.list"));
-        ActorFile a = new ActorFile(br);
-        while(true) {
-            System.out.println(a.getNextActor());
+
+        ActorParser ap = new ActorParser();
+        String line;
+        while ((line = br.readLine()) != null) {
+            String[] out = ap.convertLine(line);
+            if(out != null) {
+                System.out.println(String.join(", ",out));
+            }
         }
+
 
     }
 
