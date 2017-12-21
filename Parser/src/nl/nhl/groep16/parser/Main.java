@@ -24,6 +24,7 @@ public class Main {
 //            mainLoop();
 //        }
 
+//        BufferedReader br = new BufferedReader(new FileReader("C:/Users/twant/Desktop/moviedata/actor.list"));
         BufferedReader br = new BufferedReader(new FileReader("/home/human/Documents/BigData/actors.list"));
 
         ActorParser ap = new ActorParser();
