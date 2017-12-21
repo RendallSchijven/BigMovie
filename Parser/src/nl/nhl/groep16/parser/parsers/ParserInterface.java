@@ -6,6 +6,6 @@ import java.util.Iterator;
 
 public interface ParserInterface {
 
-    public String convertLine(String line);
+    public String[] convertLine(String line);
 
 }
