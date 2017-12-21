@@ -1,4 +1,4 @@
-package Nickbot;
+package Nickybot;
 
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
@@ -21,7 +21,7 @@ public class Main {
 
         // Register our bot
         try {
-            botsApi.registerBot(new Nickbot());
+            botsApi.registerBot(new Nickybot());
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
