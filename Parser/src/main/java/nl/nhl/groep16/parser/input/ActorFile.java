@@ -16,7 +16,7 @@ public class ActorFile {
 
     public ActorFile(BufferedReader input) {
         this.input = input;
-        this.actorRegex = Pattern.compile("^(.*)\\t");
+        this.actorRegex = Pattern.compile("^(..*)\\t");
     }
 
     public String getNextActor() {
