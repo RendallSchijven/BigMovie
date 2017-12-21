@@ -1,18 +1,14 @@
-package Nickbot;
+package Nickybot;
 
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 /**
  * @author Groep 16
  */
-public class Nickbot extends TelegramLongPollingBot {
+public class Nickybot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
