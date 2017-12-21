@@ -1,5 +1,6 @@
 package nl.nhl.groep16.parser.parsers;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ActorParser extends AbstractParser{
@@ -15,7 +16,7 @@ public class ActorParser extends AbstractParser{
     }
 
     @Override
-    public String convertLine(String line) {
+    public String[] convertLine(String line) {
         String extractedActor = extractActor(line);
         if(extractedActor != null) {
             currentActor = extractedActor;
@@ -26,10 +27,15 @@ public class ActorParser extends AbstractParser{
 
         String movie = extractMovie(line);
 
-        return currentActor + " -> " + movie;
+        return new String[]{ currentActor, movie };
     }
 
     public String extractActor(String line) {
+        Matcher m = actorRegex.matcher(line);
+        if(!m.find()) {
+            return null;
+        }
+
         return "";
     }
 
