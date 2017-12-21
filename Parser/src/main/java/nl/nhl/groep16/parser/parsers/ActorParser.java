@@ -1,6 +1,5 @@
 package nl.nhl.groep16.parser.parsers;
 
-import java.io.BufferedReader;
 import java.util.regex.Pattern;
 
 public class ActorParser extends AbstractParser{
@@ -15,9 +14,5 @@ public class ActorParser extends AbstractParser{
     public String convertLine(String line) {
         return null;
     }
-
-
-
-
 
 }
