@@ -1,5 +1,6 @@
 package Nickybot;
 
+import com.rivescript.RiveScript;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -10,6 +11,17 @@ import org.telegram.telegrambots.exceptions.TelegramApiException;
  */
 public class Nickybot extends TelegramLongPollingBot {
 
+    private RiveScript bot = new RiveScript();
+
+    public Nickybot() {
+        super();
+        bot.setSubroutine("system", new SystemSubroutine());
+        bot.setSubroutine("jdbc", new JdbcSubroutine());
+        bot.setSubroutine("send", new SendSubroutine(this));
+        bot.loadDirectory("Chatbot/resources/RiveScript");
+        bot.sortReplies();
+    }
+
     @Override
     public void onUpdateReceived(Update update) {
 
@@ -19,9 +31,11 @@ public class Nickybot extends TelegramLongPollingBot {
             String message_text = update.getMessage().getText();
             long chat_id = update.getMessage().getChatId();
 
+            String reply = bot.reply(String.valueOf(chat_id), message_text);
+
             SendMessage message = new SendMessage() // Create a message object object
                     .setChatId(chat_id)
-                    .setText(message_text);
+                    .setText(reply);
             System.out.println(message_text);
             try {
                 execute(message); // Sending our message object to user
@@ -34,7 +48,6 @@ public class Nickybot extends TelegramLongPollingBot {
     @Override
     public String getBotUsername() {
         // Return bot username
-        // If bot username is @MyAmazingBot, it must return 'MyAmazingBot'
         return "Nicky_B_Bot";
     }
 
