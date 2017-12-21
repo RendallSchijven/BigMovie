@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="slf4j-api">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Chatbot/libs/slf4j-api.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Chatbot/libs/slf4j-nop.jar!/" />
+      <root url="file://$PROJECT_DIR$" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/Chatbot/src" />
+    </SOURCES>
+  </library>
+</component>
