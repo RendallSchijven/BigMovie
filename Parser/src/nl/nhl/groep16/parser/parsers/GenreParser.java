@@ -6,14 +6,26 @@ import java.util.regex.Pattern;
 
 public class GenreParser extends AbstractParser {
 
-    Pattern genreParser;
+    private String ignoreUntilFound;
+    private boolean isIgnoreUntilFoundFound = false;
+
+    private Pattern genreParser;
 
     public GenreParser() {
+        this.ignoreUntilFound = "8: THE GENRES LIST";
         this.genreParser = Pattern.compile("^(.*)(\\t+)(.+)");
     }
 
     @Override
     public String[] convertLine(String line) {
+
+        if(!isIgnoreUntilFoundFound) {
+            if(line.equals(ignoreUntilFound)) {
+                isIgnoreUntilFoundFound = true;
+            }
+            return null;
+        }
+
         Matcher m = genreParser.matcher(line);
         if(!m.matches()){
             return null;
