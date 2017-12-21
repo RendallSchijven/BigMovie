@@ -23,6 +23,7 @@ public class Main {
 //        while (running) {
 //            mainLoop();
 //        }
+//        BufferedReader br = new BufferedReader(new FileReader("C:/Users/twant/Desktop/moviedata/actor.list"));
         BufferedReader br = new BufferedReader(new FileReader("/home/human/Documents/BigData/actors.list"));
         ActorFile a = new ActorFile(br);
         while(true) {
