@@ -11,12 +11,13 @@ public class ActorParser extends AbstractParser{
     private String currentActor;
 
     public ActorParser() {
-        this.actorRegex = Pattern.compile("^(.*,.*)\\t/gm");
-        this.movieRegex = Pattern.compile("(\\t+)(.*)/gm");
+        this.actorRegex = Pattern.compile("^(.*,.*)\\t");
+        this.movieRegex = Pattern.compile("(\\t+)(.*)");
     }
 
     @Override
     public String[] convertLine(String line) {
+
         String extractedActor = extractActor(line);
         if(extractedActor != null) {
             currentActor = extractedActor;
@@ -27,6 +28,10 @@ public class ActorParser extends AbstractParser{
 
         String movie = extractMovie(line);
 
+        if(movie == null) {
+            return null;
+        }
+
         return new String[]{ currentActor, movie };
     }
 
@@ -35,12 +40,16 @@ public class ActorParser extends AbstractParser{
         if(!m.find()) {
             return null;
         }
-
-        return "";
+        return m.group(0).replaceAll("\t", "");
     }
 
     public String extractMovie(String line) {
-        return "";
+        Matcher m = movieRegex.matcher(line);
+        if(!m.find()) {
+            return null;
+        }
+
+        return m.group(0).replaceAll("\t", "");
     }
 
 }
