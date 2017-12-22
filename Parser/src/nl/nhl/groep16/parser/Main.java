@@ -1,6 +1,8 @@
 package nl.nhl.groep16.parser;
 
 import nl.nhl.groep16.parser.parsers.ActorParser;
+import nl.nhl.groep16.parser.parsers.GenreParser;
+import nl.nhl.groep16.parser.parsers.ParserInterface;
 import nl.nhl.groep16.parser.parsers.MovieParser;
 
 import java.io.*;
@@ -28,12 +30,12 @@ public class Main {
         BufferedReader br = new BufferedReader(new FileReader("C:/Users/twant/Desktop/movies.list"));
 //        BufferedReader br = new BufferedReader(new FileReader("/home/human/Documents/BigData/actors.list"));
 
-        MovieParser ap = new MovieParser();
+        ParserInterface ap = new GenreParser();
         String line;
         while ((line = br.readLine()) != null) {
             String[] out = ap.convertLine(line);
             if(out != null) {
-                System.out.println(String.join(", ",out));
+                System.out.println(String.join(",",out));
             }
         }
 
