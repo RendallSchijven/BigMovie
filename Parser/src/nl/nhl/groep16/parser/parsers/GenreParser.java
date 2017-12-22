@@ -13,7 +13,7 @@ public class GenreParser extends AbstractParser {
 
     public GenreParser() {
         this.ignoreUntilFound = "8: THE GENRES LIST";
-        this.genreParser = Pattern.compile("^(.*)(\\t+)(.+)");
+        this.genreParser = Pattern.compile("(^[^\"].*[^\\t])\\t+(\\S+)");
     }
 
     @Override
@@ -31,8 +31,8 @@ public class GenreParser extends AbstractParser {
             return null;
         }
 
-        String movie = m.group(1).replace("\t", "");
-        String genre = m.group(3);
+        String movie = m.group(1);
+        String genre = m.group(2);
 
         return new String[]{movie, genre};
     }
