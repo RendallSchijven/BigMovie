@@ -27,10 +27,10 @@ public class Main {
 //            mainLoop();
 //        }
 
-        BufferedReader br = new BufferedReader(new FileReader("D:/IMDB/keywords.list"));
+        BufferedReader br = new BufferedReader(new FileReader("D:/IMDB/genres.list"));
 //        BufferedReader br = new BufferedReader(new FileReader("/home/human/Documents/BigData/genres.list"));
 
-        ParserInterface parser = new KeywordParser();
+        ParserInterface parser = new GenreParser();
         String line;
         while ((line = br.readLine()) != null) {
             String[] out = parser.convertLine(line);

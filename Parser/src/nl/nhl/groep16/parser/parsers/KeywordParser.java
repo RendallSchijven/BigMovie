@@ -12,7 +12,7 @@ public class KeywordParser extends AbstractParser {
 
     public KeywordParser() {
         this.ignoreUntilFound = "8: THE KEYWORDS LIST";
-        this.keywordParser = Pattern.compile("(.*[^\\t])\\t+(\\S+)");
+        this.keywordParser = Pattern.compile("(^[^\"].*[^\\t])\\t+(\\S+)");
     }
 
     @Override
