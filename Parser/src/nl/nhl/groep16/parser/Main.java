@@ -1,6 +1,7 @@
 package nl.nhl.groep16.parser;
 
 import nl.nhl.groep16.parser.parsers.ActorParser;
+import nl.nhl.groep16.parser.parsers.MovieParser;
 
 import java.io.*;
 import java.math.BigDecimal;
@@ -24,10 +25,10 @@ public class Main {
 //            mainLoop();
 //        }
 
-//        BufferedReader br = new BufferedReader(new FileReader("C:/Users/twant/Desktop/moviedata/actor.list"));
-        BufferedReader br = new BufferedReader(new FileReader("/home/human/Documents/BigData/actors.list"));
+        BufferedReader br = new BufferedReader(new FileReader("C:/Users/twant/Desktop/movies.list"));
+//        BufferedReader br = new BufferedReader(new FileReader("/home/human/Documents/BigData/actors.list"));
 
-        ActorParser ap = new ActorParser();
+        MovieParser ap = new MovieParser();
         String line;
         while ((line = br.readLine()) != null) {
             String[] out = ap.convertLine(line);
@@ -35,7 +36,6 @@ public class Main {
                 System.out.println(String.join(", ",out));
             }
         }
-
 
     }
 

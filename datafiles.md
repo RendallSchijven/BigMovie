@@ -1,17 +1,20 @@
 De bestanden die voor de DB nodig zijn:
 
-- actors.list
+Bijna het zelfde:
+- actors.list : done
 - actresses.list
 - directors.list
 - editors.list
 - cinematographers.list
 - composers.list
-- mpaa-ratings-reasons.list
-- genres.lis
-- keywords.list
-- movies.list
 - producers.list
-- ratings.list
 - writers.list 
 - costume-desiners.list
+
+Anders:
+- mpaa-ratings-reasons.list
+- genres.lis : done
+- keywords.list : done
+- movies.list : done
+- ratings.list
 - biograpies.list
