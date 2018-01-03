@@ -8,24 +8,40 @@ public class MpaaParser extends AbstractParser {
     private final Pattern ratingRegex;
     private final Pattern moviesRegex;
 
+    private String currentMovie = "";
+    private String currentRating = "";
+
     public MpaaParser() {
-        this.ratingRegex = Pattern.compile("^[^\"](.*?)\\t");
-        this.moviesRegex = Pattern.compile("^[^\"](.*?)\\t");
+        this.ratingRegex = Pattern.compile("RE:\\sRated\\s([^\\s]+)");
+        this.moviesRegex = Pattern.compile("MV:(.[^\"].*)");
     }
 
 
     @Override
     public String[] convertLine(String line) {
-        return new String[0];
+        String movie = extractMovie(line);
+
+        if (movie != null) {
+            currentMovie = movie;
+            currentRating = "";
+        } else {
+            String rating = extractRatings(line);
+            if (rating != null) {
+                currentRating = rating;
+                System.out.println(currentMovie + "," + currentRating);
+                return new String[]{currentMovie, currentRating};
+            }
+        }
+        return null;
     }
 
-    public String extractMovies(String line) {
+    public String extractMovie(String line) {
         Matcher m = moviesRegex.matcher(line);
         if (!m.find()) {
             return null;
         }
 
-        return m.group(0).replaceAll("\t", "");
+        return m.group(1);
     }
 
     public String extractRatings(String line) {
@@ -34,6 +50,6 @@ public class MpaaParser extends AbstractParser {
             return null;
         }
 
-        return m.group(0).replaceAll("\t", "");
+        return m.group(1);
     }
 }
