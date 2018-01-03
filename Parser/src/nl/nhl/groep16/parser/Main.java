@@ -27,7 +27,7 @@ public class Main {
         BufferedReader br = new BufferedReader(new FileReader("C:/Users/twant/Desktop/mpaa-ratings-reasons.list"));
 //        BufferedReader br = new BufferedReader(new FileReader("/home/human/Documents/BigData/actors.list"));
 
-        ParserInterface parser = new MpaaParser();
+        ParserInterface parser = new mpaaParser();
         String line;
         while ((line = br.readLine()) != null) {
             String[] out = parser.convertLine(line);
