@@ -12,9 +12,10 @@ Bijna het zelfde:
 - costume-desiners.list
 
 Anders:
-- mpaa-ratings-reasons.list
+- mpaa-ratings-reasons.list : done
 - genres.lis : done
 - keywords.list : done
 - movies.list : done
 - ratings.list
-- biograpies.list
+- biographies.list
+- plot.list

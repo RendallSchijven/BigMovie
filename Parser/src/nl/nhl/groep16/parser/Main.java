@@ -1,10 +1,6 @@
 package nl.nhl.groep16.parser;
 
-import nl.nhl.groep16.parser.parsers.ActorParser;
-import nl.nhl.groep16.parser.parsers.GenreParser;
-import nl.nhl.groep16.parser.parsers.KeywordParser;
-import nl.nhl.groep16.parser.parsers.ParserInterface;
-import nl.nhl.groep16.parser.parsers.MovieParser;
+import nl.nhl.groep16.parser.parsers.*;
 
 import java.io.*;
 import java.math.BigDecimal;
@@ -28,10 +24,10 @@ public class Main {
 //            mainLoop();
 //        }
 
-        BufferedReader br = new BufferedReader(new FileReader("C:/Users/twant/Desktop/movies.list"));
+        BufferedReader br = new BufferedReader(new FileReader("C:/Users/twant/Desktop/mpaa-ratings-reasons.list"));
 //        BufferedReader br = new BufferedReader(new FileReader("/home/human/Documents/BigData/actors.list"));
 
-        ParserInterface parser = new GenreParser();
+        ParserInterface parser = new MpaaParser();
         String line;
         while ((line = br.readLine()) != null) {
             String[] out = parser.convertLine(line);
@@ -39,7 +35,6 @@ public class Main {
                 System.out.println(String.join(",",out));
             }
         }
-
     }
 
     //Main loop of the console
@@ -74,7 +69,6 @@ public class Main {
             e.printStackTrace();
         }
     }
-
 
     //Round method to round doubles
     public static double round(double value, int places) {
