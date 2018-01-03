@@ -1,19 +1,18 @@
 package nl.nhl.groep16.parser.parsers;
 
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class GenreParser extends AbstractParser {
+public class KeywordParser extends AbstractParser {
 
     private String ignoreUntilFound;
     private boolean isIgnoreUntilFoundFound = false;
 
-    private Pattern genreParser;
+    private Pattern keywordParser;
 
-    public GenreParser() {
-        this.ignoreUntilFound = "8: THE GENRES LIST";
-        this.genreParser = Pattern.compile("(^[^\"].*[^\\t])\\t+(\\S+)");
+    public KeywordParser() {
+        this.ignoreUntilFound = "8: THE KEYWORDS LIST";
+        this.keywordParser = Pattern.compile("(^[^\"].*[^\\t])\\t+(\\S+)");
     }
 
     @Override
@@ -26,14 +25,14 @@ public class GenreParser extends AbstractParser {
             return null;
         }
 
-        Matcher m = genreParser.matcher(line);
+        Matcher m = keywordParser.matcher(line);
         if(!m.matches()){
             return null;
         }
 
         String movie = m.group(1);
-        String genre = m.group(2);
+        String keyword = m.group(2);
 
-        return new String[]{movie, genre};
+        return new String[]{movie, keyword};
     }
 }
