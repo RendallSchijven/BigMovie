@@ -3,7 +3,7 @@ package nl.nhl.groep16.parser.parsers;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class mpaaParser extends AbstractParser {
+public class MpaaParser extends AbstractParser {
 
     private final Pattern ratingRegex;
     private final Pattern moviesRegex;
@@ -11,7 +11,7 @@ public class mpaaParser extends AbstractParser {
     private String currentMovie = "";
     private String currentRating = "";
 
-    public mpaaParser() {
+    public MpaaParser() {
         this.ratingRegex = Pattern.compile("RE:\\sRated\\s([^\\s]+)");
         this.moviesRegex = Pattern.compile("MV:(.[^\"].*)");
     }
