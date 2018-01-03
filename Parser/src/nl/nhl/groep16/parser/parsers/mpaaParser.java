@@ -3,12 +3,12 @@ package nl.nhl.groep16.parser.parsers;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class mpaaParser extends AbstractParser{
+public class MpaaParser extends AbstractParser {
 
     private final Pattern ratingRegex;
     private final Pattern moviesRegex;
 
-    public mpaaParser() {
+    public MpaaParser() {
         this.ratingRegex = Pattern.compile("^[^\"](.*?)\\t");
         this.moviesRegex = Pattern.compile("^[^\"](.*?)\\t");
     }
@@ -36,5 +36,4 @@ public class mpaaParser extends AbstractParser{
 
         return m.group(0).replaceAll("\t", "");
     }
-}
 }
