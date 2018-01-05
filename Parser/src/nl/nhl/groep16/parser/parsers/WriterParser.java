@@ -3,26 +3,27 @@ package nl.nhl.groep16.parser.parsers;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ActorParser extends AbstractParser{
+public class WriterParser extends AbstractParser{
 
-    private final Pattern actorRegex;
+    private final Pattern writerRegex;
     private final Pattern movieRegex;
 
-    private String currentActor;
+    private String currentWriter;
 
-    public ActorParser() {
-        this.actorRegex = Pattern.compile("^(\\w+,\\s+\\w+)");
+    public WriterParser() {
+        this.writerRegex = Pattern.compile("^(\\w+,\\s+\\w+)");
         this.movieRegex = Pattern.compile("\\t+(\\w.*)");
     }
 
+    @SuppressWarnings("Duplicates")
     @Override
     public String[] convertLine(String line) {
 
-        String extractedActor = extractActor(line);
-        if(extractedActor != null) {
-            currentActor = extractedActor;
+        String extractedWriter = extractWriter(line);
+        if(extractedWriter != null) {
+            currentWriter = extractedWriter;
         }
-        if(currentActor == null) {
+        if(currentWriter == null) {
             return null;
         }
 
@@ -32,11 +33,11 @@ public class ActorParser extends AbstractParser{
             return null;
         }
 
-        return new String[]{ currentActor, movie };
+        return new String[]{currentWriter, movie };
     }
 
-    public String extractActor(String line) {
-        Matcher m = actorRegex.matcher(line);
+    public String extractWriter(String line) {
+        Matcher m = writerRegex.matcher(line);
         if(!m.find()) {
             return null;
         }

@@ -15,6 +15,7 @@ public class KeywordParser extends AbstractParser {
         this.keywordParser = Pattern.compile("(^[^\"].*[^\\t])\\t+(\\S+)");
     }
 
+    @SuppressWarnings("Duplicates")
     @Override
     public String[] convertLine(String line) {
 
