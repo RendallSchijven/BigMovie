@@ -24,10 +24,10 @@ public class Main {
 //            mainLoop();
 //        }
 
-        BufferedReader br = new BufferedReader(new FileReader("C:/Users/twant/Desktop/mpaa-ratings-reasons.list"));
-//        BufferedReader br = new BufferedReader(new FileReader("/home/human/Documents/BigData/actors.list"));
+//        BufferedReader br = new BufferedReader(new FileReader("D:/IMDB/mpaa-ratings-reasons.list"));
+        BufferedReader br = new BufferedReader(new FileReader("D:/IMDB/producers.list"));
 
-        ParserInterface parser = new MpaaParser();
+        ParserInterface parser = new ProducerParser();
         String line;
         while ((line = br.readLine()) != null) {
             String[] out = parser.convertLine(line);
@@ -53,7 +53,6 @@ public class Main {
             long counter = 0;
 
             for (String line; (line = br.readLine()) != null; ) {
-
 
                 //Prints out percentage
                 counter += line.length();

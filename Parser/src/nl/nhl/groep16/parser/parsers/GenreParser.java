@@ -16,6 +16,7 @@ public class GenreParser extends AbstractParser {
         this.genreParser = Pattern.compile("(^[^\"].*[^\\t])\\t+(\\S+)");
     }
 
+    @SuppressWarnings("Duplicates")
     @Override
     public String[] convertLine(String line) {
 
