@@ -25,9 +25,9 @@ public class Main {
 //        }
 
 //        BufferedReader br = new BufferedReader(new FileReader("D:/IMDB/mpaa-ratings-reasons.list"));
-        BufferedReader br = new BufferedReader(new FileReader("D:/IMDB/producers.list"));
+        BufferedReader br = new BufferedReader(new FileReader("D:/IMDB/editors.list"));
 
-        ParserInterface parser = new ProducerParser();
+        ParserInterface parser = new EditorParser();
         String line;
         while ((line = br.readLine()) != null) {
             String[] out = parser.convertLine(line);
