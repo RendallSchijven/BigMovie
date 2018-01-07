@@ -1,12 +1,12 @@
 // brain.rive
 
-+ Hey Nicky how are you?
++ hey nicky how are you?
 - Very feminine
 
 + hello
 - Hi there!
 
-+ how are you
++ [*] how are you [*]
 - I'm fine.
 - Splendid!
 - Couldn't be better!
@@ -16,10 +16,9 @@
 
 + [*] help [*]
 - You can ask me questions like:\n
-^ Which movies did Liv Tyler act in?\n
-^ What is the date?\n
-^ show files\n
-^ What are common video formats?
+^ /movies\n
+^ /actors\n
+^ /directors
 
 + *
 - Not sure I got that. Type /help for some example questions.
@@ -30,8 +29,14 @@
 + what is the date?
 - The date is: <call>system date</call>
 
-+ which movies did _ _ *
-- <call>jdbc localhost 3306 imdb imdb imdb select title from cast_info, name, title, kind_type where person_id = name.id and title.id = movie_id and kind_id = kind_type.id and name like '<star2>, <star>' and kind = 'movie'</call>
++ [*] actors [*]
+- <call>jdbc select Name from Persons, Persons_Movies where Persons.ID = Persons_Movies.Person_ID and Role_ID = 1 </call>
+
++ [*] directors [*]
+- <call>jdbc select Name from Persons, Persons_Movies where Persons.ID = Persons_Movies.Person_ID and Role_ID = 2 </call>
+
++ [*] movies [*]
+- <call>jdbc select Title from Movies</call>
 
 + [*] video formats [*]
 - There it is! 
