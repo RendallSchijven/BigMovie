@@ -1,14 +1,10 @@
 package nl.nhl.groep16.parser;
 
-import nl.nhl.groep16.parser.util.Config;
+import nl.nhl.groep16.parser.parsers.*;
 
 import java.io.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.Scanner;
 
 public class Main {
@@ -19,13 +15,25 @@ public class Main {
 
     static Parser parser;
 
-    public static void main(String[] args) {
-        System.out.println(Config.NAME + " " + Config.VERSION);
-        scanner = new Scanner(System.in);
-        parser = new Parser();
+    public static void main(String[] args) throws IOException {
+//        System.out.println(Config.NAME + " " + Config.VERSION);
+//        scanner = new Scanner(System.in);
+//        parser = new Parser();
+//
+//        while (running) {
+//            mainLoop();
+//        }
 
-        while (running) {
-            mainLoop();
+//        BufferedReader br = new BufferedReader(new FileReader("D:/IMDB/mpaa-ratings-reasons.list"));
+        BufferedReader br = new BufferedReader(new FileReader("D:/IMDB/editors.list"));
+
+        ParserInterface parser = new EditorParser();
+        String line;
+        while ((line = br.readLine()) != null) {
+            String[] out = parser.convertLine(line);
+            if(out != null) {
+                System.out.println(String.join(",",out));
+            }
         }
     }
 
@@ -46,7 +54,6 @@ public class Main {
 
             for (String line; (line = br.readLine()) != null; ) {
 
-
                 //Prints out percentage
                 counter += line.length();
                 double percent = (double) counter / (double) numChars * 100;
@@ -61,7 +68,6 @@ public class Main {
             e.printStackTrace();
         }
     }
-
 
     //Round method to round doubles
     public static double round(double value, int places) {

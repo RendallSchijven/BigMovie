@@ -16,15 +16,14 @@ public class JdbcSubroutine implements Subroutine {
 
     @Override
     public String call(com.rivescript.RiveScript rs, String[] args) {
-        String host = args[0];
-        String port = args[1];
-        String db = args[2];
-        String username = args[3];
-        String password = args[4];
+        String host = "136.144.128.126";
+        String port = "3306";
+        String db = "NickyBot";
+        String username = "NickyBot";
+        String password = "s9qD9iaohMkbo8c8";
         String sql = "";
         String result = "";
-        for (int i=5; i<args.length; i++)
-            sql = sql + " " + args[i];
+        for (String arg : args) sql = sql + " " + arg;
         sql = sql.trim();
 
         Connection connection = null;
