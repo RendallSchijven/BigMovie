@@ -3,7 +3,7 @@ package nl.nhl.groep16.parser.parsers;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ProducerParser extends AbstractParser{
+public class ProducerParser implements ParserInterface{
 
     private final Pattern producerRegex;
     private final Pattern infoRegex;

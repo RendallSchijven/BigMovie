@@ -3,7 +3,7 @@ package nl.nhl.groep16.parser.parsers;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class PlotParser extends AbstractParser {
+public class PlotParser implements ParserInterface{
 
     private final Pattern plotRegex;
     private final Pattern moviesRegex;
