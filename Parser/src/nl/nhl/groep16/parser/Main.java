@@ -1,11 +1,15 @@
 package nl.nhl.groep16.parser;
 
 import nl.nhl.groep16.parser.parsers.*;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 
 import java.io.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Scanner;
+import java.util.Arrays;
+
 
 public class Main {
 
@@ -15,26 +19,10 @@ public class Main {
 
     static Parser parser;
 
-    public static void main(String[] args) throws IOException {
-//        System.out.println(Config.NAME + " " + Config.VERSION);
-//        scanner = new Scanner(System.in);
-//        parser = new Parser();
-//
-//        while (running) {
-//            mainLoop();
-//        }
-
-//        BufferedReader br = new BufferedReader(new FileReader("D:/IMDB/mpaa-ratings-reasons.list"));
-        BufferedReader br = new BufferedReader(new FileReader("C:/Users/twant/Desktop/Data/release-dates.list"));
-
-        ParserInterface parser = new ReleaseParser();
-        String line;
-        while ((line = br.readLine()) != null) {
-            String[] out = parser.convertLine(line);
-            if(out != null) {
-                System.out.println(String.join(",",out));
-            }
-        }
+    public static void main(String[] args) throws Exception {
+        ParserReader pr = new ParserReader("/home/human/Documents/BigData/genres.list");
+        CSVPrinter csvPrinter = new CSVPrinter(System.out, CSVFormat.DEFAULT);
+        pr.writeToCsvPrinter(csvPrinter);
     }
 
     //Main loop of the console
