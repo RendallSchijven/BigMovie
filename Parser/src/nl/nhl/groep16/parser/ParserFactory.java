@@ -26,8 +26,7 @@ public class ParserFactory {
 
     /**
      *
-     * Free reflection bonus!
-     * 10% code, 90% magic unicorn dust.
+     * Reflection
      *
      * @param filePath
      * @return
