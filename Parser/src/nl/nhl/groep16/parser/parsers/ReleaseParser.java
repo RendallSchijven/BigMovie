@@ -8,7 +8,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ReleaseParser extends AbstractParser {
+public class ReleaseParser implements ParserInterface{
 
     private Pattern releaseRegex;
     DateFormat formatterLong;
