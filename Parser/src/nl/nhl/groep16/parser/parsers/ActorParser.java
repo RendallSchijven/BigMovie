@@ -3,7 +3,7 @@ package nl.nhl.groep16.parser.parsers;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ActorParser extends AbstractParser{
+public class ActorParser implements ParserInterface{
 
     private final Pattern actorRegex;
     private final Pattern movieRegex;
