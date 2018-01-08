@@ -13,8 +13,6 @@ public class Main {
 
     static Scanner scanner;
 
-    static Parser parser;
-
     public static void main(String[] args) throws Exception {
         ParserReader pr = new ParserReader(args[0]);
         Appendable out = System.out;
