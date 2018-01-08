@@ -33,6 +33,5 @@ public class ParserReader {
             }
         }
         csvPrinter.flush();
-        reader.reset();
     }
 }
