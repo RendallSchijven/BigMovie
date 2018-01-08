@@ -18,7 +18,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         ParserReader pr = new ParserReader(args[0]);
         Appendable out = System.out;
-        if(args.length > 1){
+        if(args[2] != null){
             out = new FileWriter(args[1]);
         }
         CSVPrinter csvPrinter = new CSVPrinter(out, CSVFormat.DEFAULT);
