@@ -4,7 +4,7 @@ package nl.nhl.groep16.parser.parsers;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class GenreParser extends AbstractParser {
+public class GenreParser implements ParserInterface{
 
     private String ignoreUntilFound;
     private boolean isIgnoreUntilFoundFound = false;
