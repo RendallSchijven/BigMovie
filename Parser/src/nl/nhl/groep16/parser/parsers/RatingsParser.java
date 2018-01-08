@@ -3,7 +3,7 @@ package nl.nhl.groep16.parser.parsers;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class RatingsParser extends AbstractParser {
+public class RatingsParser implements ParserInterface{
 
     private final Pattern ratingRegex;
 
