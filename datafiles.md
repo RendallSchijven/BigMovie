@@ -18,4 +18,4 @@ Anders:
 - movies.list : done
 - ratings.list
 - biographies.list
-- plot.list
+- plot.list : done

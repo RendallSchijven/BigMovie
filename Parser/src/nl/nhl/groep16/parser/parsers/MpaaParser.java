@@ -28,7 +28,6 @@ public class MpaaParser extends AbstractParser {
             String rating = extractRatings(line);
             if (rating != null) {
                 currentRating = rating;
-                System.out.println(currentMovie + "," + currentRating);
                 return new String[]{currentMovie, currentRating};
             }
         }
