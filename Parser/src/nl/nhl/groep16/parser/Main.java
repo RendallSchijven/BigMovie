@@ -1,14 +1,10 @@
 package nl.nhl.groep16.parser;
 
-import nl.nhl.groep16.parser.parsers.*;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
-import java.io.*;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
+import java.io.FileWriter;
 import java.util.Scanner;
-import java.util.Arrays;
 
 
 public class Main {
@@ -21,48 +17,11 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         ParserReader pr = new ParserReader(args[0]);
-        CSVPrinter csvPrinter = new CSVPrinter(System.out, CSVFormat.DEFAULT);
-        pr.writeToCsvPrinter(csvPrinter);
-    }
-
-    //Main loop of the console
-    public static void mainLoop() {
-        System.out.println("Give file path:");
-        String filePath = scanner.next();
-        loadFile(filePath);
-    }
-
-    //Loads a file and loops trough the lines
-    public static void loadFile(String path) {
-
-        long numChars = new File(path).length();
-
-        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-            long counter = 0;
-
-            for (String line; (line = br.readLine()) != null; ) {
-
-                //Prints out percentage
-                counter += line.length();
-                double percent = (double) counter / (double) numChars * 100;
-                System.out.println(round(percent, 2) + "%");
-            }
-
-            System.out.println(100 + "%");
-            System.out.println("done");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        Appendable out = System.out;
+        if(args.length > 1){
+            out = new FileWriter(args[1]);
         }
-    }
-
-    //Round method to round doubles
-    public static double round(double value, int places) {
-        if (places < 0) throw new IllegalArgumentException();
-
-        BigDecimal bd = new BigDecimal(value);
-        bd = bd.setScale(places, RoundingMode.HALF_UP);
-        return bd.doubleValue();
+        CSVPrinter csvPrinter = new CSVPrinter(out, CSVFormat.DEFAULT);
+        pr.writeToCsvPrinter(csvPrinter);
     }
 }
