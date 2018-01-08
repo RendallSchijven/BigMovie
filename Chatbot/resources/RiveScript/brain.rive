@@ -38,10 +38,10 @@
 + [*] movies [*]
 - <call>jdbc select Title from Movies</call>
 
-+ [*] video formats [*]
++ [*] plot [*]
 - There it is! 
-^ <call>system resources/R/video-format.R 2&> /dev/null</call>
-^ <call>send photo /tmp/video-format.jpg The graph produced by R</call>
+^ <call>system Chatbot/resources/R/video-format.R 2&> /dev/null</call>
+^ <call>send photo Chatbot/resources/R/rplot.jpg The graph produced by R</call>
 
 // Substitutions
 ! sub i'm     = i am
