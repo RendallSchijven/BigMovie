@@ -1,0 +1,62 @@
+// brain.rive
+
++ hey nicky how are you?
+- Very feminine
+
++ hello
+- Hi there!
+
++ [*] how are you [*]
+- I'm fine.
+- Splendid!
+- Couldn't be better!
+
++ [*] start [*]
+- I'm Movie Buff bot! Ask me questions about your favorite movies. Type /help for some example questions.
+
++ [*] help [*]
+- You can ask me questions like:\n
+^ /movies\n
+^ /actors\n
+^ /directors
+
++ *
+- Not sure I got that. Type /help for some example questions.
+
++ show files
+- <call>system ls -l</call>
+
++ what is the date?
+- The date is: <call>system date</call>
+
++ [*] actors [*]
+- <call>jdbc select Name from Persons, Persons_Movies where Persons.ID = Persons_Movies.Person_ID and Role_ID = 1 </call>
+
++ [*] directors [*]
+- <call>jdbc select Name from Persons, Persons_Movies where Persons.ID = Persons_Movies.Person_ID and Role_ID = 2 </call>
+
++ [*] movies [*]
+- <call>jdbc select Title from Movies</call>
+
++ [*] plot [*]
+- There it is! 
+^ <call>system Chatbot/resources/R/video-format.R 2&> /dev/null</call>
+^ <call>send photo Chatbot/resources/R/rplot.jpg The graph produced by R</call>
+
+// Substitutions
+! sub i'm     = i am
+! sub i'd     = i would
+! sub i've    = i have
+! sub i'll    = i will
+! sub don't   = do not
+! sub isn't   = is not
+! sub you'd   = you would
+! sub you're  = you are
+! sub you've  = you have
+! sub you'll  = you will
+! sub what's  = what is
+! sub whats   = what is
+! sub what're = what are
+! sub what've = what have
+! sub what'll = what will
+! sub who's   = who is
