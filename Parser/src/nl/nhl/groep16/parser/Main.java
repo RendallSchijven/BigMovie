@@ -20,7 +20,7 @@ public class Main {
     static Parser parser;
 
     public static void main(String[] args) throws Exception {
-        ParserReader pr = new ParserReader("/home/human/Documents/BigData/genres.list");
+        ParserReader pr = new ParserReader("C:/Users/twant/Desktop/Data/genres.list");
         CSVPrinter csvPrinter = new CSVPrinter(System.out, CSVFormat.DEFAULT);
         pr.writeToCsvPrinter(csvPrinter);
     }

@@ -11,7 +11,6 @@ public class ParserFactory {
 
     private Map<String, Class> mapper = new HashMap<>();
 
-
     public ParserFactory() {
         mapper.put("actors", ActorParser.class);
         mapper.put("editors", EditorParser.class);
