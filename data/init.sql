@@ -44,7 +44,7 @@ CREATE TABLE `Movies_Keywords` (
 CREATE TABLE `Persons` (
   `ID` int(11) NOT NULL,
   `Name` varchar(200) NOT NULL,
-  `BirthDay` date NOT NULL,
+  `BirthDay` date,
   `Sex` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
