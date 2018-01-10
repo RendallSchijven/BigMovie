@@ -72,19 +72,19 @@ CREATE TABLE ratings_temp (
 );
 
 
-LOAD DATA LOCAL INFILE '/home/zroya/Documents/School/Jaar 2/Periode 2/Project Big Data/BigMovie/data/movies.csv' INTO TABLE movies_temp
+LOAD DATA LOCAL INFILE 'data/movies.csv' INTO TABLE movies_temp
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
-LOAD DATA LOCAL INFILE '/home/zroya/Documents/School/Jaar 2/Periode 2/Project Big Data/BigMovie/data/genres.csv' INTO TABLE genres_temp
+LOAD DATA LOCAL INFILE 'data/genres.csv' INTO TABLE genres_temp
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
-LOAD DATA LOCAL INFILE '/home/zroya/Documents/School/Jaar 2/Periode 2/Project Big Data/BigMovie/data/keywords.csv' INTO TABLE keywords_temp
+LOAD DATA LOCAL INFILE 'data/keywords.csv' INTO TABLE keywords_temp
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
-LOAD DATA LOCAL INFILE '/home/zroya/Documents/School/Jaar 2/Periode 2/Project Big Data/BigMovie/data/actors.csv' INTO TABLE actors_temp
+LOAD DATA LOCAL INFILE 'data/actors.csv' INTO TABLE actors_temp
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
