@@ -47,7 +47,7 @@ CREATE TABLE editors_temp (
 CREATE TABLE producers_temp (
   `name`  VARCHAR(200),
   `movie` VARCHAR(200),
-  `role` VARCHAR(50)
+  `role` VARCHAR(200)
 );
 
 CREATE TABLE writers_temp (
@@ -116,21 +116,25 @@ LOAD DATA LOCAL INFILE 'data/ratings.csv' INTO TABLE ratings_temp
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
-INSERT INTO Genres (GenreName)
+INSERT INTO NickyBot.Genres (GenreName)
 SELECT DISTINCT genre
 FROM genres_temp;
 
-INSERT INTO Keywords (Keyword)
+INSERT INTO NickyBot.Keywords (Keyword)
 SELECT DISTINCT keyword
 FROM keywords_temp;
 
-INSERT INTO Persons (Name, Sex)
+INSERT INTO NickyBot.Persons (Name, Sex)
 SELECT DISTINCT name, 'M'
 FROM actors_temp;
 
-INSERT INTO Persons (Name, Sex)
+INSERT INTO NickyBot.Persons (Name, Sex)
 SELECT DISTINCT name, 'F'
 FROM actresses_temp;
 
-INSERT INTO Roles  (Role) VALUES
-(actors);
+INSERT INTO NickyBot.Roles (Role)
+SELECT DISTINCT (role)
+FROM producers_temp;
+
+INSERT INTO NickyBot.Roles (Role)
+ VALUES ("actors"), ("editors"), ("writer");
