@@ -1,56 +1,117 @@
 CREATE DATABASE IF NOT EXISTS TEMP;
 
-use TEMP;
+USE TEMP;
 
-DROP TABLE IF EXISTS movies;
-DROP TABLE IF EXISTS genres;
-DROP TABLE IF EXISTS keywords;
-DROP TABLE IF EXISTS actors;
-DROP TABLE IF EXISTS actresses;
+DROP TABLE IF EXISTS movies_temp;
+DROP TABLE IF EXISTS genres_temp;
+DROP TABLE IF EXISTS keywords_temp;
+DROP TABLE IF EXISTS actors_temp;
+DROP TABLE IF EXISTS actresses_temp;
+DROP TABLE IF EXISTS editors_temp;
+DROP TABLE IF EXISTS producers_temp;
+DROP TABLE IF EXISTS writers_temp;
+DROP TABLE IF EXISTS mpaa_temp;
+DROP TABLE IF EXISTS plot_temp;
+DROP TABLE IF EXISTS ratings_temp;
 
 
-CREATE TABLE movies (
-  `Name` varchar(200) NOT NULL
+CREATE TABLE movies_temp (
+  `Name` VARCHAR(200) NOT NULL
 );
 
-CREATE TABLE genres(
-	`movie` varchar(200),
-    `genre` varchar(50)
+CREATE TABLE genres_temp (
+  `movie` VARCHAR(200),
+  `genre` VARCHAR(50)
 );
 
-CREATE TABLE keywords(
-	`movie` varchar(200),
-    `keyword` varchar(50)
+CREATE TABLE keywords_temp (
+  `movie`   VARCHAR(200),
+  `keyword` VARCHAR(50)
 );
 
-CREATE TABLE actors(
-	`name` varchar(200),
-    `movie` varchar(200)
+CREATE TABLE actors_temp (
+  `name`  VARCHAR(200),
+  `movie` VARCHAR(200)
 );
 
-CREATE TABLE actresses(
-	`name` varchar(200),
-    `movie` varchar(200)
+CREATE TABLE actresses_temp (
+  `name`  VARCHAR(200),
+  `movie` VARCHAR(200)
+);
+
+CREATE TABLE editors_temp (
+  `name`  VARCHAR(200),
+  `movie` VARCHAR(200)
+);
+
+CREATE TABLE producers_temp (
+  `name`  VARCHAR(200),
+  `movie` VARCHAR(200),
+  `role` VARCHAR(50)
+);
+
+CREATE TABLE writers_temp (
+  `name`  VARCHAR(200),
+  `movie` VARCHAR(200)
+);
+
+CREATE TABLE mpaa_temp (
+  `movie`  VARCHAR(200),
+  `mpaa` VARCHAR(200)
+);
+
+CREATE TABLE plot_temp (
+  `movie`  VARCHAR(200),
+  `plot` LONGTEXT
+);
+
+CREATE TABLE ratings_temp (
+  `movie`  VARCHAR(200),
+  `rating` FLOAT,
+  `votes` INT(11)
 );
 
 
-
-LOAD DATA LOCAL INFILE 'data/movies.csv' INTO TABLE movies
+LOAD DATA LOCAL INFILE 'data/movies.csv' INTO TABLE movies_temp
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
-LOAD DATA LOCAL INFILE 'data/genres.csv' INTO TABLE genres
+LOAD DATA LOCAL INFILE 'data/genres.csv' INTO TABLE genres_temp
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
-LOAD DATA LOCAL INFILE 'data/keywords.csv' INTO TABLE keywords
+LOAD DATA LOCAL INFILE 'data/keywords.csv' INTO TABLE keywords_temp
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
-LOAD DATA LOCAL INFILE 'data/actors.csv' INTO TABLE actors
+LOAD DATA LOCAL INFILE 'data/actors.csv' INTO TABLE actors_temp
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
-LOAD DATA LOCAL INFILE 'data/actresses.csv' INTO TABLE actresses
+LOAD DATA LOCAL INFILE 'data/actresses.csv' INTO TABLE actresses_temp
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n';
+
+LOAD DATA LOCAL INFILE 'data/editors.csv' INTO TABLE editors_temp
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n';
+
+LOAD DATA LOCAL INFILE 'data/producers.csv' INTO TABLE producers_temp
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n';
+
+LOAD DATA LOCAL INFILE 'data/writers.csv' INTO TABLE writers_temp
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n';
+
+LOAD DATA LOCAL INFILE 'data/mpaa.csv' INTO TABLE mpaa_temp
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n';
+
+LOAD DATA LOCAL INFILE 'data/plot.csv' INTO TABLE plot_temp
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n';
+
+LOAD DATA LOCAL INFILE 'data/ratings.csv' INTO TABLE ratings_temp
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
