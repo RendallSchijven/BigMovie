@@ -21,12 +21,12 @@ CREATE TABLE movies_temp (
 
 CREATE TABLE genres_temp (
   `movie` VARCHAR(200),
-  `genre` VARCHAR(50)
+  `genre` VARCHAR(200)
 );
 
 CREATE TABLE keywords_temp (
   `movie`   VARCHAR(200),
-  `keyword` VARCHAR(50)
+  `keyword` VARCHAR(200)
 );
 
 CREATE TABLE actors_temp (
@@ -34,9 +34,9 @@ CREATE TABLE actors_temp (
   `movie` VARCHAR(200)
 );
 
-CREATE TABLE actresses_temp (
-  `name`  VARCHAR(200),
-  `movie` VARCHAR(200)
+CREATE TABLE actresses_temp(
+	`name` VARCHAR(200),
+    `movie` VARCHAR(200)
 );
 
 CREATE TABLE editors_temp (
@@ -72,19 +72,19 @@ CREATE TABLE ratings_temp (
 );
 
 
-LOAD DATA LOCAL INFILE 'data/movies.csv' INTO TABLE movies_temp
+LOAD DATA LOCAL INFILE '/home/zroya/Documents/School/Jaar 2/Periode 2/Project Big Data/BigMovie/data/movies.csv' INTO TABLE movies_temp
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
-LOAD DATA LOCAL INFILE 'data/genres.csv' INTO TABLE genres_temp
+LOAD DATA LOCAL INFILE '/home/zroya/Documents/School/Jaar 2/Periode 2/Project Big Data/BigMovie/data/genres.csv' INTO TABLE genres_temp
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
-LOAD DATA LOCAL INFILE 'data/keywords.csv' INTO TABLE keywords_temp
+LOAD DATA LOCAL INFILE '/home/zroya/Documents/School/Jaar 2/Periode 2/Project Big Data/BigMovie/data/keywords.csv' INTO TABLE keywords_temp
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
-LOAD DATA LOCAL INFILE 'data/actors.csv' INTO TABLE actors_temp
+LOAD DATA LOCAL INFILE '/home/zroya/Documents/School/Jaar 2/Periode 2/Project Big Data/BigMovie/data/actors.csv' INTO TABLE actors_temp
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
@@ -115,3 +115,19 @@ LINES TERMINATED BY '\n';
 LOAD DATA LOCAL INFILE 'data/ratings.csv' INTO TABLE ratings_temp
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
+
+INSERT INTO Genres (GenreName)
+SELECT DISTINCT genre
+FROM genres_temp;
+
+INSERT INTO Keywords (Keyword)
+SELECT DISTINCT keyword
+FROM keywords_temp;
+
+INSERT INTO Persons (Name, Sex)
+SELECT DISTINCT name, 'M'
+FROM actors_temp;
+
+INSERT INTO Persons (Name, Sex)
+SELECT DISTINCT name, 'F'
+FROM actresses_temp;
