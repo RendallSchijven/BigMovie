@@ -26,6 +26,7 @@ CREATE TABLE `Movies` (
   `Title` varchar(200) NOT NULL,
   `Plot` longtext NOT NULL,
   `Rating` float NOT NULL,
+  `Votes` int(11) NOT NULL,
   `MPAA` varchar(20) NOT NULL,
   `Budget` int(11) NOT NULL,
   `Gross` int(11) NOT NULL
