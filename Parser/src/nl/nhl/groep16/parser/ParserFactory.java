@@ -13,6 +13,7 @@ public class ParserFactory {
 
     public ParserFactory() {
         mapper.put("actors", ActorParser.class);
+        mapper.put("actresses", ActorParser.class);
         mapper.put("editors", EditorParser.class);
         mapper.put("genres", GenreParser.class);
         mapper.put("keywords", KeywordParser.class);
