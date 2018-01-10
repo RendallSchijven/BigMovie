@@ -11,7 +11,7 @@ DROP TABLE IF EXISTS actresses;
 
 CREATE TABLE movies (
   `Name` varchar(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+);
 
 CREATE TABLE genres(
 	`movie` varchar(200),
