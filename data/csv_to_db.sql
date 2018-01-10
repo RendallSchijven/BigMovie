@@ -2,12 +2,14 @@ CREATE DATABASE IF NOT EXISTS NickyBot;
 
 use NickyBot;
 
-DROP TABLE IF EXISTS tempMovieCSVTable;
+DROP TABLE IF EXISTS movies;
 DROP TABLE IF EXISTS genres;
 DROP TABLE IF EXISTS keywords;
+DROP TABLE IF EXISTS actors;
+DROP TABLE IF EXISTS actresses;
 
 
-CREATE TABLE tempMovieCSVTable (
+CREATE TABLE movies (
   `Name` varchar(200) NOT NULL,
   `ReleaseDate` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -22,7 +24,19 @@ CREATE TEMPORARY TABLE keywords(
     `keyword` varchar(50)
 );
 
-LOAD DATA LOCAL INFILE 'data/MovieTest.csv' INTO TABLE tempMovieCSVTable
+CREATE TEMPORARY TABLE actors(
+	`name` varchar(50),
+    `movie` varchar(50)
+);
+
+CREATE TEMPORARY TABLE actresses(
+	`name` varchar(50),
+    `movie` varchar(50)
+);
+
+
+
+LOAD DATA LOCAL INFILE 'data/MovieTest.csv' INTO TABLE movies
 FIELDS TERMINATED BY ';'
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES;
@@ -37,4 +51,14 @@ FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES;
 
-SELECT * FROM tempMovieCSVTable;
+LOAD DATA LOCAL INFILE 'data/keywords.csv' INTO TABLE actors
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES;
+
+LOAD DATA LOCAL INFILE 'data/keywords.csv' INTO TABLE actresses
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES;
+
+SELECT * FROM movies;
