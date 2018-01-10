@@ -70,3 +70,6 @@ FROM actors_temp;
 INSERT INTO Persons (Name, Sex)
 SELECT DISTINCT name, 'F'
 FROM actresses_temp;
+
+INSERT INTO Roles  (Role) VALUES
+(actors);
