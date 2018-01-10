@@ -11,7 +11,7 @@ public class WriterParser implements ParserInterface{
     private String currentWriter;
 
     public WriterParser() {
-        this.writerRegex = Pattern.compile("^(\\w+,\\s+\\w+)");
+        this.writerRegex = Pattern.compile("^(.*,.*)\\t");
         this.movieRegex = Pattern.compile("\\t+(\\w.*)");
     }
 

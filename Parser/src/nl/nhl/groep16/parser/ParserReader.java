@@ -34,4 +34,17 @@ public class ParserReader {
         }
         csvPrinter.flush();
     }
+
+    public void writeToCsvPrinter(CSVPrinter csvPrinter, int numLines) throws IOException {
+        String line;
+        int count = 0;
+        while ((line = reader.readLine()) != null && count < numLines) {
+            String[] out = parser.convertLine(line);
+            if (out != null) {
+                csvPrinter.printRecord((Object[]) out);
+                count++;
+            }
+        }
+        csvPrinter.flush();
+    }
 }
