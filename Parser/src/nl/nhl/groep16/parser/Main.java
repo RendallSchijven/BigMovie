@@ -4,7 +4,6 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
 import java.io.FileWriter;
-import java.util.Calendar;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
