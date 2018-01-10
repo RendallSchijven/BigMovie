@@ -137,4 +137,4 @@ SELECT DISTINCT (role)
 FROM producers_temp;
 
 INSERT INTO NickyBot.Roles (Role)
- VALUES ("actors"), ("editors"), ("writer");
+ VALUES ("actor"), ("editor"), ("writer");
