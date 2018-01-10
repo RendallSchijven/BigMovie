@@ -13,51 +13,44 @@ CREATE TABLE movies (
   `Name` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TEMPORARY TABLE genres(
-	`movie` varchar(50),
+CREATE TABLE genres(
+	`movie` varchar(200),
     `genre` varchar(50)
 );
 
-CREATE TEMPORARY TABLE keywords(
-	`movie` varchar(50),
+CREATE TABLE keywords(
+	`movie` varchar(200),
     `keyword` varchar(50)
 );
 
-CREATE TEMPORARY TABLE actors(
-	`name` varchar(50),
-    `movie` varchar(50)
+CREATE TABLE actors(
+	`name` varchar(200),
+    `movie` varchar(200)
 );
 
-CREATE TEMPORARY TABLE actresses(
-	`name` varchar(50),
-    `movie` varchar(50)
+CREATE TABLE actresses(
+	`name` varchar(200),
+    `movie` varchar(200)
 );
 
 
 
-LOAD DATA LOCAL INFILE 'data/MovieTest.csv' INTO TABLE movies
+LOAD DATA LOCAL INFILE 'data/movies.csv' INTO TABLE movies
 FIELDS TERMINATED BY '\t'
-LINES TERMINATED BY '\n'
-IGNORE 1 LINES;
+LINES TERMINATED BY '\n';
 
 LOAD DATA LOCAL INFILE 'data/genres.csv' INTO TABLE genres
 FIELDS TERMINATED BY '\t'
-LINES TERMINATED BY '\n'
-IGNORE 1 LINES;
+LINES TERMINATED BY '\n';
 
 LOAD DATA LOCAL INFILE 'data/keywords.csv' INTO TABLE keywords
 FIELDS TERMINATED BY '\t'
-LINES TERMINATED BY '\n'
-IGNORE 1 LINES;
+LINES TERMINATED BY '\n';
 
 LOAD DATA LOCAL INFILE 'data/actors.csv' INTO TABLE actors
 FIELDS TERMINATED BY '\t'
-LINES TERMINATED BY '\n'
-IGNORE 1 LINES;
+LINES TERMINATED BY '\n';
 
 LOAD DATA LOCAL INFILE 'data/actresses.csv' INTO TABLE actresses
 FIELDS TERMINATED BY '\t'
-LINES TERMINATED BY '\n'
-IGNORE 1 LINES;
-
-SELECT * FROM movies;
+LINES TERMINATED BY '\n';
