@@ -8,7 +8,7 @@ public class RatingsParser implements ParserInterface{
     private final Pattern ratingRegex;
 
     public RatingsParser() {
-        this.ratingRegex = Pattern.compile("\\s(\\d[\\.]\\d)\\s+(.*)");
+        this.ratingRegex = Pattern.compile("\\s(\\d+)\\s+(\\d[\\.]\\d)\\s+(.*)");
     }
 
     @Override
@@ -22,6 +22,6 @@ public class RatingsParser implements ParserInterface{
             return null;
         }
 
-        return new String[]{m.group(2), m.group(1)};
+        return new String[]{m.group(3), m.group(2), m.group(1)};
     }
 }
