@@ -1,8 +1,5 @@
 // brain.rive
 
-+ hey nicky how are you?
-- Very feminine
-
 + hello
 - Hi there!
 
@@ -44,12 +41,12 @@
 ^ <call>send photo Chatbot/resources/R/rplot.jpg The graph produced by R</call>
 
 + [*] tamagotchi [*]
-- Are you sure?
+- Are you sure there is no going back
 
 + *
-% are you sure
-* <star> == yes => there is no going back {topic=tamagotchi}
--there is no going back
+% are you sure there is no going back
+* <star> == yes => here is tamagotchi \n 🥚{topic=tamagotchi}
+-ok
 
 // Substitutions
 ! sub i'm     = i am
