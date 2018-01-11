@@ -1,5 +1,3 @@
-#!/usr/bin/Rscript
-
 #install.packages("RMySQL")
 library(RMySQL)
 
