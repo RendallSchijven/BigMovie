@@ -12,7 +12,7 @@ public class ProducerParser implements ParserInterface{
 
     public ProducerParser() {
         this.producerRegex = Pattern.compile("^(.*,.*)\\t");
-        this.infoRegex = Pattern.compile("\\t+(\\w.*)\\s{2,}\\((.*)\\).*");
+        this.infoRegex = Pattern.compile("\\t+(\\w.*)\\s{2,}\\(([^\\)]+)\\).*");
     }
 
     @SuppressWarnings("Duplicates")

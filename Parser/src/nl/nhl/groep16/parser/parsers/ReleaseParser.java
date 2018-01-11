@@ -8,16 +8,18 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ReleaseParser implements ParserInterface{
+public class ReleaseParser implements ParserInterface {
 
     private Pattern releaseRegex;
     DateFormat formatterLong;
     DateFormat formatterShort;
+    DateFormat formatterFinal;
 
     public ReleaseParser() {
         this.releaseRegex = Pattern.compile("(^[^\"].*?)\\t\\s*(.*):([1-9].*[0-9])\\t");
         formatterLong = new SimpleDateFormat("dd MMMM yyyy", Locale.US);
         formatterShort = new SimpleDateFormat("yyyy", Locale.US);
+        formatterFinal = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
     }
 
     @Override
@@ -32,15 +34,16 @@ public class ReleaseParser implements ParserInterface{
         }
         Date date = null;
         try {
-            if(m.group(3).length() < 10)
+            if (m.group(3).length() < 10) {
                 date = formatterShort.parse(m.group(3));
-            else
+            } else {
                 date = formatterLong.parse(m.group(3));
+            }
 
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        return new String[]{m.group(1), m.group(2), date.toString()};
+        return new String[]{m.group(1), m.group(2), formatterFinal.format(date)};
     }
 }
