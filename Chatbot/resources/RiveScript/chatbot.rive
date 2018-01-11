@@ -39,9 +39,17 @@
 - <call>jdbc select Title from Movies</call>
 
 + [*] plot [*]
-- There it is! 
+- There it is!
 ^ <call>system Chatbot/resources/R/video-format.R 2&> /dev/null</call>
 ^ <call>send photo Chatbot/resources/R/rplot.jpg The graph produced by R</call>
+
++ [*] tamagotchi [*]
+- Are you sure?
+
++ *
+% are you sure
+* <star> == yes => there is no going back {topic=tamagotchi}
+-there is no going back
 
 // Substitutions
 ! sub i'm     = i am
