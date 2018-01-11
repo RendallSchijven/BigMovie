@@ -11,8 +11,8 @@ public class ProducerParser implements ParserInterface{
     private String currentProducer;
 
     public ProducerParser() {
-        this.producerRegex = Pattern.compile("^(\\w+,\\s+\\w+)");
-        this.infoRegex = Pattern.compile("\\t+(\\w.*)\\s{2,}\\((.*)\\).*");
+        this.producerRegex = Pattern.compile("^(.*,.*)\\t");
+        this.infoRegex = Pattern.compile("\\t+(\\w.*)\\s{2,}\\(([^\\)]+)\\).*");
     }
 
     @SuppressWarnings("Duplicates")

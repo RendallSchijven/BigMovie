@@ -11,7 +11,7 @@ public class EditorParser implements ParserInterface{
     private String currentEditor;
 
     public EditorParser() {
-        this.editorRegex = Pattern.compile("^(\\w+,\\s+\\w+)");
+        this.editorRegex = Pattern.compile("^(.*,.*)\\t");
         this.movieRegex = Pattern.compile("\\t+(\\w.*)");
     }
 
