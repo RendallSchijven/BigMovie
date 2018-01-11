@@ -22,6 +22,7 @@ public class ParserFactory {
         mapper.put("producers", ProducerParser.class);
         mapper.put("ratings", RatingsParser.class);
         mapper.put("writers", WriterParser.class);
+        mapper.put("running-times", DurationParser.class);
     }
 
     /**
