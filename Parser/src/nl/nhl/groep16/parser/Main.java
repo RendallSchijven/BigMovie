@@ -16,7 +16,7 @@ public class Main {
     static boolean running = true;
 
     static Scanner scanner;
-    public static boolean linesArg;
+    public static boolean linesArg = false;
     public static int amountOfLinesToParse;
 
     public static void main(String[] args) throws Exception {
@@ -27,9 +27,9 @@ public class Main {
         }
 
         ArrayList<ParserReader> parseReadersList = new ArrayList<ParserReader>();
-
-        boolean linesArg;
-        int amountOfLinesToParse;
+//
+//        boolean linesArg;
+//        int amountOfLinesToParse;
         // String outputLocation = new File(" ").getAbsolutePath();
         // outputLocation = outputLocation.replaceAll("\\s+$", "");
 
@@ -41,7 +41,7 @@ public class Main {
                 linesArg = true;
                 tl = true;
             }
-            else if (tl) {
+            else if (tl == true) {
                 amountOfLinesToParse = Integer.parseInt(args[i].toString());
                 tl = false;
             }
