@@ -57,7 +57,7 @@ CREATE TABLE `Persons_Movies` (
 
 CREATE TABLE `Roles` (
   `ID` int(11) NOT NULL,
-  `Role` varchar(20) NOT NULL
+  `Role` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 ALTER TABLE `Countries`
