@@ -14,8 +14,6 @@ public class Main {
 
     static Scanner scanner;
 
-    static Parser parser;
-
     public static void main(String[] args) throws Exception {
         long startTime = System.nanoTime();
         ParserReader pr = new ParserReader(args[0]);

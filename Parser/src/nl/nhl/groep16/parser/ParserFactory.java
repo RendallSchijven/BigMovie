@@ -1,5 +1,4 @@
 package nl.nhl.groep16.parser;
-
 import nl.nhl.groep16.parser.parsers.*;
 
 import java.lang.reflect.Constructor;
@@ -23,6 +22,7 @@ public class ParserFactory {
         mapper.put("producers", ProducerParser.class);
         mapper.put("ratings", RatingsParser.class);
         mapper.put("writers", WriterParser.class);
+        mapper.put("running-times", DurationParser.class);
         mapper.put("directors", EditorParser.class);
         mapper.put("release-dates", ReleaseParser.class);
         mapper.put("biographies", BioParser.class);
