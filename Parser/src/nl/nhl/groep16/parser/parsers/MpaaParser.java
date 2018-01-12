@@ -13,7 +13,7 @@ public class MpaaParser implements ParserInterface{
 
     public MpaaParser() {
         this.ratingRegex = Pattern.compile("RE:\\sRated\\s([^\\s]+)");
-        this.moviesRegex = Pattern.compile("MV:(.[^\"].*)");
+        this.moviesRegex = Pattern.compile("MV:\\s(.[^\"].*)");
     }
 
 
