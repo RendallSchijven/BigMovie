@@ -68,7 +68,7 @@ public class ParserReader extends Thread{
             out = new FileWriter(filePath + ".csv");
             CSVPrinter csvPrinter = new CSVPrinter(out, CSVFormat.MYSQL);
 
-            if (Main.linesArg) {
+            if (Main.linesArg == true) {
                 writeToCsvPrinter(csvPrinter, Main.amountOfLinesToParse);
             }
             else {
