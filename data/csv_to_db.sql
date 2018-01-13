@@ -123,76 +123,76 @@ ALTER TABLE Movies
 ALTER TABLE Persons
   MODIFY `ID` INT(11) NOT NULL AUTO_INCREMENT;
 
-/* Create temporary tables TODO make these tables TEMPORARY!! */
+/* Create temporary tables */
 
-CREATE TABLE movies_temp (
+CREATE TEMPORARY TABLE movies_temp (
   `Name` VARCHAR(512) NOT NULL
 );
 
-CREATE TABLE genres_temp (
+CREATE TEMPORARY TABLE genres_temp (
   `movie` VARCHAR(512),
   `genre` VARCHAR(200)
 );
 
-CREATE TABLE keywords_temp (
+CREATE TEMPORARY TABLE keywords_temp (
   `movie`   VARCHAR(512),
   `keyword` VARCHAR(200)
 );
 
-CREATE TABLE actors_temp (
+CREATE TEMPORARY TABLE actors_temp (
   `name`  VARCHAR(200),
   `movie` VARCHAR(2048)
 );
 
-CREATE TABLE actresses_temp (
+CREATE TEMPORARY TABLE actresses_temp (
   `name`  VARCHAR(200),
   `movie` VARCHAR(2048)
 );
 
-CREATE TABLE editors_temp (
+CREATE TEMPORARY TABLE editors_temp (
   `name`  VARCHAR(200),
   `movie` VARCHAR(512)
 );
 
-CREATE TABLE producers_temp (
+CREATE TEMPORARY TABLE producers_temp (
   `name`  VARCHAR(200),
   `movie` VARCHAR(512),
   `role` VARCHAR(2048)
 );
 
-CREATE TABLE writers_temp (
+CREATE TEMPORARY TABLE writers_temp (
   `name`  VARCHAR(200),
   `movie` VARCHAR(512)
 );
 
-CREATE TABLE mpaa_temp (
+CREATE TEMPORARY TABLE mpaa_temp (
   `movie` VARCHAR(512),
   `mpaa`  VARCHAR(200)
 );
 
-CREATE TABLE plot_temp (
+CREATE TEMPORARY TABLE plot_temp (
   `movie` VARCHAR(512),
   `plot`  LONGTEXT
 );
 
-CREATE TABLE ratings_temp (
+CREATE TEMPORARY TABLE ratings_temp (
   `movie`  VARCHAR(512),
   `rating` FLOAT,
   `votes`  INT(11)
 );
 
-CREATE TABLE runningTimes_temp (
+CREATE TEMPORARY TABLE runningTimes_temp (
   `movie`  VARCHAR(512),
   `minutes`  INT(11)
 );
 
-CREATE TABLE releaseDates_temp (
+CREATE TEMPORARY TABLE releaseDates_temp (
   `movie`  VARCHAR(512),
   `country`  VARCHAR(64),
   `date`  DATE
 );
 
-CREATE TABLE biographies_temp (
+CREATE TEMPORARY TABLE biographies_temp (
   `actor`  VARCHAR(300),
   `birthdate`  DATE
 );
@@ -351,11 +351,12 @@ INSERT INTO Persons(Name, Sex)
                                   SELECT name,null AS sex FROM writers_temp
                                 ) AS PersonsTemp;
 
-/* Fill Countries TODO not working, column Movie_ID cannot be NULL */
+/* Fill Countries */
 
 INSERT INTO Countries (Movie_ID, Country, ReleaseDate)
   SELECT DISTINCT ID, country, date FROM releaseDates_temp
-    LEFT JOIN Movies ON movie = Movies.Title;
+    LEFT JOIN Movies ON movie = Movies.Title
+  WHERE ID IS NOT NULL;
 
 /* Fill Movies_Genres */
 
