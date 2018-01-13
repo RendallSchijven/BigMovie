@@ -123,6 +123,23 @@ ALTER TABLE Movies
 ALTER TABLE Persons
   MODIFY `ID` INT(11) NOT NULL AUTO_INCREMENT;
 
+/* Add foreign keys */
+
+ALTER TABLE Countries
+  ADD CONSTRAINT `Countries-MovieID` FOREIGN KEY (`Movie_ID`) REFERENCES Movies (`ID`);
+
+ALTER TABLE Movies_Genres
+  ADD CONSTRAINT `Movies_Genres-MovieID` FOREIGN KEY (`Movie_ID`) REFERENCES Movies (`ID`),
+  ADD CONSTRAINT `Movies_Genres-GenreID` FOREIGN KEY (`Genre_ID`) REFERENCES Genres (`ID`);
+
+ALTER TABLE Movies_Keywords
+  ADD CONSTRAINT `Movies_Keywords-MovieID` FOREIGN KEY (`Movie_ID`) REFERENCES Movies (`ID`),
+  ADD CONSTRAINT `Movies_Keywords-KeywordID` FOREIGN KEY (`Keyword_ID`) REFERENCES Keywords (`ID`);
+
+ALTER TABLE Persons_Movies
+  ADD CONSTRAINT `Persons_Movies_MovieID` FOREIGN KEY (`Movie_ID`) REFERENCES Movies (`ID`),
+  ADD CONSTRAINT `Persons_Movies_PersonID` FOREIGN KEY (`Person_ID`) REFERENCES Persons (`ID`);
+
 /* Create temporary tables */
 
 CREATE TEMPORARY TABLE movies_temp (
@@ -380,22 +397,22 @@ INSERT INTO Movies_Keywords (Movie_ID, Keyword_ID)
 /* Fill Persons_Movies */
 
 INSERT INTO Persons_Movies (Movie_ID, Person_ID, Role)
-  SELECT p.ID AS Person_ID, m.ID AS Movie_ID, "producer" as Role FROM producers_temp AS pt
+  SELECT m.ID, p.ID, "producer" as Role FROM producers_temp AS pt
     JOIN Persons p ON p.Name = pt.name
     JOIN Movies m ON m.Title = pt.movie;
 INSERT INTO Persons_Movies (Movie_ID, Person_ID, Role)
-  SELECT p.ID AS Person_ID, m.ID AS Movie_ID, "writer" AS Role FROM writers_temp AS wt
+  SELECT m.ID, p.ID, "writer" AS Role FROM writers_temp AS wt
     JOIN Persons p ON p.Name = wt.name
     JOIN Movies m ON m.Title = wt.movie;
 INSERT INTO Persons_Movies (Movie_ID, Person_ID, Role)
-  SELECT p.ID AS Person_ID, m.ID AS Movie_ID, "editor" AS Role FROM editors_temp AS et
+  SELECT m.ID, p.ID, "editor" AS Role FROM editors_temp AS et
     JOIN Persons p ON p.Name = et.name
     JOIN Movies m ON m.Title = et.movie;
 INSERT INTO Persons_Movies (Movie_ID, Person_ID, Role)
-  SELECT p.ID AS Person_ID, m.ID AS Movie_ID, "actor" AS Role FROM actors_temp AS at
+  SELECT m.ID, p.ID, "actor" AS Role FROM actors_temp AS at
     JOIN Persons p ON p.Name = at.name
     JOIN Movies m ON m.Title = at.movie;
 INSERT INTO Persons_Movies (Movie_ID, Person_ID, Role)
-  SELECT p.ID AS Person_ID, m.ID AS Movie_ID, "actor" AS Role FROM actresses_temp AS ast
+  SELECT m.ID, p.ID, "actor" AS Role FROM actresses_temp AS ast
     JOIN Persons p ON p.Name = ast.name
     JOIN Movies m ON m.Title = ast.movie;
