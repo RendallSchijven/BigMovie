@@ -50,5 +50,4 @@ public class ParserFactory {
         throw new Exception(String.format("Datatype %s not supported", basename));
     }
 
-
 }

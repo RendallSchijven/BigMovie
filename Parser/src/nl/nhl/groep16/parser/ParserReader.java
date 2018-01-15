@@ -5,10 +5,13 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.io.input.ReaderInputStream;
 
+import java.awt.*;
 import java.io.*;
+import java.util.concurrent.TimeUnit;
 
-public class ParserReader {
+public class ParserReader extends Thread{
 
+    private String filePath = "";
     private final ParserInterface parser;
     private final BufferedReader reader;
 
@@ -18,6 +21,7 @@ public class ParserReader {
     }
 
     public ParserReader(String filePath) throws Exception {
+        this.filePath = filePath;
         ParserFactory parserFactory = new ParserFactory();
         this.parser = parserFactory.createParser(filePath);
         this.reader = new BufferedReader(new FileReader(filePath));
@@ -46,5 +50,36 @@ public class ParserReader {
             }
         }
         csvPrinter.flush();
+    }
+
+    /**
+     *
+     * for multi-threading
+     *
+     */
+    @Override
+    public void run() {
+        long startTime = System.nanoTime();
+
+        System.out.println("Thread is running");
+        String runFilePath = filePath;
+        Appendable out = System.out;
+        try {
+            out = new FileWriter(filePath + ".csv");
+            CSVPrinter csvPrinter = new CSVPrinter(out, CSVFormat.MYSQL);
+
+            if (Main.linesArg == true) {
+                writeToCsvPrinter(csvPrinter, Main.amountOfLinesToParse);
+            }
+            else {
+                writeToCsvPrinter(csvPrinter);
+            }
+        } catch (IOException e) {
+             System.out.println(e.toString());
+        }
+
+        long endTime = System.nanoTime();
+        long time = TimeUnit.SECONDS.convert((endTime - startTime), TimeUnit.NANOSECONDS);
+        System.out.println("Done\nTime: " + time);
     }
 }
