@@ -23,3 +23,7 @@ R
   Valideer het model.
 - Ga na met R of er een verband is tussen de kosten van een film en de lengte ervan. 
   Analyseer dit op een vergelijkbare manier als in vraag C4. 
+- Er wordt vaak gezegd dat naarmate actrices ouder zijn zij moeilijker een rol krijgen. Ga 
+  (met R) na of dat zo is. Je zou bijvoorbeeld een lineair regressiemodel kunnen maken 
+  met leeftijd en geslacht als onafhankelijke variabelen en aantal films per jaar als 
+  afhankelijke variabele. 
