@@ -1,0 +1,74 @@
+// brain.rive
+
++ hey nicky how are you?
+- Very feminine
+
++ hello
+- Hi there!
+
++ [*] how are you [*]
+- I'm fine.
+- Splendid!
+- Couldn't be better!
+
++ [*] start [*]
+- I'm Movie Buff bot! Ask me questions about your favorite movies. Type /help for some example questions.
+
++ [*] help [*]
+- You can ask me questions like:\n
+^ /movies\n
+^ /actors\n
+^ /directors
+
++ *
+- Not sure I got that. Type /help for some example questions.
+
++ what is the shortest movie with a rating higher then 8.5
+- <call>jdbc select Title from Movies where rating > 8.5 AND duration = smallest?</call>
+
++ in which movies does joop braakhekke play
+- <call>jdbc select Title from Movies, Persons_Movies where Persons_Movies.Person_ID = (select ID frm Persons where Name = 'joop braakhekke') </call>
+
++ which director has filmed the most movies with jim carrey?
+<call>jdbc</call>
+
++ which movie was the most expensive to create
+- <call>jdbc select Title from Movies order by Budget DESC limit 1</call>
+
++ which actor has the longest movie career
+- <call>jdbc</call>
+
++ which dutch movie obtained the highest revenue
+- <call>jdbc select Title from Movies where ID = (select Movie_ID from Countries where Country='Netherlands') ORDER BY Gross DESC limit 1</call>
+
++ [*] actors [*]
+- <call>jdbc select Name from Persons, Persons_Movies where Persons.ID = Persons_Movies.Person_ID and Role_ID = 1 limit 10</call>
+
++ [*] directors [*]
+- <call>jdbc select Name from Persons, Persons_Movies where Persons.ID = Persons_Movies.Person_ID and Role_ID = 2  limit 10</call>
+
++ [*] movies [*]
+- <call>jdbc select Title from Movies limit 10</call>
+
++ [*] plot [*]
+- There it is! 
+^ <call>system rscript Chatbot/resources/R/plot.R</call>
+^ <call>send photo rplot.jpg The graph produced by R</call>
+
+// Substitutions
+! sub i'm     = i am
+! sub i'd     = i would
+! sub i've    = i have
+! sub i'll    = i will
+! sub don't   = do not
+! sub isn't   = is not
+! sub you'd   = you would
+! sub you're  = you are
+! sub you've  = you have
+! sub you'll  = you will
+! sub what's  = what is
+! sub whats   = what is
+! sub what're = what are
+! sub what've = what have
+! sub what'll = what will
+! sub who's   = who is
