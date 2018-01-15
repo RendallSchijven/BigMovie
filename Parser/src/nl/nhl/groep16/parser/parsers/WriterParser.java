@@ -12,7 +12,7 @@ public class WriterParser implements ParserInterface{
 
     public WriterParser() {
         this.writerRegex = Pattern.compile("^(.*,.*)\\t");
-        this.movieRegex = Pattern.compile("\\t+(\\w.*)");
+        this.movieRegex = Pattern.compile("\\t+(.*?)  ");
     }
 
     @SuppressWarnings("Duplicates")
