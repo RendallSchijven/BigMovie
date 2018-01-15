@@ -9,7 +9,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class BioParser implements ParserInterface {
-    String regex = "^DB:\\s(\\d{1,2}\\s\\w+\\s\\d{4})";
+
+    private String regex = "^DB:\\s(\\d{1,2}\\s\\w+\\s\\d{4})";
 
 
     private final Pattern birthDayRegex;
