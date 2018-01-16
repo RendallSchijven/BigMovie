@@ -11,8 +11,8 @@ public class ActorParser implements ParserInterface{
     private String currentActor;
 
     public ActorParser() {
-        this.actorRegex = Pattern.compile("^(.*,.*[^\\t])\\t");
-        this.movieRegex = Pattern.compile("\\t+(\\w.*)");
+        this.actorRegex = Pattern.compile("^(.*,.*)\\t");
+        this.movieRegex = Pattern.compile("\\t+([^\"]\\w.*)");
     }
 
     @Override

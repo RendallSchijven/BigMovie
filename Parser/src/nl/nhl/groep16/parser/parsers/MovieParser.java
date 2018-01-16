@@ -8,25 +8,25 @@ public class MovieParser implements ParserInterface{
     private final Pattern movieRegex;
 
     public MovieParser() {
-        this.movieRegex = Pattern.compile("^[^\"](.*?)\\t");
+        this.movieRegex = Pattern.compile("^([^\"].*?)\\t+(\\d+)?");
     }
 
     @Override
     public String[] convertLine(String line) {
 
-        String movie = extractMovie(line);
+        String[] movie = extractMovie(line);
         if (movie == null) {
             return null;
         }
-        return new String[]{movie};
+        return movie;
     }
 
-    public String extractMovie(String line) {
+    public String[] extractMovie(String line) {
         Matcher m = movieRegex.matcher(line);
         if (!m.find()) {
             return null;
         }
 
-        return m.group(0).replaceAll("\t", "");
+        return new String[]{m.group(1), m.group(2)};
     }
 }
