@@ -27,7 +27,7 @@
 - <call>jdbc SELECT Title FROM Movies WHERE rating > 8.5 AND duration IS NOT NULL ORDER BY duration ASC LIMIT 1;</call>
 
 + in which movies does joop braakhekke play
-- <call>jdbc select Title from Movies, Persons_Movies where Persons_Movies.Person_ID = (select ID frm Persons where Name = 'joop braakhekke') </call>
+- <call>jdbc select Title from Movies, Persons_Movies where Persons_Movies.Person_ID = (select ID from Persons where Name = 'joop braakhekke') </call>
 
 + which director has filmed the most movies with jim carrey?
 <call>jdbc</call>
