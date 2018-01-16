@@ -27,25 +27,22 @@ public class Main {
         }
 
         ArrayList<ParserReader> parseReadersList = new ArrayList<ParserReader>();
-//
-//        boolean linesArg;
-//        int amountOfLinesToParse;
+
+        boolean linesArg;
+        int amountOfLinesToParse;
         // String outputLocation = new File(" ").getAbsolutePath();
         // outputLocation = outputLocation.replaceAll("\\s+$", "");
 
         boolean tl = false;
         // Process the input arguments
-        for (int i = 0; i < args.length; i++)
-        {
+        for (int i = 0; i < args.length; i++) {
             if (args[i].equals("-l")) {
                 linesArg = true;
                 tl = true;
-            }
-            else if (tl == true) {
+            } else if (tl == true) {
                 amountOfLinesToParse = Integer.parseInt(args[i].toString());
                 tl = false;
-            }
-            else {
+            } else {
                 ParserReader pr = new ParserReader(args[i]);
                 parseReadersList.add(pr);
             }
@@ -55,7 +52,7 @@ public class Main {
         for (ParserReader parser : parseReadersList) {
             parser.start();
         }
-
+    }
 
 //=======================================
 //         Old non-threaded version
@@ -79,7 +76,7 @@ public class Main {
 //        long endTime = System.nanoTime();
 //        long time = TimeUnit.SECONDS.convert((endTime - startTime), TimeUnit.NANOSECONDS);
 //        System.out.println("Done\nTime: " + time);
-    }
+//    }
 
     static private void printHelp() {
         System.out.println("Parser: ./parser movies.list mpaa-rating.list -l 50 -o outputDir/\n\targuments:\n\t-l\tamount of lines to parse");
