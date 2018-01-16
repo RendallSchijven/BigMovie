@@ -24,7 +24,7 @@
 - Not sure I got that. Type /help for some example questions.
 
 + what is the shortest movie with a rating higher then 8.5
-- <call>jdbc select Title from Movies where rating > 8.5 AND duration = smallest?</call>
+- <call>jdbc SELECT Title FROM Movies WHERE rating > 8.5 AND duration IS NOT NULL ORDER BY duration ASC LIMIT 1;</call>
 
 + in which movies does joop braakhekke play
 - <call>jdbc select Title from Movies, Persons_Movies where Persons_Movies.Person_ID = (select ID frm Persons where Name = 'joop braakhekke') </call>
@@ -41,14 +41,8 @@
 + which dutch movie obtained the highest revenue
 - <call>jdbc select Title from Movies where ID = (select Movie_ID from Countries where Country='Netherlands') ORDER BY Gross DESC limit 1</call>
 
-+ [*] actors [*]
-- <call>jdbc select Name from Persons, Persons_Movies where Persons.ID = Persons_Movies.Person_ID and Role_ID = 1 limit 10</call>
-
-+ [*] directors [*]
-- <call>jdbc select Name from Persons, Persons_Movies where Persons.ID = Persons_Movies.Person_ID and Role_ID = 2  limit 10</call>
-
-+ [*] movies [*]
-- <call>jdbc select Title from Movies limit 10</call>
++ ik wil _
+-<call>system rscript Chatbot/resources/R/Visualization2.R <star1><call>
 
 + [*] plot [*]
 - There it is! 

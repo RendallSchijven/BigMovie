@@ -6,9 +6,11 @@
 #install.packages("RMySQL")
 library(RMySQL)
 
+args = commandArgs(trainingOnly=TRUE)
+
 mydb <- dbConnect(MySQL(), dbname="NickyBot", user="Riley", password="jayden", host="hiddevanranden.nl")
 
-values <- dbGetQuery(mydb, "select ReleaseDate as years, count(*) as freq from Movies, Countries where Countries.Name = 'Zimbabwe' group by Countries.ReleaseDate ASC")
+values <- dbGetQuery(mydb, "select ReleaseDate as years, count(*) as freq from ReleaseDates, Countries, Movies_Countries where Countries.ID = Movies_Countries.Country_ID AND Countries.Country = 'USA' group by ReleaseDates.ReleaseDate ASC")
 
 invisible(jpeg('MoviesYear.jpg'))
 barplot(values$freq, names.arg = values$years, horiz=FALSE, cex.names=0.5)
