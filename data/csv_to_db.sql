@@ -27,6 +27,7 @@ CREATE TABLE Movies (
   `ID` int(11) NOT NULL,
   `Title` varchar(512) NOT NULL,
   `Plot` longtext,
+  `ReleaseYear` int(4) DEFAULT NULL,
   `Rating` float DEFAULT NULL,
   `Votes` int(11) DEFAULT NULL,
   `MPAA` varchar(20) DEFAULT NULL,
@@ -85,7 +86,7 @@ ALTER TABLE Keywords
 
 ALTER TABLE Movies
   ADD PRIMARY KEY (`ID`),
-  ADD KEY `Title` (`Title`,`Rating`,`Votes`,`MPAA`,`Budget`,`duration`);
+  ADD KEY `Title` (`Title`,`ReleaseYear`,`Rating`,`Votes`,`MPAA`,`Budget`,`duration`);
 
 ALTER TABLE Movies_Countries
   ADD PRIMARY KEY (`Movie_ID`,`Country_ID`),
@@ -101,7 +102,7 @@ ALTER TABLE Movies_Keywords
 
 ALTER TABLE Persons
   ADD PRIMARY KEY (`ID`),
-  ADD KEY `Name` (`Name`);
+  ADD UNIQUE KEY `Name` (`Name`) USING BTREE;
 
 ALTER TABLE Persons_Movies
   ADD KEY `Movie_ID` (`Movie_ID`,`Person_ID`,`Role`),
@@ -153,7 +154,8 @@ ALTER TABLE ReleaseDates
 /* Create temporary tables */
 
 CREATE TEMPORARY TABLE movies_temp (
-  `Name` VARCHAR(512) NOT NULL
+  `Name` VARCHAR(512),
+  `releaseYear` INT(4)
 );
 
 CREATE TEMPORARY TABLE genres_temp (
@@ -300,7 +302,6 @@ LOAD DATA INFILE '/var/lib/mysql-files/countries.list.csv' INTO TABLE countries_
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
-
 /* Add indexes to temp tables */
 
 ALTER TABLE `movies_temp`
@@ -363,10 +364,11 @@ INSERT INTO Keywords (Keyword)
 
 /* Fill Movies */
 
-INSERT INTO Movies (Title, Plot, Rating, Votes, MPAA, Budget, Duration)
+INSERT INTO Movies (Title, Plot, ReleaseYear, Rating, Votes, MPAA, Budget, Duration)
   (SELECT
      movies_temp.name,
      plot_temp.plot,
+     movies_temp.releaseYear,
      ratings_temp.rating,
      ratings_temp.votes,
      mpaa_temp.mpaa,
@@ -381,21 +383,23 @@ INSERT INTO Movies (Title, Plot, Rating, Votes, MPAA, Budget, Duration)
 /* Fill Persons */
 
 INSERT INTO Persons(Name, Sex, BirthDay)
-  SELECT name, sex, biographies_temp.birthdate FROM (
-    SELECT name, "Male" AS sex FROM actors_temp
-    UNION
-    SELECT name, "Female" AS sex FROM actresses_temp
-    UNION
-    SELECT name, NULL AS sex FROM producers_temp
-    UNION
-    SELECT name, NULL AS sex FROM writers_temp
-    UNION
-    SELECT name, NULL AS sex FROM editors_temp
-    UNION
-    SELECT name, NULL AS sex FROM directors_temp
-  ) AS PersonsTemp
-    LEFT JOIN biographies_temp ON PersonsTemp.name = biographies_temp.actor
-  GROUP BY name;
+    SELECT name, "Male" AS sex, biographies_temp.birthdate AS birthdate FROM actors_temp
+      LEFT JOIN biographies_temp ON name = biographies_temp.actor;
+INSERT IGNORE INTO Persons(Name, Sex, BirthDay)
+    SELECT name, "Female" AS sex, biographies_temp.birthdate AS birthdate FROM actresses_temp
+      LEFT JOIN biographies_temp ON name = biographies_temp.actor;
+INSERT IGNORE INTO Persons(Name, BirthDay)
+    SELECT name, biographies_temp.birthdate FROM producers_temp
+      LEFT JOIN biographies_temp ON name = biographies_temp.actor;
+INSERT IGNORE INTO Persons(Name, BirthDay)
+    SELECT name, biographies_temp.birthdate FROM writers_temp
+      LEFT JOIN biographies_temp ON name = biographies_temp.actor;
+INSERT IGNORE INTO Persons(Name, BirthDay)
+    SELECT name, biographies_temp.birthdate FROM editors_temp
+      LEFT JOIN biographies_temp ON name = biographies_temp.actor;
+INSERT IGNORE INTO Persons(Name, BirthDay)
+    SELECT name, biographies_temp.birthdate FROM directors_temp
+      LEFT JOIN biographies_temp ON name = biographies_temp.actor;
 
 /* Fill Countries */
 
