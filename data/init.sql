@@ -26,6 +26,7 @@ CREATE TABLE `Movies` (
   `Title` varchar(200) NOT NULL,
   `Plot` longtext NOT NULL,
   `Rating` float NOT NULL,
+  `Votes` int(11) NOT NULL,
   `MPAA` varchar(20) NOT NULL,
   `Budget` int(11) NOT NULL,
   `Gross` int(11) NOT NULL
@@ -44,7 +45,7 @@ CREATE TABLE `Movies_Keywords` (
 CREATE TABLE `Persons` (
   `ID` int(11) NOT NULL,
   `Name` varchar(200) NOT NULL,
-  `BirthDay` date NOT NULL,
+  `BirthDay` date,
   `Sex` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -56,7 +57,7 @@ CREATE TABLE `Persons_Movies` (
 
 CREATE TABLE `Roles` (
   `ID` int(11) NOT NULL,
-  `Role` varchar(20) NOT NULL
+  `Role` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 ALTER TABLE `Countries`
