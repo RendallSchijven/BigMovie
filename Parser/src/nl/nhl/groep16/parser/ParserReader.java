@@ -65,7 +65,13 @@ public class ParserReader extends Thread{
         String runFilePath = filePath;
         Appendable out = System.out;
         try {
-            out = new FileWriter(filePath + ".csv");
+
+            String string = filePath;
+            String[] parts = string.split("/");
+            String name = parts[parts.length-1];
+            String outLocation = "out/" + name;
+
+            out = new FileWriter("./out/" + name.toString() + ".csv");
             CSVPrinter csvPrinter = new CSVPrinter(out, CSVFormat.MYSQL);
 
             if (Main.linesArg == true) {
