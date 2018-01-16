@@ -1,0 +1,1 @@
+sed -i 's@/home/zroya/Documents/School/Jaar 2/Periode 2/Project Big Data/BigMovie/data/@data/@g' csv_to_db.sql

@@ -11,10 +11,11 @@ require "config.php";
 try 
 {
 	$connection = new PDO("mysql:host=$host", $username, $password, $options);
-	$sql = file_get_contents("data/init.sql");
+	echo "running $argv[1]...\n";
+	$sql = file_get_contents($argv[1]);
 	$connection->exec($sql);
 	
-	echo "Database and table users created successfully.";
+	echo "Sql script ran successfully.\n";
 }
 catch(PDOException $error)
 {
