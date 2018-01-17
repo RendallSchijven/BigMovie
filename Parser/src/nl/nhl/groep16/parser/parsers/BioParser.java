@@ -14,6 +14,7 @@ public class BioParser implements ParserInterface {
 
 
     private final Pattern birthDayRegex;
+    private final Pattern deathDayRegex;
     private final Pattern personRegex;
     DateFormat formatter;
     DateFormat formatterFinal;
@@ -22,6 +23,7 @@ public class BioParser implements ParserInterface {
 
     public BioParser() {
         this.birthDayRegex = Pattern.compile("^DB:\\s(\\d{1,2}\\s\\w+\\s\\d{4})");
+        this.deathDayRegex = Pattern.compile("^DD:\\s(\\d{1,2}\\s\\w+\\s\\d{4})");
         this.personRegex = Pattern.compile("^NM:\\s(.[^\"].*)");
         formatter = new SimpleDateFormat("dd MMMM yyyy", Locale.US);
         formatterFinal = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
@@ -36,16 +38,25 @@ public class BioParser implements ParserInterface {
             currentPerson = person;
         } else {
             String birthDayString = extractBirthDay(line);
+            String birthDay = null;
             if (birthDayString != null) {
-                Date birthDay = null;
                 try {
-                    birthDay = formatter.parse(birthDayString);
+                    birthDay = formatterFinal.format(formatter.parse(birthDayString));
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-
-                return new String[]{currentPerson, formatterFinal.format(birthDay)};
             }
+
+            String deathDayString = extractDeathDay(line);
+            String deathDay = null;
+            if (deathDayString != null) {
+                try {
+                    deathDay = formatterFinal.format(formatter.parse(deathDayString));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+            return new String[]{currentPerson, birthDay, deathDay};
         }
         return null;
     }
@@ -61,6 +72,15 @@ public class BioParser implements ParserInterface {
 
     public String extractBirthDay(String line) {
         Matcher m = birthDayRegex.matcher(line);
+        if (!m.find()) {
+            return null;
+        }
+
+        return m.group(1);
+    }
+
+    public String extractDeathDay(String line) {
+        Matcher m = deathDayRegex.matcher(line);
         if (!m.find()) {
             return null;
         }
