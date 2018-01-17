@@ -1,12 +1,14 @@
 # vragen
 
 SQL
-- Wat is de kortste film met een waardering van 8.5 of hoger?
-- In welke films speelde Joop Braakhekke? (Variable naam?)
++ Wat is de kortste film met een waardering van 8.5 of hoger?
+- In welke films speelde "acteur"
 - Welke regisseur heeft de meeste films met Jim Carrey in de hoofdrol geregisseerd?
 - Welke film is het duurst geweest om op te nemen? Bonus: houd hierbij rekening met de inflatie. 
 - Welke acteur (m/v) heeft de langste filmcarrière? (dus geen series)
-- Welke Nederlandse film heeft het meeste opgebracht in de bioscoop?
+- In welk jaar tussen 1990 en nu zijn de meeste films met het woord ‘beer’ in de titel 
+  geproduceerd.
+- Wat is de meest voorkomende genre?
 
 Visualazation
 - Maak een kaart (b.v. google maps / openstreetview) met landen waar een flim speelt. 
@@ -21,7 +23,7 @@ R
 - Maak een model waaruit je de MPAA-categorie (zie ook vraag C2) afleidt uit de tekst van 
   de plot (NB: hier wordt niet een grafische plot bedoeld, maar de plot van de film). 
   Valideer het model.
-- Ga na met R of er een verband is tussen de kosten van een film en de lengte ervan. 
++ Ga na met R of er een verband is tussen de kosten van een film en de lengte ervan. 
   Analyseer dit op een vergelijkbare manier als in vraag C4. 
 - Er wordt vaak gezegd dat naarmate actrices ouder zijn zij moeilijker een rol krijgen. Ga 
   (met R) na of dat zo is. Je zou bijvoorbeeld een lineair regressiemodel kunnen maken 
