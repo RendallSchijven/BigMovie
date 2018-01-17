@@ -4,6 +4,9 @@ import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
+import javax.script.ScriptException;
+import java.io.FileNotFoundException;
+
 /**
  *
  * @author Groep 16
@@ -12,7 +15,7 @@ public class Main {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ScriptException {
         // Initialize Api Context
         ApiContextInitializer.init();
 
