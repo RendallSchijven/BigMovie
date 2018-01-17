@@ -23,3 +23,10 @@ careerLength <- dbGetQuery(mydb, "SELECT Name, (MAX(m.ReleaseYear) - MIN(m.Relea
 movies <- dbGetQuery(mydb, paste("select Title from Movies, Persons_Movies where Persons_Movies.Person_ID = (" ,id, ")", sep=""))
 
 dbDisconnect(mydb)
+
+plot(movies)
+cor(movies)
+
+#Maak een lineair regressie model van movies
+movielm = lm(Budget ~ Duration, data=movies)
+summary(movielm)

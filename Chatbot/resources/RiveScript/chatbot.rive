@@ -23,27 +23,53 @@
 + *
 - Not sure I got that. Type /help for some example questions.
 
+//Plain SQL questions
 + what is the shortest movie with a rating higher then 8.5
 - <call>jdbc SELECT Title FROM Movies WHERE rating > 8.5 AND duration IS NOT NULL ORDER BY duration ASC LIMIT 1;</call>
 
-+ in which movies does joop braakhekke play
-- <call>jdbc select Title from Movies, Persons_Movies where Persons_Movies.Person_ID = (select ID from Persons where Name = 'joop braakhekke') </call>
++ in what year between 1990 and 2018 are the most films with the word 'beer' in the title produced
+- <call>jdbc SELECT ReleaseYear as Year, COUNT(*) as Amount of beer FROM Movies where Title LIKE '%beer%' GROUP BY ReleaseYear ORDER BY ReleaseYear ASC</call>
 
-+ which director has filmed the most movies with jim carrey?
-<call>jdbc</call>
++ in which movies does * play
+- <call>jdbc SELECT Title from Movies, Persons_Movies WHERE Persons_Movies.Person_ID = (SELECT ID FROM Persons WHERE Name LIKE '%<star2>% %<star1>%') </call>
+
++ which director has filmed the most movies with *?
+<call>jdbc </call>
+
+           SELECT Name FROM Persons WHERE ID = (SELECT Person_ID, (MAX(COUNT(*)) FROM Person_Movies WHERE Role = 'director' AND Movie_ID = (SELECT Movie_ID FROM Persons_Movies WHERE Person_ID = (SELECT ID FROM Persons WHERE Name LIKE '%carrey% %jim%')))
+
+           SELECT DISTINCT Name FROM Persons WHERE ID = (SELECT Person_ID FROM Person_Movies WHERE Role = 'director')
+           SELECT pm.Movie_ID FROM Persons_Movies AS pm
+           LEFT JOIN Persons_Movies AS pms ON pm.Movie_ID = pms.Movie_ID
+                                           AND pm.Person_ID = (SELECT ID FROM Persons WHERE Name LIKE '%carrey% %jim%')
+                                           AND pm.Role = 'actor'
+                                           AND pms.Role = 'producer'
+
+           SELECT Name FROM Persons WHERE ID = ( SELECT pm.Person_ID as director, pms.Person_ID as actor
+                                                 FROM Person_Movies AS PM
+                                                 INNER JOIN Person_Movies AS PMS ON pm.Person_ID = pms.ID)
+                                                 LIMIT 1
+
+            SELECT p.Name From Persons AS p
+            LEFT JOIN Persons_Movies AS pm ON p.ID = pm.Person_ID
+
+
 
 + which movie was the most expensive to create
-- <call>jdbc select Title from Movies order by Budget DESC limit 1</call>
+- <call>jdbc SELECT Title from Movies ORDER BY Budget DESC limit 1</call>
 
 + which actor has the longest movie career
 - <call>jdbc</call>
 
-+ which dutch movie obtained the highest revenue
-- <call>jdbc select Title from Movies where ID = (select Movie_ID from Countries where Country='Netherlands') ORDER BY Gross DESC limit 1</call>
++ what are the most occuring genres?
+- <call>jdbc SELECT GenreName FROM Genres WHERE ID = (SELECT COUNT(Genre_ID) FROM Movies_Genres GROUP BY Genre_ID) GROUP BY GenreName</call>
 
+
+// Visualisation questions
 + ik wil _
 -<call>system rscript Chatbot/resources/R/Visualization2.R <star1><call>
 
+// R Questions
 + [*] plot [*]
 - There it is! 
 ^ <call>system rscript Chatbot/resources/R/plot.R</call>
