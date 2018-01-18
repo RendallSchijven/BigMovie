@@ -6,9 +6,9 @@ SQL
 - Welke regisseur heeft de meeste films met Jim Carrey in de hoofdrol geregisseerd?
 - Welke film is het duurst geweest om op te nemen? Bonus: houd hierbij rekening met de inflatie. 
 - Welke acteur (m/v) heeft de langste filmcarrière? (dus geen series)
-- In welk jaar tussen 1990 en nu zijn de meeste films met het woord ‘beer’ in de titel 
++ In welk jaar tussen 1990 en nu zijn de meeste films met het woord ‘beer’ in de titel 
   geproduceerd.
-- Wat is de meest voorkomende genre?
++ Wat zijn de 5 meest voorkomende genre?
 
 Visualazation
 - Maak een kaart (b.v. google maps / openstreetview) met landen waar een flim speelt. 

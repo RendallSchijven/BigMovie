@@ -28,10 +28,16 @@
 - <call>jdbc SELECT Title FROM Movies WHERE rating > 8.5 AND duration IS NOT NULL ORDER BY duration ASC LIMIT 1;</call>
 
 + in what year between 1990 and 2018 are the most films with the word 'beer' in the title produced
-- <call>jdbc SELECT ReleaseYear as Year, COUNT(*) as Amount of beer FROM Movies where Title LIKE '%beer%' GROUP BY ReleaseYear ORDER BY ReleaseYear ASC</call>
+- <call>jdbc SELECT ReleaseYear as Year, COUNT(*) as Amount_of_beer
+             FROM Movies where Title LIKE '%beer%'
+             AND ReleaseYear > 1989 AND ReleaseYear < 2019
+             GROUP BY ReleaseYear
+             ORDER BY ReleaseYear ASC;</call>
 
 + in which movies does * play
-- <call>jdbc SELECT Title from Movies, Persons_Movies WHERE Persons_Movies.Person_ID = (SELECT ID FROM Persons WHERE Name LIKE '%<star2>% %<star1>%') </call>
+- <call>jdbc SELECT Title from Movies, Persons_Movies
+             WHERE Persons_Movies.Person_ID =
+             (SELECT ID FROM Persons WHERE Name LIKE '%<star2>% %<star1>%'); </call>
 
 + which director has filmed the most movies with *?
 <call>jdbc </call>
@@ -62,7 +68,11 @@
 - <call>jdbc</call>
 
 + what are the most occuring genres?
-- <call>jdbc SELECT GenreName FROM Genres WHERE ID = (SELECT COUNT(Genre_ID) FROM Movies_Genres GROUP BY Genre_ID) GROUP BY GenreName</call>
+- <call>jdbc SELECT g.GenreName AS Genre, COUNT(mg.Genre_ID) AS Movies FROM Movies_Genres AS mg
+             LEFT JOIN Genres AS g ON g.ID = mg.Genre_ID
+             GROUP BY g.ID
+             ORDER BY Movies DESC
+             LIMIT 5; </call>
 
 
 // Visualisation questions
