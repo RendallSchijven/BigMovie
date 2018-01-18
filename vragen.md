@@ -20,6 +20,7 @@ Visualazation
   geweld etc. Zoek zelf naar een goede manier om dit te presenteren. 
 - 2. Geef het aantal films dat in een land gemaakt is weer in de tijd. Dwz maak een grafiek 
   waarin op de x-as het jaar staat en op de y-as het aantal gemaakte films. Maak het land variabel.
+- 3. Geef een chart van de verdeling van genres
 
 R
 - Op IMDB staat onder meer een lijst van MPAA-ratings (de Amerikaanse versie van de 
