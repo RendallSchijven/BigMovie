@@ -24,21 +24,20 @@
 - Not sure I got that. Type /help for some example questions.
 
 //Plain SQL questions
-+ what is the shortest movie with a rating higher then 8.5
+
+//Question 1
++ shortest movie highest rating
 - <call>jdbc SELECT Title FROM Movies WHERE rating > 8.5 AND duration IS NOT NULL ORDER BY duration ASC LIMIT 1;</call>
 
-+ in what year between 1990 and 2018 are the most films with the word 'beer' in the title produced
-- <call>jdbc SELECT ReleaseYear as Year, COUNT(*) as Amount_of_beer
-             FROM Movies where Title LIKE '%beer%'
-             AND ReleaseYear > 1989 AND ReleaseYear < 2019
-             GROUP BY ReleaseYear
-             ORDER BY ReleaseYear ASC;</call>
+//Question 2
++ in what year between 1990 and 2018 are the most films with the word beer in the title produced
+- <call>jdbc SELECT ReleaseYear as Year FROM Movies where Title LIKE '%beer%' AND ReleaseYear > 1989 AND ReleaseYear < 2019 GROUP BY ReleaseYear ORDER BY COUNT(*) DESC LIMIT 1;</call>
 
+//Question 3
 + in which movies does * play
-- <call>jdbc SELECT Title from Movies, Persons_Movies
-             WHERE Persons_Movies.Person_ID =
-             (SELECT ID FROM Persons WHERE Name LIKE '%<star2>% %<star1>%'); </call>
+- <call>jdbc SELECT Title from Movies, Persons_Movies WHERE Persons_Movies.Person_ID = (SELECT ID FROM Persons WHERE Name LIKE '%<star2>% %<star1>%'); </call>
 
+//Question 4
 + which director has filmed the most movies with *?
 <call>jdbc </call>
 
@@ -60,20 +59,33 @@
             LEFT JOIN Persons_Movies AS pm ON p.ID = pm.Person_ID
 
 
-
+//Question 5
 + which movie was the most expensive to create
 - <call>jdbc SELECT Title from Movies ORDER BY Budget DESC limit 1</call>
 
+//Question 6
 + which actor has the longest movie career
 - <call>jdbc</call>
 
-+ what are the most occuring genres?
-- <call>jdbc SELECT g.GenreName AS Genre, COUNT(mg.Genre_ID) AS Movies FROM Movies_Genres AS mg
-             LEFT JOIN Genres AS g ON g.ID = mg.Genre_ID
-             GROUP BY g.ID
-             ORDER BY Movies DESC
-             LIMIT 5; </call>
+//Question 7
++ what are the 5 most occuring genres?
+-<call>jdbc SELECT g.GenreName AS Genre, COUNT(mg.Genre_ID) AS Movies FROM Movies_Genres AS mg LEFT JOIN Genres AS g ON g.ID = mg.Genre_ID GROUP BY g.ID ORDER BY Movies DESC LIMIT 5; </call>
 
+//Question 8
++ what is the most occuring genre in _
+- <call>jdbc SELECT c.Country AS Country, COUNT(mg.Movie_ID) FROM Movies_Genres AS mg LEFT JOIN Genres AS g ON g.ID = mg.Genre_ID LEFT JOIN Movies_Countries AS mc ON mg.Movie_ID = mc.Movie_ID LEFT JOIN Countries as c ON c.ID = mc.Country_ID GROUP BY Country;</call>
+
+//Question 9
++ which 5 countries made the most movies
+- <call>jdbc SELECT c.Country, COUNT(mc.Movie_ID) AS Movies FROM Movies_Countries as mc LEFT JOIN Countries AS c ON c.ID = mc.Country_ID GROUP BY Country ORDER BY Movies DESC LIMIT 5; </call>
+
+//Question 10
++ what are the top rated movies?
+- <call>jdbc SELECT DISTINCT Title, Rating, Votes FROM `Movies` WHERE Votes > 100000 AND Title NOT LIKE '%(VG)%' ORDER BY Rating DESC, Votes DESC LIMIT 5;</call>
+
+//Question 11
++ who is the oldest living actor
+- <call>jdbc SELECT Name FROM Persons WHERE MIN(BirthDay) AND DeathDay IS NULL;
 
 // Visualisation questions
 + ik wil _
@@ -81,7 +93,7 @@
 
 // R Questions
 + [*] plot [*]
-- There it is! 
+- There it is!
 ^ <call>system rscript Chatbot/resources/R/plot.R</call>
 ^ <call>send photo rplot.jpg The graph produced by R</call>
 
