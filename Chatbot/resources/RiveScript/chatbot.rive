@@ -84,6 +84,13 @@
 + in which movies does * play
 - <call>jdbc SELECT Title from Movies, Persons_Movies WHERE Persons_Movies.Person_ID = (SELECT ID FROM Persons WHERE Name LIKE '%<star2>% %<star1>%'); </call>
 
+            SELECT Title FROM Movies JOIN Persons_Movies
+            ON Persons_Movies.Person_ID = (SELECT ID FROM Persons WHERE Name LIKE 'carrey');
+
+            SELECT Title FROM Movies
+            INNER JOIN Persons ON Persons.Name LIKE '%carrey%'
+            INNER JOIN Persons_Movies ON Persons_Movies.Person_ID = Persons.ID;
+
 //Question 4
 + which director has filmed the most movies with *?
 <call>jdbc </call>
