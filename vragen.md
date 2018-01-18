@@ -4,14 +4,14 @@ SQL
 + 1. Wat is de kortste film met een waardering van 8.5 of hoger?
 + 2. In welk jaar tussen 1990 en nu zijn de meeste films met het woord ‘beer’ in de titel 
      geproduceerd?
-- 3. In welke films speelde "acteur"?
-- 4. Welke regisseur heeft de meeste films met Jim Carrey in de hoofdrol geregisseerd?
-- 5. Welke film is het duurst geweest om op te nemen? Bonus: houd hierbij rekening met de inflatie. 
++ 3. In welke films speelde "acteur"?
++ 4. Welke regisseur heeft de meeste films met Jim Carrey in de hoofdrol geregisseerd?
++ 5. Welke film is het duurst geweest om op te nemen? Bonus: houd hierbij rekening met de inflatie. 
 - 6. Welke acteur (m/v) heeft de langste filmcarrière? (dus geen series)
 + 7. Wat zijn de 5 meest voorkomende genre?
-- 8. Wat is de meest voorkomende genre in "land"?
++ 8. Wat is de meest voorkomende genre in "land"?
 + 9. Welke 5 landen komen de meeste films vandaan?
-- 10. Wat is de hoogst gewaardeerde film?
++ 10. Wat is de hoogst gewaardeerde film?
 - 11. Wie is de oudste nog levende acteur?
 
 Visualazation

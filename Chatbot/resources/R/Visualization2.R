@@ -19,6 +19,8 @@ values <- dbGetQuery(mydb, "SELECT ReleaseYear AS years, count(*) AS freq FROM M
                             ON mc.Country_ID = m.ID AND m.Country = 'USA'
                             GROUP BY m.ReleaseYear ASC"
 
+select Name as names, count(*) as freq from Persons, Persons_Movies where Persons.ID = 1 group by Persons.Name
+
 invisible(jpeg('MoviesYear.jpg'))
 barplot(values$freq, names.arg = values$years, horiz=FALSE, cex.names=0.5)
 invisible(dev.off())

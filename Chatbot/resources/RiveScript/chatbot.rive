@@ -81,30 +81,24 @@
 - <call>jdbc SELECT ReleaseYear as Year FROM Movies where Title LIKE '%beer%' AND ReleaseYear > 1989 AND ReleaseYear < 2019 GROUP BY ReleaseYear ORDER BY COUNT(*) DESC LIMIT 1;</call>
 
 //Question 3
-+ in which movies does * play
-- <call>jdbc SELECT Title from Movies, Persons_Movies WHERE Persons_Movies.Person_ID = (SELECT ID FROM Persons WHERE Name LIKE '%<star2>% %<star1>%'); </call>
-
-            SELECT Title FROM Movies JOIN Persons_Movies
-            ON Persons_Movies.Person_ID = (SELECT ID FROM Persons WHERE Name LIKE 'carrey');
-
-            SELECT Title FROM Movies
-            INNER JOIN Persons ON Persons.Name LIKE '%carrey%'
-            INNER JOIN Persons_Movies ON Persons_Movies.Person_ID = Persons.ID;
++ in which movies does _ _ play
+- <call>jdbc SELECT Movies.Title FROM Movies LEFT JOIN Persons_Movies ON Persons_Movies.Movie_ID = Movies.ID LEFT JOIN Persons ON Persons_Movies.Person_ID = Persons.ID WHERE Persons.Name LIKE '%<star2>, <star1>%'); </call>
 
 //Question 4
 + which director has filmed the most movies with *?
-<call>jdbc </call>
-
-            SELECT Name FROM Persons WHERE ID = (SELECT Person_ID, (MAX(COUNT(*)) FROM Person_Movies WHERE Role = 'director' AND Movie_ID = (SELECT Movie_ID FROM Persons_Movies WHERE Person_ID = (SELECT ID FROM Persons WHERE Name LIKE '%carrey% %jim%')))
-
-            SELECT p.Name FROM Persons_Movies AS pm
-            LEFT JOIN Persons_Movies AS pmm ON p.ID = pm.Person_ID AND p.Name LIKE '%carrey% %jim%' AND pm.Role = 'actor'
-            LEFT JOIN Persons AS p ON pm.Movie_ID = pmm.Movie_ID AND pm.Role = 'director'
-
+<call>jdbc SELECT p.Name, COUNT(*) AS Movies FROM Persons AS p
+           LEFT JOIN Persons_Movies AS pm ON pm.Person_ID = p.ID
+           WHERE pm.Role = 'director' AND pm.Movie_ID IN (SELECT pm.Movie_ID FROM Persons_Movies AS pm
+           											  LEFT JOIN Persons AS p ON p.ID = pm.Person_ID
+           											  WHERE p.Name LIKE '%Carrey, Jim%' AND pm.Role = 'actor')
+           GROUP BY p.Name
+           ORDER BY Movies DESC
+           LIMIT 1;
+</call>
 
 //Question 5
 + which movie was the most expensive to create
-- <call>jdbc SELECT Title from Movies ORDER BY Budget DESC limit 1</call>
+- <call>jdbc SELECT Title from Movies ORDER BY Budget DESC LIMIT 1;</call>
 
 //Question 6
 + which actor has the longest movie career
@@ -115,8 +109,8 @@
 -<call>jdbc SELECT g.GenreName AS Genre, COUNT(mg.Genre_ID) AS Movies FROM Movies_Genres AS mg LEFT JOIN Genres AS g ON g.ID = mg.Genre_ID GROUP BY g.ID ORDER BY Movies DESC LIMIT 5; </call>
 
 //Question 8
-+ what is the most occuring genre in _
-- <call>jdbc SELECT c.Country AS Country, COUNT(mg.Movie_ID) FROM Movies_Genres AS mg LEFT JOIN Genres AS g ON g.ID = mg.Genre_ID LEFT JOIN Movies_Countries AS mc ON mg.Movie_ID = mc.Movie_ID LEFT JOIN Countries as c ON c.ID = mc.Country_ID GROUP BY Country;</call>
++ what are the most occuring genres in _
+- <call>jdbc SELECT g.GenreName AS Genre, COUNT(mg.Genre_ID) AS Movies FROM Movies_Genres AS mg LEFT JOIN Genres AS g ON g.ID = mg.Genre_ID LEFT JOIN Movies_Countries as mc ON mc.Movie_ID = mg.Movie_ID LEFT JOIN Countries AS c ON c.ID = mc.Country_ID WHERE c.Country LIKE '%<star1>%' GROUP BY g.ID ORDER BY Movies DESC LIMIT 5;</call>
 
 //Question 9
 + which 5 countries made the most movies
