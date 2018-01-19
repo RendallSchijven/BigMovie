@@ -215,7 +215,7 @@ CREATE TEMPORARY TABLE mpaa_temp (
 
 CREATE TEMPORARY TABLE plot_temp (
   `movie` VARCHAR(512),
-  `plot`  LONGTEXT
+  `plot`  VARCHAR(32768)
 )ENGINE = MEMORY;
 
 CREATE TEMPORARY TABLE ratings_temp (
