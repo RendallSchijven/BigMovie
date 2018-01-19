@@ -12,17 +12,17 @@ USE NickyBot;
 CREATE TABLE Countries (
   `ID` int(11) NOT NULL,
   `Country` varchar(128) NOT NULL
-) ENGINE=InnoDB;
+) ENGINE=MEMORY;
 
 CREATE TABLE Genres (
   `ID` int(11) NOT NULL,
   `GenreName` varchar(200) NOT NULL
-) ENGINE=InnoDB;
+) ENGINE=MEMORY;
 
 CREATE TABLE Keywords (
   `ID` int(11) NOT NULL,
   `Keyword` varchar(200) NOT NULL
-) ENGINE=InnoDB;
+) ENGINE=MEMORY;
 
 CREATE TABLE Movies (
   `ID` int(11) NOT NULL,
@@ -35,22 +35,22 @@ CREATE TABLE Movies (
   `Currency` varchar(16) DEFAULT NULL,
   `Budget` BIGINT DEFAULT NULL,
   `Duration` int(11) DEFAULT NULL
-) ENGINE=InnoDB;
+) ENGINE=MEMORY;
 
 CREATE TABLE Movies_Countries (
   `Movie_ID` int(11) NOT NULL,
   `Country_ID` int(11) NOT NULL
-) ENGINE=InnoDB;
+) ENGINE=MEMORY;
 
 CREATE TABLE Movies_Genres (
   `Movie_ID` int(11) NOT NULL,
   `Genre_ID` int(11) NOT NULL
-) ENGINE=InnoDB;
+) ENGINE=MEMORY;
 
 CREATE TABLE Movies_Keywords (
   `Movie_ID` int(11) NOT NULL,
   `Keyword_ID` int(11) NOT NULL
-) ENGINE=InnoDB;
+) ENGINE=MEMORY;
 
 CREATE TABLE Persons (
   `ID` int(11) NOT NULL,
@@ -58,19 +58,19 @@ CREATE TABLE Persons (
   `BirthDay` date DEFAULT NULL,
   `DeathDay` date DEFAULT NULL,
   `Sex` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB;
+) ENGINE=MEMORY;
 
 CREATE TABLE Persons_Movies (
   `Movie_ID` int(11) NOT NULL,
   `Person_ID` int(11) NOT NULL,
   `Role` varchar(100) NOT NULL
-) ENGINE=InnoDB;
+) ENGINE=MEMORY;
 
 CREATE TABLE ReleaseDates (
   `Movie_ID` int(11) NOT NULL,
   `Country_ID` int(11) NOT NULL,
   `ReleaseDate` date NOT NULL
-) ENGINE=InnoDB;
+) ENGINE=MEMORY;
 
 /* Add indexes, PK's and FK's */
 
