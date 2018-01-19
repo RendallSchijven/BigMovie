@@ -27,7 +27,7 @@ CREATE TABLE Keywords (
 CREATE TABLE Movies (
   `ID` int(11) NOT NULL,
   `Title` varchar(512) NOT NULL,
-  `Plot` VARCHAR(17877),
+  `Plot` TEXT,
   `ReleaseYear` int(4) DEFAULT NULL,
   `Rating` float DEFAULT NULL,
   `Votes` int(11) DEFAULT NULL,
@@ -215,7 +215,7 @@ CREATE TEMPORARY TABLE mpaa_temp (
 
 CREATE TEMPORARY TABLE plot_temp (
   `movie` VARCHAR(512),
-  `plot`  VARCHAR(17877)
+  `plot`  TEXT
 );
 
 CREATE TEMPORARY TABLE ratings_temp (
