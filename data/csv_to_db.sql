@@ -83,43 +83,43 @@ ALTER TABLE Genres
   ADD UNIQUE KEY `GenreName` (`GenreName`) USING BTREE;
 
 ALTER TABLE Keywords
-  ADD PRIMARY KEY (`ID`),
-  ADD KEY `Keyword` (`Keyword`);
+  ADD PRIMARY KEY (`ID`);
+#   ADD KEY `Keyword` (`Keyword`);
 
 ALTER TABLE Movies
-  ADD PRIMARY KEY (`ID`),
-  ADD KEY `Title` (`Title`),
-  ADD KEY `ReleaseYear` (`ReleaseYear`),
-  ADD KEY `Rating` (`Rating`),
-  ADD KEY `Votes` (`Votes`),
-  ADD KEY `MPAA` (`MPAA`),
-  ADD KEY `Budget` (`Budget`),
-  ADD KEY `Duration` (`Duration`);
+  ADD PRIMARY KEY (`ID`);
+#   ADD KEY `Title` (`Title`),
+#   ADD KEY `ReleaseYear` (`ReleaseYear`),
+#   ADD KEY `Rating` (`Rating`),
+#   ADD KEY `Votes` (`Votes`),
+#   ADD KEY `MPAA` (`MPAA`),
+#   ADD KEY `Budget` (`Budget`),
+#   ADD KEY `Duration` (`Duration`);
 
 ALTER TABLE Movies_Countries
-  ADD PRIMARY KEY (`Movie_ID`,`Country_ID`),
-  ADD KEY `Country_ID` (`Country_ID`);
+  ADD PRIMARY KEY (`Movie_ID`,`Country_ID`);
+#   ADD KEY `Country_ID` (`Country_ID`);
 
-ALTER TABLE Movies_Genres
-  ADD KEY `Movie_ID` (`Movie_ID`,`Genre_ID`),
-  ADD KEY `Movies_Genres-GenreID` (`Genre_ID`);
+# ALTER TABLE Movies_Genres
+#   ADD KEY `Movie_ID` (`Movie_ID`,`Genre_ID`),
+#   ADD KEY `Movies_Genres-GenreID` (`Genre_ID`);
 
-ALTER TABLE Movies_Keywords
-  ADD KEY `Movie_ID` (`Movie_ID`,`Keyword_ID`),
-  ADD KEY `Movies_Keywords-KeywordID` (`Keyword_ID`);
+# ALTER TABLE Movies_Keywords
+#   ADD KEY `Movie_ID` (`Movie_ID`,`Keyword_ID`),
+#   ADD KEY `Movies_Keywords-KeywordID` (`Keyword_ID`);
 
 ALTER TABLE Persons
   ADD PRIMARY KEY (`ID`),
-  ADD UNIQUE KEY `Name` (`Name`) USING BTREE,
-  ADD KEY `Persons` (`BirthDay`, `DeathDay`, `Sex`);
+  ADD UNIQUE KEY `Name` (`Name`) USING BTREE;
+#   ADD KEY `Persons` (`BirthDay`, `DeathDay`, `Sex`);
 
 ALTER TABLE Persons_Movies
-  ADD UNIQUE KEY `Movie_ID` (`Role`,`Movie_ID`,`Person_ID`) USING BTREE ,
-  ADD KEY `Persons_Movies_PersonID` (`Person_ID`);
+  ADD UNIQUE KEY `Movie_ID` (`Role`,`Movie_ID`,`Person_ID`) USING BTREE;
+#   ADD KEY `Persons_Movies_PersonID` (`Person_ID`);
 
 ALTER TABLE ReleaseDates
-  ADD PRIMARY KEY (`Movie_ID`,`Country_ID`,`ReleaseDate`),
-  ADD KEY `CountryID` (`Country_ID`);
+  ADD PRIMARY KEY (`Movie_ID`,`Country_ID`,`ReleaseDate`);
+#   ADD KEY `CountryID` (`Country_ID`);
 
 /* Set AUTO_INCREMENT */
 
@@ -278,24 +278,6 @@ LOAD DATA INFILE '/var/lib/mysql-files/business.list.csv' IGNORE INTO TABLE busi
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
-ALTER TABLE `movies_temp`
-  ADD KEY `Name` (`Name`);
-
-ALTER TABLE `plot_temp`
-  ADD KEY `movie` (`movie`);
-
-ALTER TABLE `mpaa_temp`
-  ADD KEY `movie` (`movie`);
-
-ALTER TABLE `ratings_temp`
-  ADD KEY `movie` (`movie`);
-
-ALTER TABLE `runningTimes_temp`
-  ADD KEY `movie` (`movie`);
-
-ALTER TABLE `business_temp`
-  ADD KEY `movie` (`movie`);
-
 INSERT INTO Movies (Title, Plot, ReleaseYear, Rating, Votes, MPAA, Currency, Budget, Duration)
   (SELECT
      movies_temp.name,
@@ -308,7 +290,7 @@ INSERT INTO Movies (Title, Plot, ReleaseYear, Rating, Votes, MPAA, Currency, Bud
      business_temp.budget,
      runningTimes_temp.minutes
   FROM movies_temp
-     RIGHT JOIN plot_temp ON plot_temp.movie = movies_temp.name
+     LEFT JOIN plot_temp ON plot_temp.movie = movies_temp.name
      LEFT JOIN ratings_temp ON ratings_temp.movie = movies_temp.name
      LEFT JOIN mpaa_temp ON mpaa_temp.movie = movies_temp.name
      LEFT JOIN runningTimes_temp ON runningTimes_temp.movie = movies_temp.name
@@ -333,9 +315,6 @@ LOAD DATA INFILE '/var/lib/mysql-files/genres.list.csv' INTO TABLE genres_temp
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
-ALTER TABLE `genres_temp`
-  ADD KEY `movie` (`movie`);
-
 INSERT INTO Genres (GenreName)
   SELECT DISTINCT genre
   FROM genres_temp;
@@ -353,10 +332,7 @@ DROP TABLE genres_temp;
 
 LOAD DATA INFILE '/var/lib/mysql-files/keywords.list.csv' INTO TABLE keywords_temp
 FIELDS TERMINATED BY '\t'
-LINES TERMINATED BY '\n';
-
-ALTER TABLE `keywords_temp`
-  ADD KEY `movie` (`movie`);
+LINES TERMINATED BY '\n';\
 
 INSERT INTO Keywords (Keyword)
   SELECT DISTINCT keyword
@@ -384,12 +360,6 @@ LOAD DATA INFILE '/var/lib/mysql-files/actors.list.csv' INTO TABLE actors_temp
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
-ALTER TABLE `biographies_temp`
-  ADD KEY `actor` (`actor`);
-
-ALTER TABLE `actors_temp`
-  ADD KEY `movie` (`name`,`movie`);
-
 INSERT IGNORE INTO Persons(Name, Sex, BirthDay, DeathDay)
   SELECT name, "Male" AS sex, biographies_temp.birthdate, biographies_temp.deathdate AS birthdate FROM actors_temp
     LEFT JOIN biographies_temp ON actors_temp.name = biographies_temp.actor;
@@ -413,9 +383,6 @@ LOAD DATA INFILE '/var/lib/mysql-files/producers.list.csv' INTO TABLE producers_
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
-ALTER TABLE `producers_temp`
-  ADD KEY `movie` (`movie`);
-
 INSERT IGNORE INTO Persons(Name, BirthDay, DeathDay)
   SELECT name, biographies_temp.birthdate, biographies_temp.deathdate FROM producers_temp
     LEFT JOIN biographies_temp ON name = biographies_temp.actor;
@@ -425,9 +392,6 @@ DROP TABLE producers_temp;
 LOAD DATA INFILE '/var/lib/mysql-files/writers.list.csv' INTO TABLE writers_temp
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
-
-ALTER TABLE `writers_temp`
-  ADD KEY `movie` (`movie`);
 
 INSERT IGNORE INTO Persons(Name, BirthDay, DeathDay)
   SELECT name, biographies_temp.birthdate, biographies_temp.deathdate FROM writers_temp
@@ -439,9 +403,6 @@ LOAD DATA INFILE '/var/lib/mysql-files/editors.list.csv' INTO TABLE editors_temp
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
-ALTER TABLE `editors_temp`
-  ADD KEY `movie` (`movie`);
-
 INSERT IGNORE INTO Persons(Name, BirthDay, DeathDay)
   SELECT name, biographies_temp.birthdate, biographies_temp.deathdate FROM editors_temp
     LEFT JOIN biographies_temp ON name = biographies_temp.actor;
@@ -451,9 +412,6 @@ DROP TABLE editors_temp;
 LOAD DATA INFILE '/var/lib/mysql-files/directors.list.csv' INTO TABLE directors_temp
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
-
-ALTER TABLE `directors_temp`
-  ADD KEY `movie` (`movie`);
 
 INSERT IGNORE INTO Persons(Name, BirthDay, DeathDay)
   SELECT name, biographies_temp.birthdate, biographies_temp.deathdate FROM directors_temp
@@ -508,9 +466,6 @@ LOAD DATA INFILE '/var/lib/mysql-files/release-dates.list.csv' INTO TABLE releas
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
-ALTER TABLE `releaseDates_temp`
-  ADD KEY `movie` (`movie`,`country`);
-
 INSERT INTO Countries(Country)
   SELECT DISTINCT DISTINCT Country FROM releaseDates_temp;
 
@@ -528,10 +483,6 @@ DROP TABLE releaseDates_temp;
 
 LOAD DATA INFILE '/var/lib/mysql-files/countries.list.csv' INTO TABLE countries_temp
 FIELDS TERMINATED BY '\t'
-LINES TERMINATED BY '\n';
-
-ALTER TABLE `countries_temp`
-  ADD KEY `movie` (`movie`,`country`);
 
 INSERT INTO Movies_Countries(Movie_ID, Country_ID)
   SELECT DISTINCT Movies.ID, c.ID FROM Movies
