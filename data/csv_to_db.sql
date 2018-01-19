@@ -299,7 +299,7 @@ ALTER TABLE `business_temp`
 INSERT INTO Movies (Title, Plot, ReleaseYear, Rating, Votes, MPAA, Currency, Budget, Duration)
   (SELECT
      movies_temp.name,
-     plot_temp.plot,
+     MIN(plot_temp.plot),
      movies_temp.releaseYear,
      ratings_temp.rating,
      ratings_temp.votes,
@@ -313,7 +313,7 @@ INSERT INTO Movies (Title, Plot, ReleaseYear, Rating, Votes, MPAA, Currency, Bud
      LEFT JOIN mpaa_temp ON mpaa_temp.movie = movies_temp.name
      LEFT JOIN runningTimes_temp ON runningTimes_temp.movie = movies_temp.name
      LEFT JOIN business_temp ON business_temp.movie = movies_temp.name
-  WHERE movies_temp.name IS NOT NULL GROUP BY movies_temp.name);
+  WHERE movies_temp.name IS NOT NULL);
 
 DROP TABLE plot_temp;
 
