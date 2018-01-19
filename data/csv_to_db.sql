@@ -475,13 +475,13 @@ INSERT INTO Persons_Movies (Movie_ID, Person_ID, Role)
     RIGHT JOIN Movies m ON m.Title = dt.movie
     RIGHT JOIN biographies_temp b ON p.Name = b.actor
   WHERE m.ID IS NOT NULL;
-INSERT INTO Persons_Movies (Movie_ID, Person_ID, Role)
+INSERT IGNORE INTO Persons_Movies (Movie_ID, Person_ID, Role)
   SELECT DISTINCT m.ID, p.ID, "actor" AS Role FROM actors_temp AS at
     RIGHT JOIN Persons p ON p.Name = at.name
     RIGHT JOIN Movies m ON m.Title = at.movie
     RIGHT JOIN biographies_temp b ON p.Name = b.actor
   WHERE m.ID IS NOT NULL;
-INSERT INTO Persons_Movies (Movie_ID, Person_ID, Role)
+INSERT IGNORE INTO Persons_Movies (Movie_ID, Person_ID, Role)
   SELECT DISTINCT m.ID, p.ID, "actor" AS Role FROM actresses_temp AS ast
     RIGHT JOIN Persons p ON p.Name = ast.name
     RIGHT JOIN Movies m ON m.Title = ast.movie
