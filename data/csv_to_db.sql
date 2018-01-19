@@ -27,7 +27,7 @@ CREATE TABLE Keywords (
 CREATE TABLE Movies (
   `ID` int(11) NOT NULL,
   `Title` varchar(512) NOT NULL,
-  `Plot` VARCHAR(32768),
+  `Plot` VARCHAR(17877),
   `ReleaseYear` int(4) DEFAULT NULL,
   `Rating` float DEFAULT NULL,
   `Votes` int(11) DEFAULT NULL,
@@ -215,7 +215,7 @@ CREATE TEMPORARY TABLE mpaa_temp (
 
 CREATE TEMPORARY TABLE plot_temp (
   `movie` VARCHAR(512),
-  `plot`  VARCHAR(32768)
+  `plot`  VARCHAR(17877)
 )ENGINE = MEMORY;
 
 CREATE TEMPORARY TABLE ratings_temp (
@@ -254,11 +254,11 @@ CREATE TEMPORARY TABLE business_temp (
 
 /* Fill Movies */
 
-LOAD DATA INFILE '/var/lib/mysql-files/movies.list.csv' INTO TABLE movies_temp
+LOAD DATA INFILE '/var/lib/mysql-files/plot.list.csv' INTO TABLE plot_temp
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
-LOAD DATA INFILE '/var/lib/mysql-files/plot.list.csv' INTO TABLE plot_temp
+LOAD DATA INFILE '/var/lib/mysql-files/movies.list.csv' INTO TABLE movies_temp
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
@@ -315,9 +315,9 @@ INSERT INTO Movies (Title, Plot, ReleaseYear, Rating, Votes, MPAA, Currency, Bud
      LEFT JOIN business_temp ON business_temp.movie = movies_temp.name
   WHERE movies_temp.name IS NOT NULL);
 
-DROP TABLE movies_temp;
-
 DROP TABLE plot_temp;
+
+DROP TABLE movies_temp;
 
 DROP TABLE ratings_temp;
 
