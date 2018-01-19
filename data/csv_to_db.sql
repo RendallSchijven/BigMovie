@@ -12,17 +12,17 @@ USE NickyBot;
 CREATE TABLE Countries (
   `ID` int(11) NOT NULL,
   `Country` varchar(128) NOT NULL
-) ENGINE=InnoDB;
+) ENGINE=MEMORY;
 
 CREATE TABLE Genres (
   `ID` int(11) NOT NULL,
   `GenreName` varchar(200) NOT NULL
-) ENGINE=InnoDB;
+) ENGINE=MEMORY;
 
 CREATE TABLE Keywords (
   `ID` int(11) NOT NULL,
   `Keyword` varchar(200) NOT NULL
-) ENGINE=InnoDB;
+) ENGINE=MEMORY;
 
 CREATE TABLE Movies (
   `ID` int(11) NOT NULL,
@@ -35,22 +35,22 @@ CREATE TABLE Movies (
   `Currency` varchar(16) DEFAULT NULL,
   `Budget` BIGINT DEFAULT NULL,
   `Duration` int(11) DEFAULT NULL
-) ENGINE=InnoDB;
+) ENGINE=MEMORY;
 
 CREATE TABLE Movies_Countries (
   `Movie_ID` int(11) NOT NULL,
   `Country_ID` int(11) NOT NULL
-) ENGINE=InnoDB;
+) ENGINE=MEMORY;
 
 CREATE TABLE Movies_Genres (
   `Movie_ID` int(11) NOT NULL,
   `Genre_ID` int(11) NOT NULL
-) ENGINE=InnoDB;
+) ENGINE=MEMORY;
 
 CREATE TABLE Movies_Keywords (
   `Movie_ID` int(11) NOT NULL,
   `Keyword_ID` int(11) NOT NULL
-) ENGINE=InnoDB;
+) ENGINE=MEMORY;
 
 CREATE TABLE Persons (
   `ID` int(11) NOT NULL,
@@ -58,19 +58,19 @@ CREATE TABLE Persons (
   `BirthDay` date DEFAULT NULL,
   `DeathDay` date DEFAULT NULL,
   `Sex` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB;
+) ENGINE=MEMORY;
 
 CREATE TABLE Persons_Movies (
   `Movie_ID` int(11) NOT NULL,
   `Person_ID` int(11) NOT NULL,
   `Role` varchar(100) NOT NULL
-) ENGINE=InnoDB;
+) ENGINE=MEMORY;
 
 CREATE TABLE ReleaseDates (
   `Movie_ID` int(11) NOT NULL,
   `Country_ID` int(11) NOT NULL,
   `ReleaseDate` date NOT NULL
-) ENGINE=InnoDB;
+) ENGINE=MEMORY;
 
 /* Add indexes, PK's and FK's */
 
@@ -165,92 +165,92 @@ ALTER TABLE ReleaseDates
 CREATE TEMPORARY TABLE movies_temp (
   `Name` VARCHAR(512),
   `releaseYear` INT(4)
-);
+) ENGINE = MEMORY;
 
 CREATE TEMPORARY TABLE genres_temp (
   `movie` VARCHAR(512),
   `genre` VARCHAR(200)
-);
+)ENGINE = MEMORY;
 
 CREATE TEMPORARY TABLE keywords_temp (
   `movie`   VARCHAR(512),
   `keyword` VARCHAR(200)
-);
+)ENGINE = MEMORY;
 
 CREATE TEMPORARY TABLE actors_temp (
   `name`  VARCHAR(200),
   `movie` VARCHAR(2047)
-);
+)ENGINE = MEMORY;
 
 CREATE TEMPORARY TABLE actresses_temp (
   `name`  VARCHAR(200),
   `movie` VARCHAR(2047)
-);
+)ENGINE = MEMORY;
 
 CREATE TEMPORARY TABLE editors_temp (
   `name`  VARCHAR(200),
   `movie` VARCHAR(512)
-);
+)ENGINE = MEMORY;
 
 CREATE TEMPORARY TABLE directors_temp (
   `name`  VARCHAR(200),
   `movie` VARCHAR(512)
-);
+)ENGINE = MEMORY;
 
 CREATE TEMPORARY TABLE producers_temp (
   `name`  VARCHAR(200),
   `movie` VARCHAR(512),
   `role` VARCHAR(2048)
-);
+)ENGINE = MEMORY;
 
 CREATE TEMPORARY TABLE writers_temp (
   `name`  VARCHAR(200),
   `movie` VARCHAR(512)
-);
+)ENGINE = MEMORY;
 
 CREATE TEMPORARY TABLE mpaa_temp (
   `movie` VARCHAR(512),
   `mpaa`  VARCHAR(200)
-);
+)ENGINE = MEMORY;
 
 CREATE TEMPORARY TABLE plot_temp (
   `movie` VARCHAR(512),
   `plot`  LONGTEXT
-);
+)ENGINE = MEMORY;
 
 CREATE TEMPORARY TABLE ratings_temp (
   `movie`  VARCHAR(512),
   `rating` FLOAT,
   `votes`  INT(11)
-);
+)ENGINE = MEMORY;
 
 CREATE TEMPORARY TABLE runningTimes_temp (
   `movie`  VARCHAR(512),
   `minutes`  INT(11)
-);
+)ENGINE = MEMORY;
 
 CREATE TEMPORARY TABLE releaseDates_temp (
   `movie`  VARCHAR(512),
   `country`  VARCHAR(64),
   `date`  DATE
-);
+)ENGINE = MEMORY;
 
 CREATE TEMPORARY TABLE biographies_temp (
   `actor`  VARCHAR(300),
   `birthdate`  DATE,
   `deathdate`  DATE
-);
+)ENGINE = MEMORY;
 
 CREATE TEMPORARY TABLE countries_temp (
   `movie`  VARCHAR(512),
   `country`  VARCHAR(64)
-);
+)ENGINE = MEMORY;
 
 CREATE TEMPORARY TABLE business_temp (
   `movie`  VARCHAR(512),
   `budget`  BIGINT DEFAULT NULL,
   `currency`  VARCHAR(16) DEFAULT NULL
-);
+)ENGINE = MEMORY;
 
 /* Load CSV files on the server */
 
