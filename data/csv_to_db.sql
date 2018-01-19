@@ -313,7 +313,7 @@ INSERT INTO Movies (Title, Plot, ReleaseYear, Rating, Votes, MPAA, Currency, Bud
      LEFT JOIN mpaa_temp ON mpaa_temp.movie = movies_temp.name
      LEFT JOIN runningTimes_temp ON runningTimes_temp.movie = movies_temp.name
      LEFT JOIN business_temp ON business_temp.movie = movies_temp.name
-  WHERE movies_temp.name IS NOT NULL);
+  WHERE movies_temp.name IS NOT NULL GROUP BY movies_temp.name);
 
 DROP TABLE plot_temp;
 
@@ -394,8 +394,6 @@ INSERT IGNORE INTO Persons(Name, Sex, BirthDay, DeathDay)
   SELECT name, "Male" AS sex, biographies_temp.birthdate, biographies_temp.deathdate AS birthdate FROM actors_temp
     LEFT JOIN biographies_temp ON actors_temp.name = biographies_temp.actor;
 
-DROP TABLE actors_temp;
-
 LOAD DATA INFILE '/var/lib/mysql-files/actresses.list.csv' INTO TABLE actresses_temp
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
@@ -406,8 +404,6 @@ ALTER TABLE `actresses_temp`
 INSERT IGNORE INTO Persons(Name, Sex, BirthDay, DeathDay)
   SELECT name, "Female" AS sex, biographies_temp.birthdate, biographies_temp.deathdate FROM actresses_temp
     LEFT JOIN biographies_temp ON name = biographies_temp.actor;
-
-DROP TABLE actresses_temp;
 
 LOAD DATA INFILE '/var/lib/mysql-files/producers.list.csv' INTO TABLE producers_temp
 FIELDS TERMINATED BY '\t'
@@ -420,8 +416,6 @@ INSERT IGNORE INTO Persons(Name, BirthDay, DeathDay)
   SELECT name, biographies_temp.birthdate, biographies_temp.deathdate FROM producers_temp
     LEFT JOIN biographies_temp ON name = biographies_temp.actor;
 
-DROP TABLE producers_temp;
-
 LOAD DATA INFILE '/var/lib/mysql-files/writers.list.csv' INTO TABLE writers_temp
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
@@ -432,8 +426,6 @@ ALTER TABLE `writers_temp`
 INSERT IGNORE INTO Persons(Name, BirthDay, DeathDay)
   SELECT name, biographies_temp.birthdate, biographies_temp.deathdate FROM writers_temp
     LEFT JOIN biographies_temp ON name = biographies_temp.actor;
-
-DROP TABLE writers_temp;
 
 LOAD DATA INFILE '/var/lib/mysql-files/editors.list.csv' INTO TABLE editors_temp
 FIELDS TERMINATED BY '\t'
@@ -446,8 +438,6 @@ INSERT IGNORE INTO Persons(Name, BirthDay, DeathDay)
   SELECT name, biographies_temp.birthdate, biographies_temp.deathdate FROM editors_temp
     LEFT JOIN biographies_temp ON name = biographies_temp.actor;
 
-DROP TABLE editors_temp;
-
 LOAD DATA INFILE '/var/lib/mysql-files/directors.list.csv' INTO TABLE directors_temp
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
@@ -458,8 +448,6 @@ ALTER TABLE `directors_temp`
 INSERT IGNORE INTO Persons(Name, BirthDay, DeathDay)
   SELECT name, biographies_temp.birthdate, biographies_temp.deathdate FROM directors_temp
     LEFT JOIN biographies_temp ON name = biographies_temp.actor;
-
-DROP TABLE directors_temp;
 
 /* Fill Persons_Movies */
 
@@ -500,8 +488,6 @@ INSERT INTO Persons_Movies (Movie_ID, Person_ID, Role)
     RIGHT JOIN biographies_temp b ON p.Name = b.actor
   WHERE m.ID IS NOT NULL;
 
-DROP TABLE biographies_temp;
-
 /* Fill Countries */
 
 LOAD DATA INFILE '/var/lib/mysql-files/release-dates.list.csv' INTO TABLE releaseDates_temp
@@ -522,8 +508,6 @@ INSERT INTO ReleaseDates (Movie_ID, Country_ID, ReleaseDate)
     LEFT JOIN Countries ON Countries.Country = releaseDates_temp.country
   WHERE Movies.ID IS NOT NULL;
 
-DROP TABLE releaseDates_temp;
-
 /* Fill Movies_Countries */
 
 LOAD DATA INFILE '/var/lib/mysql-files/countries.list.csv' INTO TABLE countries_temp
@@ -538,5 +522,3 @@ INSERT INTO Movies_Countries(Movie_ID, Country_ID)
     RIGHT JOIN countries_temp as ct ON Movies.Title = ct.movie
     RIGHT JOIN Countries as c ON c.Country = ct.country
   WHERE Movies.ID IS NOT NULL;
-
-DROP TABLE countries_temp;
