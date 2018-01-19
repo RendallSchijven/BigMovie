@@ -252,49 +252,17 @@ CREATE TEMPORARY TABLE business_temp (
   `currency`  VARCHAR(16) DEFAULT NULL
 )ENGINE = MEMORY;
 
-/* Load CSV files on the server */
+/* Fill Movies */
 
 LOAD DATA INFILE '/var/lib/mysql-files/movies.list.csv' INTO TABLE movies_temp
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
-LOAD DATA INFILE '/var/lib/mysql-files/genres.list.csv' INTO TABLE genres_temp
-FIELDS TERMINATED BY '\t'
-LINES TERMINATED BY '\n';
-
-LOAD DATA INFILE '/var/lib/mysql-files/keywords.list.csv' INTO TABLE keywords_temp
-FIELDS TERMINATED BY '\t'
-LINES TERMINATED BY '\n';
-
-LOAD DATA INFILE '/var/lib/mysql-files/actors.list.csv' INTO TABLE actors_temp
-FIELDS TERMINATED BY '\t'
-LINES TERMINATED BY '\n';
-
-LOAD DATA INFILE '/var/lib/mysql-files/actresses.list.csv' INTO TABLE actresses_temp
-FIELDS TERMINATED BY '\t'
-LINES TERMINATED BY '\n';
-
-LOAD DATA INFILE '/var/lib/mysql-files/editors.list.csv' INTO TABLE editors_temp
-FIELDS TERMINATED BY '\t'
-LINES TERMINATED BY '\n';
-
-LOAD DATA INFILE '/var/lib/mysql-files/directors.list.csv' INTO TABLE directors_temp
-FIELDS TERMINATED BY '\t'
-LINES TERMINATED BY '\n';
-
-LOAD DATA INFILE '/var/lib/mysql-files/producers.list.csv' INTO TABLE producers_temp
-FIELDS TERMINATED BY '\t'
-LINES TERMINATED BY '\n';
-
-LOAD DATA INFILE '/var/lib/mysql-files/writers.list.csv' INTO TABLE writers_temp
+LOAD DATA INFILE '/var/lib/mysql-files/plot.list.csv' INTO TABLE plot_temp
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
 LOAD DATA INFILE '/var/lib/mysql-files/mpaa-ratings-reasons.list.csv' INTO TABLE mpaa_temp
-FIELDS TERMINATED BY '\t'
-LINES TERMINATED BY '\n';
-
-LOAD DATA INFILE '/var/lib/mysql-files/plot.list.csv' INTO TABLE plot_temp
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
@@ -306,86 +274,27 @@ LOAD DATA INFILE '/var/lib/mysql-files/running-times.list.csv' INTO TABLE runnin
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
-LOAD DATA INFILE '/var/lib/mysql-files/release-dates.list.csv' INTO TABLE releaseDates_temp
-FIELDS TERMINATED BY '\t'
-LINES TERMINATED BY '\n';
-
-LOAD DATA INFILE '/var/lib/mysql-files/biographies.list.csv' INTO TABLE biographies_temp
-FIELDS TERMINATED BY '\t'
-LINES TERMINATED BY '\n';
-
-LOAD DATA INFILE '/var/lib/mysql-files/countries.list.csv' INTO TABLE countries_temp
-FIELDS TERMINATED BY '\t'
-LINES TERMINATED BY '\n';
-
 LOAD DATA INFILE '/var/lib/mysql-files/business.list.csv' IGNORE INTO TABLE business_temp
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
-/* Add indexes to temp tables */
-
 ALTER TABLE `movies_temp`
   ADD KEY `Name` (`Name`);
-
-ALTER TABLE `mpaa_temp`
-  ADD KEY `movie` (`movie`);
 
 ALTER TABLE `plot_temp`
   ADD KEY `movie` (`movie`);
 
-ALTER TABLE `genres_temp`
+ALTER TABLE `mpaa_temp`
   ADD KEY `movie` (`movie`);
 
-ALTER TABLE `keywords_temp`
-  ADD KEY `movie` (`movie`);
-
-ALTER TABLE `actors_temp`
-  ADD KEY `movie` (`name`,`movie`);
-
-ALTER TABLE `actresses_temp`
-  ADD KEY `movie` (`name`,`movie`);
-
-ALTER TABLE `editors_temp`
-  ADD KEY `movie` (`movie`);
-
-ALTER TABLE `directors_temp`
-  ADD KEY `movie` (`movie`);
-
-ALTER TABLE `producers_temp`
-  ADD KEY `movie` (`movie`);
-
-ALTER TABLE `writers_temp`
+ALTER TABLE `ratings_temp`
   ADD KEY `movie` (`movie`);
 
 ALTER TABLE `runningTimes_temp`
   ADD KEY `movie` (`movie`);
 
-ALTER TABLE `releaseDates_temp`
-  ADD KEY `movie` (`movie`,`country`);
-
-ALTER TABLE `biographies_temp`
-  ADD KEY `actor` (`actor`);
-
-ALTER TABLE `ratings_temp`
-  ADD KEY `movie` (`movie`);
-
-ALTER TABLE `countries_temp`
-  ADD KEY `movie` (`movie`,`country`);
-
 ALTER TABLE `business_temp`
   ADD KEY `movie` (`movie`);
-
-/* import temporary data to NickyBot */
-
-INSERT INTO Genres (GenreName)
-  SELECT DISTINCT genre
-  FROM genres_temp;
-
-INSERT INTO Keywords (Keyword)
-  SELECT DISTINCT keyword
-  FROM keywords_temp;
-
-/* Fill Movies */
 
 INSERT INTO Movies (Title, Plot, ReleaseYear, Rating, Votes, MPAA, Currency, Budget, Duration)
   (SELECT
@@ -406,26 +315,151 @@ INSERT INTO Movies (Title, Plot, ReleaseYear, Rating, Votes, MPAA, Currency, Bud
      LEFT JOIN business_temp ON business_temp.movie = movies_temp.name
   WHERE movies_temp.name IS NOT NULL);
 
+DROP TABLE movies_temp;
+
+DROP TABLE plot_temp;
+
+DROP TABLE ratings_temp;
+
+DROP TABLE mpaa_temp;
+
+DROP TABLE runningTimes_temp;
+
+DROP TABLE business_temp;
+
+/* import temporary data to NickyBot */
+
+LOAD DATA INFILE '/var/lib/mysql-files/genres.list.csv' INTO TABLE genres_temp
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n';
+
+ALTER TABLE `genres_temp`
+  ADD KEY `movie` (`movie`);
+
+INSERT INTO Genres (GenreName)
+  SELECT DISTINCT genre
+  FROM genres_temp;
+
+/* Fill Movies_Genres */
+
+INSERT INTO Movies_Genres (Movie_ID, Genre_ID)
+  SELECT Movies.ID, x.ID FROM Movies
+    RIGHT JOIN (SELECT ID, movie FROM Genres
+      INNER JOIN genres_temp ON genres_temp.genre = Genres.GenreName) AS x
+      ON x.movie = Movies.Title
+  WHERE Movies.ID IS NOT NULL AND x.ID IS NOT NULL;
+
+DROP TABLE genres_temp;
+
+LOAD DATA INFILE '/var/lib/mysql-files/keywords.list.csv' INTO TABLE keywords_temp
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n';
+
+ALTER TABLE `keywords_temp`
+  ADD KEY `movie` (`movie`);
+
+INSERT INTO Keywords (Keyword)
+  SELECT DISTINCT keyword
+  FROM keywords_temp;
+
+/* Fill Movies_Keywords */
+
+INSERT INTO Movies_Keywords (Movie_ID, Keyword_ID)
+  SELECT Movies.ID, x.ID FROM Movies
+    RIGHT JOIN
+    (SELECT ID, movie FROM Keywords
+      INNER JOIN keywords_temp ON keywords_temp.keyword = Keywords.Keyword) AS x
+      ON x.movie = Movies.Title
+  WHERE Movies.ID IS NOT NULL AND x.ID IS NOT NULL;
+
+DROP TABLE keywords_temp;
+
 /* Fill Persons */
+
+LOAD DATA INFILE '/var/lib/mysql-files/biographies.list.csv' INTO TABLE biographies_temp
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n';
+
+LOAD DATA INFILE '/var/lib/mysql-files/actors.list.csv' INTO TABLE actors_temp
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n';
+
+ALTER TABLE `biographies_temp`
+  ADD KEY `actor` (`actor`);
+
+ALTER TABLE `actors_temp`
+  ADD KEY `movie` (`name`,`movie`);
 
 INSERT IGNORE INTO Persons(Name, Sex, BirthDay, DeathDay)
   SELECT name, "Male" AS sex, biographies_temp.birthdate, biographies_temp.deathdate AS birthdate FROM actors_temp
     LEFT JOIN biographies_temp ON actors_temp.name = biographies_temp.actor;
+
+DROP TABLE actors_temp;
+
+LOAD DATA INFILE '/var/lib/mysql-files/actresses.list.csv' INTO TABLE actresses_temp
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n';
+
+ALTER TABLE `actresses_temp`
+  ADD KEY `movie` (`name`,`movie`);
+
 INSERT IGNORE INTO Persons(Name, Sex, BirthDay, DeathDay)
   SELECT name, "Female" AS sex, biographies_temp.birthdate, biographies_temp.deathdate FROM actresses_temp
     LEFT JOIN biographies_temp ON name = biographies_temp.actor;
+
+DROP TABLE actresses_temp;
+
+LOAD DATA INFILE '/var/lib/mysql-files/producers.list.csv' INTO TABLE producers_temp
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n';
+
+ALTER TABLE `producers_temp`
+  ADD KEY `movie` (`movie`);
+
 INSERT IGNORE INTO Persons(Name, BirthDay, DeathDay)
   SELECT name, biographies_temp.birthdate, biographies_temp.deathdate FROM producers_temp
     LEFT JOIN biographies_temp ON name = biographies_temp.actor;
+
+DROP TABLE producers_temp;
+
+LOAD DATA INFILE '/var/lib/mysql-files/writers.list.csv' INTO TABLE writers_temp
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n';
+
+ALTER TABLE `writers_temp`
+  ADD KEY `movie` (`movie`);
+
 INSERT IGNORE INTO Persons(Name, BirthDay, DeathDay)
   SELECT name, biographies_temp.birthdate, biographies_temp.deathdate FROM writers_temp
     LEFT JOIN biographies_temp ON name = biographies_temp.actor;
+
+DROP TABLE writers_temp;
+
+LOAD DATA INFILE '/var/lib/mysql-files/editors.list.csv' INTO TABLE editors_temp
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n';
+
+ALTER TABLE `editors_temp`
+  ADD KEY `movie` (`movie`);
+
 INSERT IGNORE INTO Persons(Name, BirthDay, DeathDay)
   SELECT name, biographies_temp.birthdate, biographies_temp.deathdate FROM editors_temp
     LEFT JOIN biographies_temp ON name = biographies_temp.actor;
+
+DROP TABLE editors_temp;
+
+LOAD DATA INFILE '/var/lib/mysql-files/directors.list.csv' INTO TABLE directors_temp
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n';
+
+ALTER TABLE `directors_temp`
+  ADD KEY `movie` (`movie`);
+
 INSERT IGNORE INTO Persons(Name, BirthDay, DeathDay)
   SELECT name, biographies_temp.birthdate, biographies_temp.deathdate FROM directors_temp
     LEFT JOIN biographies_temp ON name = biographies_temp.actor;
+
+DROP TABLE directors_temp;
 
 /* Fill Persons_Movies */
 
@@ -466,7 +500,16 @@ INSERT INTO Persons_Movies (Movie_ID, Person_ID, Role)
     RIGHT JOIN biographies_temp b ON p.Name = b.actor
   WHERE m.ID IS NOT NULL;
 
+DROP TABLE biographies_temp;
+
 /* Fill Countries */
+
+LOAD DATA INFILE '/var/lib/mysql-files/release-dates.list.csv' INTO TABLE releaseDates_temp
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n';
+
+ALTER TABLE `releaseDates_temp`
+  ADD KEY `movie` (`movie`,`country`);
 
 INSERT INTO Countries(Country)
   SELECT DISTINCT DISTINCT Country FROM releaseDates_temp;
@@ -479,7 +522,16 @@ INSERT INTO ReleaseDates (Movie_ID, Country_ID, ReleaseDate)
     LEFT JOIN Countries ON Countries.Country = releaseDates_temp.country
   WHERE Movies.ID IS NOT NULL;
 
+DROP TABLE releaseDates_temp;
+
 /* Fill Movies_Countries */
+
+LOAD DATA INFILE '/var/lib/mysql-files/countries.list.csv' INTO TABLE countries_temp
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n';
+
+ALTER TABLE `countries_temp`
+  ADD KEY `movie` (`movie`,`country`);
 
 INSERT INTO Movies_Countries(Movie_ID, Country_ID)
   SELECT DISTINCT Movies.ID, c.ID FROM Movies
@@ -487,21 +539,4 @@ INSERT INTO Movies_Countries(Movie_ID, Country_ID)
     RIGHT JOIN Countries as c ON c.Country = ct.country
   WHERE Movies.ID IS NOT NULL;
 
-/* Fill Movies_Genres */
-
-INSERT INTO Movies_Genres (Movie_ID, Genre_ID)
-  SELECT Movies.ID, x.ID FROM Movies
-    RIGHT JOIN (SELECT ID, movie FROM Genres
-      INNER JOIN genres_temp ON genres_temp.genre = Genres.GenreName) AS x
-      ON x.movie = Movies.Title
-  WHERE Movies.ID IS NOT NULL AND x.ID IS NOT NULL;
-
-/* Fill Movies_Keywords */
-
-INSERT INTO Movies_Keywords (Movie_ID, Keyword_ID)
-  SELECT Movies.ID, x.ID FROM Movies
-    RIGHT JOIN
-    (SELECT ID, movie FROM Keywords
-      INNER JOIN keywords_temp ON keywords_temp.keyword = Keywords.Keyword) AS x
-      ON x.movie = Movies.Title
-  WHERE Movies.ID IS NOT NULL AND x.ID IS NOT NULL;
+DROP TABLE countries_temp;
