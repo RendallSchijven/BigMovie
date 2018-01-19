@@ -300,13 +300,13 @@ INSERT INTO Movies (Title, Plot, ReleaseYear, Rating, Votes, MPAA, Currency, Bud
   (SELECT
      movies_temp.name,
      MIN(plot_temp.plot),
-     movies_temp.releaseYear,
-     ratings_temp.rating,
-     ratings_temp.votes,
-     mpaa_temp.mpaa,
-     business_temp.currency,
-     business_temp.budget,
-     runningTimes_temp.minutes
+     MIN(movies_temp.releaseYear),
+     MIN(ratings_temp.rating),
+     MIN(ratings_temp.votes),
+     MIN(mpaa_temp.mpaa),
+     MIN(business_temp.currency),
+     MIN(business_temp.budget),
+     MIN(runningTimes_temp.minutes)
   FROM movies_temp
      LEFT JOIN plot_temp ON plot_temp.movie = movies_temp.name
      LEFT JOIN ratings_temp ON ratings_temp.movie = movies_temp.name
