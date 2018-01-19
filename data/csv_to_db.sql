@@ -391,7 +391,7 @@ ALTER TABLE `actors_temp`
   ADD KEY `movie` (`name`,`movie`);
 
 INSERT IGNORE INTO Persons(Name, Sex, BirthDay, DeathDay)
-  SELECT name, "Male" AS sex, biographies_temp.birthdate, biographies_temp.deathdate AS birthdate FROM actors_temp
+  SELECT name, "Male" AS sex, biographies_temp.birthdate, biographies_temp.deathdate FROM actors_temp
     LEFT JOIN biographies_temp ON actors_temp.name = biographies_temp.actor;
 
 LOAD DATA INFILE '/var/lib/mysql-files/actresses.list.csv' INTO TABLE actresses_temp
@@ -476,7 +476,7 @@ INSERT INTO Persons_Movies (Movie_ID, Person_ID, Role)
     RIGHT JOIN biographies_temp b ON p.Name = b.actor
   WHERE m.ID IS NOT NULL;
 INSERT INTO Persons_Movies (Movie_ID, Person_ID, Role)
-  SELECT m.ID, p.ID, "actor" AS Role FROM actors_temp AS at
+  SELECT DISTINCT m.ID, p.ID, "actor" AS Role FROM actors_temp AS at
     RIGHT JOIN Persons p ON p.Name = at.name
     RIGHT JOIN Movies m ON m.Title = at.movie
     RIGHT JOIN biographies_temp b ON p.Name = b.actor
