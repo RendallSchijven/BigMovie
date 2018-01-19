@@ -27,7 +27,7 @@ CREATE TABLE Keywords (
 CREATE TABLE Movies (
   `ID` int(11) NOT NULL,
   `Title` varchar(512) NOT NULL,
-  `Plot` longtext,
+  `Plot` VARCHAR(32768),
   `ReleaseYear` int(4) DEFAULT NULL,
   `Rating` float DEFAULT NULL,
   `Votes` int(11) DEFAULT NULL,
