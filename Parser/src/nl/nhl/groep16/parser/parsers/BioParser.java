@@ -19,7 +19,9 @@ public class BioParser implements ParserInterface {
     DateFormat formatter;
     DateFormat formatterFinal;
 
-    private String currentPerson = "";
+    private String currentPerson = null;
+    private String currentBirthDay = null;
+    private String currentDeathDay = null;
 
     public BioParser() {
         this.birthDayRegex = Pattern.compile("^DB:\\s(\\d{1,2}\\s\\w+\\s\\d{4})");
@@ -32,32 +34,31 @@ public class BioParser implements ParserInterface {
 
     @Override
     public String[] convertLine(String line) {
+
         String person = extractPerson(line);
 
-        if (person != null) {
+        if(person != null && currentPerson != null && person != currentPerson) {
+            String[] rValue = new String[]{currentPerson, currentBirthDay, currentDeathDay};
             currentPerson = person;
-        } else {
-            String birthDayString = extractBirthDay(line);
-            String birthDay = null;
-            if (birthDayString != null) {
-                try {
-                    birthDay = formatterFinal.format(formatter.parse(birthDayString));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            String deathDayString = extractDeathDay(line);
-            String deathDay = null;
-            if (deathDayString != null) {
-                try {
-                    deathDay = formatterFinal.format(formatter.parse(deathDayString));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            }
-            return new String[]{currentPerson, birthDay, deathDay};
+            currentBirthDay = null;
+            currentDeathDay = null;
+            return rValue;
         }
+
+        if(person != null) {
+            currentPerson = person;
+        }
+
+        String birthDay = extractBirthDay(line);
+        if(birthDay != null) {
+            currentBirthDay = birthDay;
+        }
+
+        String deathDay = extractDeathDay(line);
+        if(deathDay != null) {
+            currentDeathDay = deathDay;
+        }
+
         return null;
     }
 
@@ -76,7 +77,12 @@ public class BioParser implements ParserInterface {
             return null;
         }
 
-        return m.group(1);
+        try {
+            return formatterFinal.format(formatter.parse(m.group(1)));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return  null;
     }
 
     public String extractDeathDay(String line) {
@@ -85,6 +91,11 @@ public class BioParser implements ParserInterface {
             return null;
         }
 
-        return m.group(1);
+        try {
+            return formatterFinal.format(formatter.parse( m.group(1)));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
