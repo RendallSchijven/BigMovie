@@ -12,7 +12,7 @@ public class ActorParser implements ParserInterface{
 
     public ActorParser() {
         this.actorRegex = Pattern.compile("^(.*,.*)\\t");
-        this.movieRegex = Pattern.compile("\\t+([^\"]\\w.*)");
+        this.movieRegex = Pattern.compile("\\t+([^\"]\\w.*(?<=[0-9IV\\?])\\))");
     }
 
     @Override
