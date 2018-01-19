@@ -89,12 +89,12 @@ ALTER TABLE Keywords
 ALTER TABLE Movies
   ADD PRIMARY KEY (`ID`),
   ADD KEY `Title` (`Title`),
-  ADD KEY `Title` (`ReleaseYear`),
-  ADD KEY `Title` (`Rating`),
-  ADD KEY `Title` (`Votes`),
-  ADD KEY `Title` (`MPAA`),
-  ADD KEY `Title` (`Budget`),
-  ADD KEY `Title` (`Duration`);
+  ADD KEY `ReleaseYear` (`ReleaseYear`),
+  ADD KEY `Rating` (`Rating`),
+  ADD KEY `Votes` (`Votes`),
+  ADD KEY `MPAA` (`MPAA`),
+  ADD KEY `Budget` (`Budget`),
+  ADD KEY `Duration` (`Duration`);
 
 ALTER TABLE Movies_Countries
   ADD PRIMARY KEY (`Movie_ID`,`Country_ID`),
