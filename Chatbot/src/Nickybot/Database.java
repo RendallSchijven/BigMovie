@@ -8,11 +8,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Database {
-    private static final String HOST = "136.144.128.126";
+    private static final String HOST = "195.154.170.210";
     private static final String PORT = "3306";
     private static final String DATABASE = "NickyBot";
-    private static final String USERNAME = "NickyBot";
-    private static final String PASSWORD = "s9qD9iaohMkbo8c8";
+    private static final String USERNAME = "riley";
+    private static final String PASSWORD = "jayden";
 
     public static String query(String sql){
         String result = "";
