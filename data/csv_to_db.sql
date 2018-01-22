@@ -200,7 +200,7 @@ CREATE TEMPORARY TABLE directors_temp (
 CREATE TEMPORARY TABLE producers_temp (
   `name`  VARCHAR(200),
   `movie` VARCHAR(512),
-  `role` VARCHAR(256)
+  `role` VARCHAR(512)
 ) CHARACTER SET utf8mb4;
 
 CREATE TEMPORARY TABLE writers_temp (
