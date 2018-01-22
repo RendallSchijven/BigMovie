@@ -29,14 +29,14 @@ public class InlineKeyboardSubroutine implements Subroutine {
 
 
         SendMessage message = new SendMessage()
-                .setChatId(riveScript.currentUser())
-                .setText("test");
+                .setChatId(riveScript.currentUser());
 
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> rowButtons = new ArrayList<>();
 
         JSONArray rowJsonArray = new JSONArray(jsonString);
-        for(int i = 0; i < rowJsonArray.length(); i++){
+        message.setText(rowJsonArray.getString(0));
+        for(int i = 1; i < rowJsonArray.length(); i++){
             List<InlineKeyboardButton> colButtons = new ArrayList<>();
             JSONArray colJsonArray = rowJsonArray.getJSONArray(i);
 
