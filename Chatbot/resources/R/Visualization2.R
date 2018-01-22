@@ -6,14 +6,17 @@
 #install.packages("RMySQL")
 library(RMySQL)
 
-args = commandArgs(trainingOnly=TRUE)
+mydb <- dbConnect(MySQL(), dbname="NickyBotUtf8", user="riley", password="jayden", host="db.sanderkastelein.nl")
 
-mydb <- dbConnect(MySQL(), dbname="NickyBot", user="Riley", password="jayden", host="hiddevanranden.nl")
+args <- commandArgs(trailingOnly = TRUE)
 
-values <- dbGetQuery(mydb, "select ReleaseDate as years, count(*) as freq from ReleaseDates, Countries, Movies_Countries where Countries.ID = Movies_Countries.Country_ID AND Countries.Country = 'USA' group by ReleaseDates.ReleaseDate ASC")
-                           "select ReleaseYear as years, count(*) as freq from Movies, Movies_Countries WHERE Movies_Countries.Country_ID = (SELECT ID FROM Countries WHERE Country = 'USA') GROUP BY Movies.ReleaseYear ASC"
+query = sprintf("SELECT m.ReleaseYear AS Years, count(*) AS Movies FROM Movies AS m LEFT JOIN Movies_Countries AS mc ON mc.Movie_ID = m.ID LEFT JOIN Countries AS c ON mc.Country_ID = c.ID WHERE m.ReleaseYear IS NOT NULL AND m.ReleaseYear < 2018 AND c.Country LIKE '%%%s%%' GROUP BY m.ReleaseYear ORDER BY m.ReleaseYear ASC", args[[1]])
+
+meme = ("SELECT Title FROM Movies where Duration > 150")
+values <- dbGetQuery(mydb, query)
+
 invisible(jpeg('MoviesYear.jpg'))
-barplot(values$freq, names.arg = values$years, horiz=FALSE, cex.names=0.5)
+barplot(values$Movies, names.arg = values$Years, horiz=FALSE, cex.names=0.5)
 invisible(dev.off())
 
-dbDisconnect(mydb)
+invisible(dbDisconnect(mydb))
