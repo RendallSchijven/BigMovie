@@ -14,6 +14,7 @@ import org.telegram.telegrambots.exceptions.TelegramApiException;
 public class Nickybot extends TelegramLongPollingBot {
 
     private RiveScript bot = new RiveScript(Config.utf8());
+    private static String username = "";
 
     public Nickybot() {
         super();
@@ -21,6 +22,7 @@ public class Nickybot extends TelegramLongPollingBot {
         bot.setSubroutine("jdbc", new JdbcSubroutine());
         bot.setSubroutine("send", new SendSubroutine(this));
         bot.setSubroutine("inlineKeyboard", new InlineKeyboardSubroutine(this));
+        bot.setSubroutine("rive", new riveFeaturesSubroutine());
         bot.loadDirectory("Chatbot/resources/RiveScript");
         bot.sortReplies();
     }
@@ -33,6 +35,8 @@ public class Nickybot extends TelegramLongPollingBot {
             // Set variables
             String message_text = update.getMessage().getText();
             long chat_id = update.getMessage().getChatId();
+
+            Nickybot.username = update.getMessage().getChat().getFirstName();
 
             String reply = bot.reply(String.valueOf(chat_id), message_text);
 
@@ -89,6 +93,10 @@ public class Nickybot extends TelegramLongPollingBot {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static String getName(){
+        return Nickybot.username;
     }
 
     @Override
