@@ -19,6 +19,7 @@ public class JdbcSubroutine implements Subroutine {
         String sql = "";
         for (String arg : args) sql = sql + " " + arg;
         sql = sql.trim();
+        System.out.println(sql);
 
         return Database.query(sql);
     }
