@@ -3,3 +3,5 @@
 # Created by: Rendall
 # Created on: 15-1-2018
 
+mydb <- dbConnect(MySQL(), dbname="NickyBot", user="riley", password="jayden", host="db.sanderkastelein.nl")
+
