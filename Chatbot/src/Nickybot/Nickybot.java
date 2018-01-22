@@ -1,5 +1,6 @@
 package Nickybot;
 
+import com.rivescript.Config;
 import com.rivescript.RiveScript;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
@@ -11,13 +12,14 @@ import org.telegram.telegrambots.exceptions.TelegramApiException;
  */
 public class Nickybot extends TelegramLongPollingBot {
 
-    private RiveScript bot = new RiveScript();
-
+    private RiveScript bot = new RiveScript(Config.utf8());
+    private static String username = "";
     public Nickybot() {
         super();
         bot.setSubroutine("system", new SystemSubroutine());
         bot.setSubroutine("jdbc", new JdbcSubroutine());
         bot.setSubroutine("send", new SendSubroutine(this));
+        bot.setSubroutine("rive", new riveFeaturesSubroutine());
         bot.loadDirectory("Chatbot/resources/RiveScript");
         bot.sortReplies();
     }
@@ -30,7 +32,7 @@ public class Nickybot extends TelegramLongPollingBot {
             // Set variables
             String message_text = update.getMessage().getText();
             long chat_id = update.getMessage().getChatId();
-
+            Nickybot.username = update.getMessage().getChat().getFirstName();
             String reply = bot.reply(String.valueOf(chat_id), message_text);
 
             SendMessage message = new SendMessage() // Create a message object object
@@ -50,7 +52,9 @@ public class Nickybot extends TelegramLongPollingBot {
         // Return bot username
         return "Nicky_B_Bot";
     }
-
+    public static String getName(){
+        return Nickybot.username;
+    }
     @Override
     public String getBotToken() {
         // Return bot token from BotFather
