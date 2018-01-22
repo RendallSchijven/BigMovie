@@ -1,18 +1,19 @@
-# Title     : Leeftijd actrice
-# Objective : Kijk of een actrice minder werk heeft naarmate ze ouder word
+# Title     : Costly length
+# Objective : Ga na of er een verband is tussen de kosten van een film en de lengte ervan.
 # Created by: Rendall
 # Created on: 15-1-2018
 
 library(RMySQL)
 
-mydb <- dbConnect(MySQL(), dbname="NickyBot", user="Riley", password="jayden", host="hiddevanranden.nl")
+mydb <- dbConnect(MySQL(), dbname="NickyBotUtf8", user="riley", password="jayden", host="db.sanderkastelein.nl")
 
-actress <- dbGetQuery(mydb, "select ID, BirthDay, Name, count(*) as freq FROM Persons LEFT JOIN Persons_Movies ON Persons_Movies.Person_ID = Persons.ID WHERE Persons.Sex = 'Female' AND Persons_Movies.Role = 'actor' GROUP BY Persons.ID ORDER BY freq DESC LIMIT 2000")
-moviesPerYearPerActress <- dbGetQuery(mydb, "select Name, ReleaseYear, count(*) as freq FROM Persons, Movies, Persons_Movies WHERE Persons_Movies.Role = 'actor' AND Persons_Movies.Person_ID = Persons.ID GROUP BY Movies.ReleaseYear ORDER BY freq DESC LIMIT 4000")
-
-
-for(id in 1:2000){
-  movies <- dbGetQuery(mydb, paste("select Title from Movies, Persons_Movies where Persons_Movies.Person_ID = (" ,id, ")", sep=""))
-}
+movies <- dbGetQuery(mydb, "SELECT ID, Budget, Duration FROM Movies WHERE Duration IS NOT NULL AND Budget IS NOT NULL")
 
 dbDisconnect(mydb)
+
+plot(movies)
+cor(movies)
+
+#Maak een lineair regressie model van movies
+movielm = lm(Budget ~ Duration, data=movies)
+summary(movielm)
