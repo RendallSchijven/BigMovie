@@ -1,5 +1,6 @@
 package Nickybot;
 
+import com.rivescript.Config;
 import com.rivescript.RiveScript;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.methods.updatingmessages.EditMessageText;
@@ -12,7 +13,7 @@ import org.telegram.telegrambots.exceptions.TelegramApiException;
  */
 public class Nickybot extends TelegramLongPollingBot {
 
-    private RiveScript bot = new RiveScript();
+    private RiveScript bot = new RiveScript(Config.utf8());
 
     public Nickybot() {
         super();

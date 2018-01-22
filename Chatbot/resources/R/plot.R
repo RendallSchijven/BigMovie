@@ -1,7 +1,7 @@
 #install.packages("RMySQL")
 library(RMySQL)
 
-mydb <- dbConnect(MySQL(), dbname="NickyBot", user="riley", password="jayden", host="db.sanderkastelein.nl")
+mydb <- dbConnect(MySQL(), dbname="NickyBotUtf8", user="riley", password="jayden", host="db.sanderkastelein.nl")
 
 values <- dbGetQuery(mydb, "select Name as names, count(*) as freq from Persons, Persons_Movies where Persons.ID = 1 group by Persons.Name")
 

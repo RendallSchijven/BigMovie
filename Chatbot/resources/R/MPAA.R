@@ -5,7 +5,7 @@
 
 library(RMySQL)
 
-mydb <- dbConnect(MySQL(), dbname="NickyBot", user="riley", password="jayden", host="db.sanderkastelein.nl")
+mydb <- dbConnect(MySQL(), dbname="NickyBotUtf8", user="riley", password="jayden", host="db.sanderkastelein.nl")
 
 movies <- dbGetQuery(mydb, "SELECT * FROM Movies")
 
