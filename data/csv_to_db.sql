@@ -508,7 +508,7 @@ ALTER TABLE `releaseDates_temp`
 ADD KEY `movie` (`movie`);
 
 ALTER TABLE `releaseDates_temp`
-ADD KEY `movie` (`country`);
+ADD KEY `country` (`country`);
 
 INSERT INTO Countries(Country)
 SELECT DISTINCT DISTINCT Country FROM releaseDates_temp;
@@ -531,7 +531,7 @@ ALTER TABLE `countries_temp`
 ADD KEY `movie` (`movie`);
 
 ALTER TABLE `countries_temp`
-ADD KEY `movie` (`country`);
+ADD KEY `country` (`country`);
 
 INSERT INTO Movies_Countries(Movie_ID, Country_ID)
 SELECT DISTINCT Movies.ID, c.ID FROM Movies
