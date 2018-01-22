@@ -400,7 +400,7 @@ FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
 ALTER TABLE `actresses_temp`
-ADD KEY `movie` (`name`);
+ADD KEY `name` (`name`);
 
 ALTER TABLE `actresses_temp`
 ADD KEY `movie` (`movie`);
@@ -414,6 +414,9 @@ FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
 ALTER TABLE `producers_temp`
+ADD KEY `name` (`name`);
+
+ALTER TABLE `producers_temp`
 ADD KEY `movie` (`movie`);
 
 INSERT IGNORE INTO Persons(Name, BirthDay, DeathDay)
@@ -423,6 +426,9 @@ LEFT JOIN biographies_temp ON name = biographies_temp.actor;
 LOAD DATA INFILE '/var/lib/mysql-files/writers.list.csv' INTO TABLE writers_temp
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
+
+ALTER TABLE `writers_temp`
+ADD KEY `name` (`name`);
 
 ALTER TABLE `writers_temp`
 ADD KEY `movie` (`movie`);
