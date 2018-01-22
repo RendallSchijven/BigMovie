@@ -1,7 +1,7 @@
 DROP DATABASE IF EXISTS NickyBotUtf8;
 
 CREATE DATABASE NickyBotUtf8
-  DEFAULT CHARACTER SET latin1;
+DEFAULT CHARACTER SET latin1;
 
 USE NickyBotUtf8;
 
@@ -75,90 +75,90 @@ CREATE TABLE ReleaseDates (
 /* Add indexes, PK's and FK's */
 
 ALTER TABLE Countries
-  ADD PRIMARY KEY (`ID`),
-  ADD UNIQUE KEY `Country` (`Country`) USING BTREE;
+ADD PRIMARY KEY (`ID`),
+ADD UNIQUE KEY `Country` (`Country`) USING BTREE;
 
 ALTER TABLE Genres
-  ADD PRIMARY KEY (`ID`),
-  ADD UNIQUE KEY `GenreName` (`GenreName`) USING BTREE;
+ADD PRIMARY KEY (`ID`),
+ADD UNIQUE KEY `GenreName` (`GenreName`) USING BTREE;
 
 ALTER TABLE Keywords
-  ADD PRIMARY KEY (`ID`),
-  ADD KEY `Keyword` (`Keyword`);
+ADD PRIMARY KEY (`ID`),
+ADD KEY `Keyword` (`Keyword`);
 
 ALTER TABLE Movies
-  ADD PRIMARY KEY (`ID`),
-  ADD KEY `Title` (`Title`),
-  ADD KEY `ReleaseYear` (`ReleaseYear`),
-  ADD KEY `Rating` (`Rating`),
-  ADD KEY `Votes` (`Votes`),
-  ADD KEY `MPAA` (`MPAA`),
-  ADD KEY `Budget` (`Budget`),
-  ADD KEY `Duration` (`Duration`);
+ADD PRIMARY KEY (`ID`),
+ADD KEY `Title` (`Title`),
+ADD KEY `ReleaseYear` (`ReleaseYear`),
+ADD KEY `Rating` (`Rating`),
+ADD KEY `Votes` (`Votes`),
+ADD KEY `MPAA` (`MPAA`),
+ADD KEY `Budget` (`Budget`),
+ADD KEY `Duration` (`Duration`);
 
 ALTER TABLE Movies_Countries
-  ADD PRIMARY KEY (`Movie_ID`,`Country_ID`),
-  ADD KEY `Country_ID` (`Country_ID`);
+ADD PRIMARY KEY (`Movie_ID`,`Country_ID`),
+ADD KEY `Country_ID` (`Country_ID`);
 
 ALTER TABLE Movies_Genres
-  ADD KEY `Movie_ID` (`Movie_ID`,`Genre_ID`),
-  ADD KEY `Movies_Genres-GenreID` (`Genre_ID`);
+ADD KEY `Movie_ID` (`Movie_ID`,`Genre_ID`),
+ADD KEY `Movies_Genres-GenreID` (`Genre_ID`);
 
 ALTER TABLE Movies_Keywords
-  ADD KEY `Movie_ID` (`Movie_ID`,`Keyword_ID`),
-  ADD KEY `Movies_Keywords-KeywordID` (`Keyword_ID`);
+ADD KEY `Movie_ID` (`Movie_ID`,`Keyword_ID`),
+ADD KEY `Movies_Keywords-KeywordID` (`Keyword_ID`);
 
 ALTER TABLE Persons
-  ADD PRIMARY KEY (`ID`),
-  ADD UNIQUE KEY `Name` (`Name`) USING BTREE;
+ADD PRIMARY KEY (`ID`),
+ADD UNIQUE KEY `Name` (`Name`) USING BTREE;
 #   ADD KEY `Persons` (`BirthDay`, `DeathDay`, `Sex`);
 
 ALTER TABLE Persons_Movies
-  ADD UNIQUE KEY `Movie_ID` (`Role`,`Movie_ID`,`Person_ID`) USING BTREE ,
-  ADD KEY `Persons_Movies_PersonID` (`Person_ID`);
+ADD UNIQUE KEY `Movie_ID` (`Role`,`Movie_ID`,`Person_ID`) USING BTREE ,
+ADD KEY `Persons_Movies_PersonID` (`Person_ID`);
 
 ALTER TABLE ReleaseDates
-  ADD PRIMARY KEY (`Movie_ID`,`Country_ID`,`ReleaseDate`),
-  ADD KEY `CountryID` (`Country_ID`);
+ADD PRIMARY KEY (`Movie_ID`,`Country_ID`,`ReleaseDate`),
+ADD KEY `CountryID` (`Country_ID`);
 
 /* Set AUTO_INCREMENT */
 
 ALTER TABLE Countries
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE Genres
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE Keywords
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE Movies
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE Persons
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 /* Add foreign keys */
 
 ALTER TABLE Movies_Countries
-  ADD CONSTRAINT `Movies_Countries_ibfk_1` FOREIGN KEY (`Movie_ID`) REFERENCES Movies (`ID`),
-  ADD CONSTRAINT `Movies_Countries_ibfk_2` FOREIGN KEY (`Country_ID`) REFERENCES Countries (`ID`);
+ADD CONSTRAINT `Movies_Countries_ibfk_1` FOREIGN KEY (`Movie_ID`) REFERENCES Movies (`ID`),
+ADD CONSTRAINT `Movies_Countries_ibfk_2` FOREIGN KEY (`Country_ID`) REFERENCES Countries (`ID`);
 
 ALTER TABLE Movies_Genres
-  ADD CONSTRAINT `Movies_Genres-GenreID` FOREIGN KEY (`Genre_ID`) REFERENCES Genres (`ID`),
-  ADD CONSTRAINT `Movies_Genres-MovieID` FOREIGN KEY (`Movie_ID`) REFERENCES Movies (`ID`);
+ADD CONSTRAINT `Movies_Genres-GenreID` FOREIGN KEY (`Genre_ID`) REFERENCES Genres (`ID`),
+ADD CONSTRAINT `Movies_Genres-MovieID` FOREIGN KEY (`Movie_ID`) REFERENCES Movies (`ID`);
 
 ALTER TABLE Movies_Keywords
-  ADD CONSTRAINT `Movies_Keywords-KeywordID` FOREIGN KEY (`Keyword_ID`) REFERENCES Keywords (`ID`),
-  ADD CONSTRAINT `Movies_Keywords-MovieID` FOREIGN KEY (`Movie_ID`) REFERENCES Movies (`ID`);
+ADD CONSTRAINT `Movies_Keywords-KeywordID` FOREIGN KEY (`Keyword_ID`) REFERENCES Keywords (`ID`),
+ADD CONSTRAINT `Movies_Keywords-MovieID` FOREIGN KEY (`Movie_ID`) REFERENCES Movies (`ID`);
 
 ALTER TABLE Persons_Movies
-  ADD CONSTRAINT `Persons_Movies_MovieID` FOREIGN KEY (`Movie_ID`) REFERENCES Movies (`ID`),
-  ADD CONSTRAINT `Persons_Movies_PersonID` FOREIGN KEY (`Person_ID`) REFERENCES Persons (`ID`);
+ADD CONSTRAINT `Persons_Movies_MovieID` FOREIGN KEY (`Movie_ID`) REFERENCES Movies (`ID`),
+ADD CONSTRAINT `Persons_Movies_PersonID` FOREIGN KEY (`Person_ID`) REFERENCES Persons (`ID`);
 
 ALTER TABLE ReleaseDates
-  ADD CONSTRAINT `ReleaseDates-MovieID` FOREIGN KEY (`Movie_ID`) REFERENCES Movies (`ID`),
-  ADD CONSTRAINT `ReleaseDates_CountryID` FOREIGN KEY (`Country_ID`) REFERENCES Countries (`ID`);
+ADD CONSTRAINT `ReleaseDates-MovieID` FOREIGN KEY (`Movie_ID`) REFERENCES Movies (`ID`),
+ADD CONSTRAINT `ReleaseDates_CountryID` FOREIGN KEY (`Country_ID`) REFERENCES Countries (`ID`);
 
 /* Create temporary tables */
 
@@ -279,41 +279,41 @@ FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
 ALTER TABLE `movies_temp`
-  ADD KEY `Name` (`Name`);
+ADD KEY `Name` (`Name`);
 
 ALTER TABLE `plot_temp`
-  ADD KEY `movie` (`movie`);
+ADD KEY `movie` (`movie`);
 
 ALTER TABLE `mpaa_temp`
-  ADD KEY `movie` (`movie`);
+ADD KEY `movie` (`movie`);
 
 ALTER TABLE `ratings_temp`
-  ADD KEY `movie` (`movie`);
+ADD KEY `movie` (`movie`);
 
 ALTER TABLE `runningTimes_temp`
-  ADD KEY `movie` (`movie`);
+ADD KEY `movie` (`movie`);
 
 ALTER TABLE `business_temp`
-  ADD KEY `movie` (`movie`);
+ADD KEY `movie` (`movie`);
 
 INSERT INTO Movies (Title, Plot, ReleaseYear, Rating, Votes, MPAA, Currency, Budget, Duration)
-  (SELECT
-     movies_temp.name,
-     MIN(plot_temp.plot),
-     MIN(movies_temp.releaseYear),
-     MIN(ratings_temp.rating),
-     MIN(ratings_temp.votes),
-     MIN(mpaa_temp.mpaa),
-     MIN(business_temp.currency),
-     MIN(business_temp.budget),
-     MIN(runningTimes_temp.minutes)
-  FROM movies_temp
-     LEFT JOIN plot_temp ON plot_temp.movie = movies_temp.name
-     LEFT JOIN ratings_temp ON ratings_temp.movie = movies_temp.name
-     LEFT JOIN mpaa_temp ON mpaa_temp.movie = movies_temp.name
-     LEFT JOIN runningTimes_temp ON runningTimes_temp.movie = movies_temp.name
-     LEFT JOIN business_temp ON business_temp.movie = movies_temp.name
-  WHERE movies_temp.name IS NOT NULL GROUP BY movies_temp.Name);
+(SELECT
+ movies_temp.name,
+ MIN(plot_temp.plot),
+ MIN(movies_temp.releaseYear),
+ MIN(ratings_temp.rating),
+ MIN(ratings_temp.votes),
+ MIN(mpaa_temp.mpaa),
+ MIN(business_temp.currency),
+ MIN(business_temp.budget),
+ MIN(runningTimes_temp.minutes)
+ FROM movies_temp
+ LEFT JOIN plot_temp ON plot_temp.movie = movies_temp.name
+ LEFT JOIN ratings_temp ON ratings_temp.movie = movies_temp.name
+ LEFT JOIN mpaa_temp ON mpaa_temp.movie = movies_temp.name
+ LEFT JOIN runningTimes_temp ON runningTimes_temp.movie = movies_temp.name
+ LEFT JOIN business_temp ON business_temp.movie = movies_temp.name
+ WHERE movies_temp.name IS NOT NULL GROUP BY movies_temp.Name);
 
 DROP TABLE plot_temp;
 
@@ -334,20 +334,20 @@ FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
 ALTER TABLE `genres_temp`
-  ADD KEY `movie` (`movie`);
+ADD KEY `movie` (`movie`);
 
 INSERT INTO Genres (GenreName)
-  SELECT DISTINCT genre
-  FROM genres_temp;
+SELECT DISTINCT genre
+FROM genres_temp;
 
 /* Fill Movies_Genres */
 
 INSERT INTO Movies_Genres (Movie_ID, Genre_ID)
-  SELECT Movies.ID, x.ID FROM Movies
-    RIGHT JOIN (SELECT ID, movie FROM Genres
-      INNER JOIN genres_temp ON genres_temp.genre = Genres.GenreName) AS x
-      ON x.movie = Movies.Title
-  WHERE Movies.ID IS NOT NULL AND x.ID IS NOT NULL;
+SELECT Movies.ID, x.ID FROM Movies
+RIGHT JOIN (SELECT ID, movie FROM Genres
+  INNER JOIN genres_temp ON genres_temp.genre = Genres.GenreName) AS x
+ON x.movie = Movies.Title
+WHERE Movies.ID IS NOT NULL AND x.ID IS NOT NULL;
 
 DROP TABLE genres_temp;
 
@@ -356,21 +356,21 @@ FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
 ALTER TABLE `keywords_temp`
-  ADD KEY `movie` (`movie`);
+ADD KEY `movie` (`movie`);
 
 INSERT INTO Keywords (Keyword)
-  SELECT DISTINCT keyword
-  FROM keywords_temp;
+SELECT DISTINCT keyword
+FROM keywords_temp;
 
 /* Fill Movies_Keywords */
 
 INSERT INTO Movies_Keywords (Movie_ID, Keyword_ID)
-  SELECT Movies.ID, x.ID FROM Movies
-    RIGHT JOIN
-    (SELECT ID, movie FROM Keywords
-      INNER JOIN keywords_temp ON keywords_temp.keyword = Keywords.Keyword) AS x
-      ON x.movie = Movies.Title
-  WHERE Movies.ID IS NOT NULL AND x.ID IS NOT NULL;
+SELECT Movies.ID, x.ID FROM Movies
+RIGHT JOIN
+(SELECT ID, movie FROM Keywords
+  INNER JOIN keywords_temp ON keywords_temp.keyword = Keywords.Keyword) AS x
+ON x.movie = Movies.Title
+WHERE Movies.ID IS NOT NULL AND x.ID IS NOT NULL;
 
 DROP TABLE keywords_temp;
 
@@ -385,108 +385,115 @@ FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
 ALTER TABLE `biographies_temp`
-  ADD KEY `actor` (`actor`);
+ADD KEY `actor` (`actor`);
 
 ALTER TABLE `actors_temp`
-  ADD KEY `movie` (`name`,`movie`);
+ADD KEY `movie` (`name`);
+
+ALTER TABLE `actors_temp`
+ADD KEY `movie` (`movie`);
+
 
 INSERT IGNORE INTO Persons(Name, Sex, BirthDay, DeathDay)
-  SELECT name, "Male" AS sex, biographies_temp.birthdate, biographies_temp.deathdate FROM actors_temp
-    LEFT JOIN biographies_temp ON actors_temp.name = biographies_temp.actor;
+SELECT name, "Male" AS sex, biographies_temp.birthdate, biographies_temp.deathdate FROM actors_temp
+LEFT JOIN biographies_temp ON actors_temp.name = biographies_temp.actor;
 
 LOAD DATA INFILE '/var/lib/mysql-files/actresses.list.csv' INTO TABLE actresses_temp
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
 ALTER TABLE `actresses_temp`
-  ADD KEY `movie` (`name`,`movie`);
+ADD KEY `movie` (`name`);
+
+ALTER TABLE `actresses_temp`
+ADD KEY `movie` (`movie`);
 
 INSERT IGNORE INTO Persons(Name, Sex, BirthDay, DeathDay)
-  SELECT name, "Female" AS sex, biographies_temp.birthdate, biographies_temp.deathdate FROM actresses_temp
-    LEFT JOIN biographies_temp ON name = biographies_temp.actor;
+SELECT name, "Female" AS sex, biographies_temp.birthdate, biographies_temp.deathdate FROM actresses_temp
+LEFT JOIN biographies_temp ON name = biographies_temp.actor;
 
 LOAD DATA INFILE '/var/lib/mysql-files/producers.list.csv' INTO TABLE producers_temp
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
 ALTER TABLE `producers_temp`
-  ADD KEY `movie` (`movie`);
+ADD KEY `movie` (`movie`);
 
 INSERT IGNORE INTO Persons(Name, BirthDay, DeathDay)
-  SELECT name, biographies_temp.birthdate, biographies_temp.deathdate FROM producers_temp
-    LEFT JOIN biographies_temp ON name = biographies_temp.actor;
+SELECT name, biographies_temp.birthdate, biographies_temp.deathdate FROM producers_temp
+LEFT JOIN biographies_temp ON name = biographies_temp.actor;
 
 LOAD DATA INFILE '/var/lib/mysql-files/writers.list.csv' INTO TABLE writers_temp
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
 ALTER TABLE `writers_temp`
-  ADD KEY `movie` (`movie`);
+ADD KEY `movie` (`movie`);
 
 INSERT IGNORE INTO Persons(Name, BirthDay, DeathDay)
-  SELECT name, biographies_temp.birthdate, biographies_temp.deathdate FROM writers_temp
-    LEFT JOIN biographies_temp ON name = biographies_temp.actor;
+SELECT name, biographies_temp.birthdate, biographies_temp.deathdate FROM writers_temp
+LEFT JOIN biographies_temp ON name = biographies_temp.actor;
 
 LOAD DATA INFILE '/var/lib/mysql-files/editors.list.csv' INTO TABLE editors_temp
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
 ALTER TABLE `editors_temp`
-  ADD KEY `movie` (`movie`);
+ADD KEY `movie` (`movie`);
 
 INSERT IGNORE INTO Persons(Name, BirthDay, DeathDay)
-  SELECT name, biographies_temp.birthdate, biographies_temp.deathdate FROM editors_temp
-    LEFT JOIN biographies_temp ON name = biographies_temp.actor;
+SELECT name, biographies_temp.birthdate, biographies_temp.deathdate FROM editors_temp
+LEFT JOIN biographies_temp ON name = biographies_temp.actor;
 
 LOAD DATA INFILE '/var/lib/mysql-files/directors.list.csv' INTO TABLE directors_temp
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
 ALTER TABLE `directors_temp`
-  ADD KEY `movie` (`movie`);
+ADD KEY `movie` (`movie`);
 
 INSERT IGNORE INTO Persons(Name, BirthDay, DeathDay)
-  SELECT name, biographies_temp.birthdate, biographies_temp.deathdate FROM directors_temp
-    LEFT JOIN biographies_temp ON name = biographies_temp.actor;
+SELECT name, biographies_temp.birthdate, biographies_temp.deathdate FROM directors_temp
+LEFT JOIN biographies_temp ON name = biographies_temp.actor;
 
 /* Fill Persons_Movies */
 
 INSERT INTO Persons_Movies (Movie_ID, Person_ID, Role)
-  SELECT DISTINCT m.ID, p.ID, "producer" as Role FROM producers_temp AS pt
-    RIGHT JOIN Persons p ON p.Name = pt.name
-    RIGHT JOIN Movies m ON m.Title = pt.movie
-    RIGHT JOIN biographies_temp b ON p.Name = b.actor
-  WHERE m.ID IS NOT NULL;
+SELECT DISTINCT m.ID, p.ID, "producer" as Role FROM producers_temp AS pt
+RIGHT JOIN Persons p ON p.Name = pt.name
+RIGHT JOIN Movies m ON m.Title = pt.movie
+RIGHT JOIN biographies_temp b ON p.Name = b.actor
+WHERE m.ID IS NOT NULL;
 INSERT INTO Persons_Movies (Movie_ID, Person_ID, Role)
-  SELECT DISTINCT m.ID, p.ID,"writer" AS Role FROM writers_temp AS wt
-    RIGHT JOIN Persons p ON p.Name = wt.name
-    RIGHT JOIN Movies m ON m.Title = wt.movie
-    RIGHT JOIN biographies_temp b ON p.Name = b.actor
-  WHERE m.ID IS NOT NULL;
+SELECT DISTINCT m.ID, p.ID,"writer" AS Role FROM writers_temp AS wt
+RIGHT JOIN Persons p ON p.Name = wt.name
+RIGHT JOIN Movies m ON m.Title = wt.movie
+RIGHT JOIN biographies_temp b ON p.Name = b.actor
+WHERE m.ID IS NOT NULL;
 INSERT INTO Persons_Movies (Movie_ID, Person_ID, Role)
-  SELECT DISTINCT m.ID, p.ID, "editor" AS Role FROM editors_temp AS et
-    RIGHT JOIN Persons p ON p.Name = et.name
-    RIGHT JOIN Movies m ON m.Title = et.movie
-    RIGHT JOIN biographies_temp b ON p.Name = b.actor
-  WHERE m.ID IS NOT NULL;
+SELECT DISTINCT m.ID, p.ID, "editor" AS Role FROM editors_temp AS et
+RIGHT JOIN Persons p ON p.Name = et.name
+RIGHT JOIN Movies m ON m.Title = et.movie
+RIGHT JOIN biographies_temp b ON p.Name = b.actor
+WHERE m.ID IS NOT NULL;
 INSERT INTO Persons_Movies (Movie_ID, Person_ID, Role)
-  SELECT DISTINCT m.ID, p.ID, "director" AS Role FROM directors_temp AS dt
-    RIGHT JOIN Persons p ON p.Name = dt.name
-    RIGHT JOIN Movies m ON m.Title = dt.movie
-    RIGHT JOIN biographies_temp b ON p.Name = b.actor
-  WHERE m.ID IS NOT NULL;
+SELECT DISTINCT m.ID, p.ID, "director" AS Role FROM directors_temp AS dt
+RIGHT JOIN Persons p ON p.Name = dt.name
+RIGHT JOIN Movies m ON m.Title = dt.movie
+RIGHT JOIN biographies_temp b ON p.Name = b.actor
+WHERE m.ID IS NOT NULL;
 INSERT IGNORE INTO Persons_Movies (Movie_ID, Person_ID, Role)
-  SELECT DISTINCT m.ID, p.ID, "actor" AS Role FROM actors_temp AS at
-    RIGHT JOIN Persons p ON p.Name = at.name
-    RIGHT JOIN Movies m ON m.Title = at.movie
-    RIGHT JOIN biographies_temp b ON p.Name = b.actor
-  WHERE m.ID IS NOT NULL;
+SELECT DISTINCT m.ID, p.ID, "actor" AS Role FROM actors_temp AS at
+RIGHT JOIN Persons p ON p.Name = at.name
+RIGHT JOIN Movies m ON m.Title = at.movie
+RIGHT JOIN biographies_temp b ON p.Name = b.actor
+WHERE m.ID IS NOT NULL;
 INSERT IGNORE INTO Persons_Movies (Movie_ID, Person_ID, Role)
-  SELECT DISTINCT m.ID, p.ID, "actor" AS Role FROM actresses_temp AS ast
-    RIGHT JOIN Persons p ON p.Name = ast.name
-    RIGHT JOIN Movies m ON m.Title = ast.movie
-    RIGHT JOIN biographies_temp b ON p.Name = b.actor
-  WHERE m.ID IS NOT NULL;
+SELECT DISTINCT m.ID, p.ID, "actor" AS Role FROM actresses_temp AS ast
+RIGHT JOIN Persons p ON p.Name = ast.name
+RIGHT JOIN Movies m ON m.Title = ast.movie
+RIGHT JOIN biographies_temp b ON p.Name = b.actor
+WHERE m.ID IS NOT NULL;
 
 /* Fill Countries */
 
@@ -495,18 +502,21 @@ FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
 ALTER TABLE `releaseDates_temp`
-  ADD KEY `movie` (`movie`,`country`);
+ADD KEY `movie` (`movie`);
+
+ALTER TABLE `releaseDates_temp`
+ADD KEY `movie` (`country`);
 
 INSERT INTO Countries(Country)
-  SELECT DISTINCT DISTINCT Country FROM releaseDates_temp;
+SELECT DISTINCT DISTINCT Country FROM releaseDates_temp;
 
 /* Fill ReleaseDates */
 
 INSERT INTO ReleaseDates (Movie_ID, Country_ID, ReleaseDate)
-  SELECT DISTINCT Movies.ID, Countries.ID, date FROM releaseDates_temp
-    LEFT JOIN Movies ON movie = Movies.Title
-    LEFT JOIN Countries ON Countries.Country = releaseDates_temp.country
-  WHERE Movies.ID IS NOT NULL;
+SELECT DISTINCT Movies.ID, Countries.ID, date FROM releaseDates_temp
+LEFT JOIN Movies ON movie = Movies.Title
+LEFT JOIN Countries ON Countries.Country = releaseDates_temp.country
+WHERE Movies.ID IS NOT NULL;
 
 /* Fill Movies_Countries */
 
@@ -515,10 +525,13 @@ FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n';
 
 ALTER TABLE `countries_temp`
-  ADD KEY `movie` (`movie`,`country`);
+ADD KEY `movie` (`movie`);
+
+ALTER TABLE `countries_temp`
+ADD KEY `movie` (`country`);
 
 INSERT INTO Movies_Countries(Movie_ID, Country_ID)
-  SELECT DISTINCT Movies.ID, c.ID FROM Movies
-    RIGHT JOIN countries_temp as ct ON Movies.Title = ct.movie
-    RIGHT JOIN Countries as c ON c.Country = ct.country
-  WHERE Movies.ID IS NOT NULL;
+SELECT DISTINCT Movies.ID, c.ID FROM Movies
+RIGHT JOIN countries_temp as ct ON Movies.Title = ct.movie
+RIGHT JOIN Countries as c ON c.Country = ct.country
+WHERE Movies.ID IS NOT NULL;
