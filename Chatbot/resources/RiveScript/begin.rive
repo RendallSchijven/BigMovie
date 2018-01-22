@@ -1,0 +1,25 @@
+! var birthyear = 1995
+! var year = <call>rive year</call>
+! var botpersonName = <call>rive name</call>
+
+! array compliments = nice good amazing like well\sdone good\sjob great cool
+! array greetings = hello greetings good\smorning good\sevening good\safternoon hey ey yo hi sup whaddup what\sis\sup
+! array verbs = make create write do
+
+// Substitutions
+! sub i'm     = i am
+! sub i'd     = i would
+! sub i've    = i have
+! sub i'll    = i will
+! sub don't   = do not
+! sub isn't   = is not
+! sub you'd   = you would
+! sub you're  = you are
+! sub you've  = you have
+! sub you'll  = you will
+! sub what's  = what is
+! sub whats   = what is
+! sub what're = what are
+! sub what've = what have
+! sub what'll = what will
+! sub who's   = who is
