@@ -5,7 +5,7 @@
 
 library(RMySQL)
 
-mydb <- dbConnect(MySQL(), dbname="NickyBot", user="Riley", password="jayden", host="hiddevanranden.nl")
+mydb <- dbConnect(MySQL(), dbname="NickyBot", user="riley", password="jayden", host="db.sanderkastelein.nl")
 
 actress <- dbGetQuery(mydb, "select ID, BirthDay, Name, count(*) as freq FROM Persons LEFT JOIN Persons_Movies ON Persons_Movies.Person_ID = Persons.ID WHERE Persons.Sex = 'Female' AND Persons_Movies.Role = 'actor' GROUP BY Persons.ID ORDER BY freq DESC LIMIT 2000")
 moviesPerYearPerActress <- dbGetQuery(mydb, "select Name, ReleaseYear, count(*) as freq FROM Persons, Movies, Persons_Movies WHERE Persons_Movies.Role = 'actor' AND Persons_Movies.Person_ID = Persons.ID GROUP BY Movies.ReleaseYear ORDER BY freq DESC LIMIT 4000")
