@@ -179,12 +179,12 @@ CREATE TEMPORARY TABLE keywords_temp (
 
 CREATE TEMPORARY TABLE actors_temp (
   `name`  VARCHAR(200),
-  `movie` VARCHAR(1024)
+  `movie` VARCHAR(512)
 ) CHARACTER SET utf8mb4;
 
 CREATE TEMPORARY TABLE actresses_temp (
   `name`  VARCHAR(200),
-  `movie` VARCHAR(1024)
+  `movie` VARCHAR(512)
 ) CHARACTER SET utf8mb4;
 
 CREATE TEMPORARY TABLE editors_temp (
