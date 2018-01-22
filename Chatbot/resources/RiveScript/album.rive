@@ -20,8 +20,4 @@
 
 + *
 % what thing do you want most
-- <set thing=<star>> lets go
-
-+ *
-%lets go
--<call> rive album <get transport> <get like> <get thing> <get place> </call>
+- <set thing=<star>> Here it is \n <call> rive album <get transport> <get like> <get thing> <get place> </call>
