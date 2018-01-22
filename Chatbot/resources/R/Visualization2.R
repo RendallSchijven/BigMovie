@@ -6,7 +6,7 @@
 #install.packages("RMySQL")
 library(RMySQL)
 
-mydb <- dbConnect(MySQL(), dbname="NickyBot", user="riley", password="jayden", host="db.sanderkastelein.nl")
+mydb <- dbConnect(MySQL(), dbname="NickyBotUtf8", user="riley", password="jayden", host="db.sanderkastelein.nl")
 
 args <- commandArgs(trailingOnly = TRUE)
 
