@@ -2,6 +2,7 @@
 ! var year = <call>rive year</call>
 ! var botpersonName = <call>rive name</call>
 
+! array goodbyes = bye goodbye farewell later see\syou\slater so\slong i\sam\sout
 ! array compliments = nice good amazing like well\sdone good\sjob great cool
 ! array greetings = hello eyy greetings good\smorning good\sevening good\safternoon hey ey yo hi sup whaddup what\sis\sup
 ! array verbs = make create write do
