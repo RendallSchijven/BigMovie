@@ -390,9 +390,6 @@ ADD KEY `actor` (`actor`);
 ALTER TABLE `actors_temp`
 ADD KEY `movie` (`name`);
 
-ALTER TABLE `actors_temp`
-ADD KEY `movie` (`movie`);
-
 
 INSERT IGNORE INTO Persons(Name, Sex, BirthDay, DeathDay)
 SELECT name, "Male" AS sex, biographies_temp.birthdate, biographies_temp.deathdate FROM actors_temp
