@@ -4,6 +4,9 @@
 + hello
 - Hi there!
 
++ test
+- <call>inlineKeyboard ["test",[{"text":"test button 1", "callback":"inline_test_button_1"}],[{"text":"test button 3", "callback":"test_button_3"},{"text":"test button 4", "callback":"test_button_4"}]]</call>
+
 + [*] how are you [*]
 - I'm fine.
 - Splendid!
@@ -17,6 +20,7 @@
 ^ /movies\n
 ^ /actors\n
 ^ /directors
+^ <call>inlineKeyboard ["You can ask me questions like:",[{"text":"movies", "callback":"help_movies"}],[{"text":"actors", "callback":"actors_help"}],[{"text":"directors", "callback":"directors_help"}]]</call>
 
 + *
 - Not sure I got that. Type /help for some example questions.

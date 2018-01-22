@@ -27,39 +27,7 @@ public class JdbcSubroutine implements Subroutine {
         sql = sql.trim();
         System.out.println(sql);
 
-        Connection connection = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
-
-        try {
-            connection=(Connection) DriverManager.getConnection(
-                    "jdbc:mysql://" + host + ":" + port + "/" + db + "?autoReconnect=true&useSSL=false",
-                    username, password);
-            statement=(Statement) connection.createStatement();
-            resultSet=statement.executeQuery(sql);
-            while(resultSet.next()) {
-                int i = resultSet.getMetaData().getColumnCount();
-                for (int j = 1; j <= i; j++) {
-                    if (result.equals("")) {
-                        result = resultSet.getString(j);
-                    } else {
-                        result += resultSet.getString(j) + " ";
-                    }
-                }
-                if (!result.equals(""))
-                    result += "\n";
-            }
-        } catch (SQLException ex) {
-        } finally{
-            try {
-                resultSet.close();
-                statement.close();
-                connection.close();
-            } catch (SQLException ex) {
-            }
-        }
-
-        return result;
+        return Database.query(sql);
     }
 
 }
