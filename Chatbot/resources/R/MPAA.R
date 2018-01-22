@@ -8,3 +8,12 @@ library(RMySQL)
 mydb <- dbConnect(MySQL(), dbname="NickyBot", user="Riley", password="jayden", host="hiddevanranden.nl")
 
 movies <- dbGetQuery(mydb, "SELECT * FROM Movies")
+
+dbDisconnect(mydb)
+
+plot(movies)
+cor(movies)
+
+#Maak een lineair regressie model van movies
+movielm = lm(MPAA ~ Plot , data=movies)
+summary(movielm)
