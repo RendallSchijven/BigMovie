@@ -7,12 +7,10 @@ SQL
 + 3. In welke films speelde "acteur"?
 + 4. Welke regisseur heeft de meeste films met Jim Carrey in de hoofdrol geregisseerd?
 + 5. Welke film is het duurst geweest om op te nemen? Bonus: houd hierbij rekening met de inflatie. 
-- 6. Welke acteur (m/v) heeft de langste filmcarrière? (dus geen series)
-+ 7. Wat zijn de 5 meest voorkomende genre?
-+ 8. Wat is de meest voorkomende genre in "land"?
-+ 9. Welke 5 landen komen de meeste films vandaan?
-+ 10. Wat is de hoogst gewaardeerde film?
-- 11. Wie is de oudste nog levende acteur?
++ 6. Wat zijn de 5 meest voorkomende genre?
++ 7. Wat is de meest voorkomende genre in "land"?
++ 8. Welke 5 landen komen de meeste films vandaan?
++ 9. Wat is de hoogst gewaardeerde film?
 
 Visualazation
 - 1. Maak een visuele presentatie van de in de loop van de tijd veranderende populariteit van 
