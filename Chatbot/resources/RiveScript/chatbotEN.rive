@@ -31,53 +31,6 @@
 + *
 - Not sure I got that. Type /help for some example questions.
 
-//Plain SQL questions Dutch
-
-//Question 1
-+ wat is de kortste film met het hoogste cijfer
-- <call>jdbc SELECT Title FROM Movies WHERE rating > 8.5 AND duration IS NOT NULL ORDER BY duration ASC LIMIT 1;</call>
-
-//Question 2
-+ in welk jaar tussen 1990 en nu zijn de meeste films gemaakt met het woord beer in de titel
-- <call>jdbc SELECT ReleaseYear as Year FROM Movies where Title LIKE '%beer%' AND ReleaseYear > 1989 GROUP BY ReleaseYear ORDER BY COUNT(*) DESC LIMIT 1;</call>
-
-//Question 3
-+ in welke films speelt *
-- <call>jdbc SELECT Movies.Title FROM Movies LEFT JOIN Persons_Movies ON Persons_Movies.Movie_ID = Movies.ID LEFT JOIN Persons ON Persons_Movies.Person_ID = Persons.ID WHERE Persons.Name LIKE '%<star2>, <star1>%'; </call>
-
-//Question 4
-+ welke regisseur heeft de meeste films gemaakt met *
-<call>jdbc SELECT p.Name, COUNT(*) AS Movies FROM Persons AS p LEFT JOIN Persons_Movies AS pm ON pm.Person_ID = p.ID WHERE pm.Role = 'director' AND pm.Movie_ID IN (SELECT pm.Movie_ID FROM Persons_Movies AS pm LEFT JOIN Persons AS p ON p.ID = pm.Person_ID WHERE p.Name LIKE '%<star2>, <star1>%' AND pm.Role = 'actor') GROUP BY p.Name ORDER BY Movies DESC LIMIT 1;</call>
-
-//Question 5
-+ welke films was het duurst om te maken
-- <call>jdbc SELECT Title from Movies ORDER BY Budget DESC LIMIT 1;</call>
-
-//Question 6
-+ welke acteur had de langste film carrière
-- <call>jdbc</call>
-
-//Question 7
-+ wat zijn de meest voorkomende genres
--<call>jdbc SELECT g.GenreName AS Genre, COUNT(mg.Genre_ID) AS Movies FROM Movies_Genres AS mg LEFT JOIN Genres AS g ON g.ID = mg.Genre_ID GROUP BY g.ID ORDER BY Movies DESC LIMIT 5; </call>
-
-//Question 8
-+ wat is de meest voorkomende genre in _
-- <call>jdbc SELECT g.GenreName AS Genre, COUNT(mg.Genre_ID) AS Movies FROM Movies_Genres AS mg LEFT JOIN Genres AS g ON g.ID = mg.Genre_ID LEFT JOIN Movies_Countries as mc ON mc.Movie_ID = mg.Movie_ID LEFT JOIN Countries AS c ON c.ID = mc.Country_ID WHERE c.Country LIKE '%<star1>%' GROUP BY g.ID ORDER BY Movies DESC LIMIT 5;</call>
-
-//Question 9
-+ waar komen de meeste films vandaan
-- <call>jdbc SELECT c.Country, COUNT(mc.Movie_ID) AS Movies FROM Movies_Countries as mc LEFT JOIN Countries AS c ON c.ID = mc.Country_ID GROUP BY Country ORDER BY Movies DESC LIMIT 5; </call>
-
-//Question 10
-+ wat zijn de hoogst gewaardeerde films
-- <call>jdbc SELECT DISTINCT Title, Rating, Votes FROM `Movies` WHERE Votes > 100000 AND Title NOT LIKE '%(VG)%' ORDER BY Rating DESC, Votes DESC LIMIT 5;</call>
-
-//Question 11
-+ wie is de oudst levende acteur
-- <call>jdbc SELECT Name FROM Persons WHERE MIN(BirthDay) AND DeathDay IS NULL;
-
-
 //Plain SQL questions English
 
 //Question 1
@@ -101,28 +54,20 @@
 - <call>jdbc SELECT Title from Movies WHERE CURRENCY = 'USD' ORDER BY Budget DESC LIMIT 1;</call>
 
 //Question 6
-+ which actor has the longest movie career
-- <call>jdbc</call>
-
-//Question 7
 + what are the 5 most occuring genres
 -<call>jdbc SELECT g.GenreName AS Genre, COUNT(mg.Genre_ID) AS Movies FROM Movies_Genres AS mg LEFT JOIN Genres AS g ON g.ID = mg.Genre_ID GROUP BY g.ID ORDER BY Movies DESC LIMIT 5; </call>
 
-//Question 8
+//Question 7
 + what are the most occuring genres in *
 - <call>jdbc SELECT g.GenreName AS Genre, COUNT(mg.Genre_ID) AS Movies FROM Movies_Genres AS mg LEFT JOIN Genres AS g ON g.ID = mg.Genre_ID LEFT JOIN Movies_Countries as mc ON mc.Movie_ID = mg.Movie_ID LEFT JOIN Countries AS c ON c.ID = mc.Country_ID WHERE c.Country LIKE '%<star1>%' GROUP BY g.ID ORDER BY Movies DESC LIMIT 5;</call>
 
-//Question 9
+//Question 8
 + which 5 countries made the most movies
 - <call>jdbc SELECT c.Country, COUNT(mc.Movie_ID) AS Movies FROM Movies_Countries as mc LEFT JOIN Countries AS c ON c.ID = mc.Country_ID GROUP BY Country ORDER BY Movies DESC LIMIT 5; </call>
 
-//Question 10
+//Question 9
 + what are the top rated movies
 - <call>jdbc SELECT DISTINCT Title, Rating, Votes FROM `Movies` WHERE Votes > 100000 AND Title NOT LIKE '%(VG)%' ORDER BY Rating DESC, Votes DESC LIMIT 5;</call>
-
-//Question 11
-+ who is the oldest living actor
-- <call>jdbc SELECT Name FROM Persons WHERE MIN(BirthDay) AND DeathDay IS NULL;</call>
 
 // Visualisation questions
 
@@ -130,13 +75,12 @@
 + get years *
 - Just a moment please
 ^ <call>system rscript Chatbot/resources/R/Visualization2.R <star1></call>
-^ <call> send photo MoviesYear.jpg</call>
+^ <call> send photo MoviesYear.jpg there it is rockstar</call>
 
 // R Questions
-+ [*] plot [*]
-- There it is!
-^ <call>system rscript Chatbot/resources/R/plot.R</call>
-^ <call>send photo rplot.jpg The graph produced by R</call>
++ is there a relation between the cost and duration of movies
+- <call>system rscript Chatbot/resources/R/R2en.R</call>
+^ <call>send photo MoviesBudget.jpg As you can see there is not really a relation between the budget and duration of a movie</call>
 
 // Substitutions
 ! sub i'm     = i am
@@ -155,3 +99,4 @@
 ! sub what've = what have
 ! sub what'll = what will
 ! sub who's   = who is
+
