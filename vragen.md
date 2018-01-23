@@ -21,15 +21,10 @@ Visualazation
 - 3. Geef een chart van de verdeling van genres
 
 R
-- Op IMDB staat onder meer een lijst van MPAA-ratings (de Amerikaanse versie van de 
-  Nederlandse Kijkwijzer). Maak een model waaruit je kan afleiden in welke categorie een 
-  film valt op grond van de motivatie in de MPAA-ratings lijst. Valideer het model. 
-- Maak een model waaruit je de MPAA-categorie (zie ook vraag C2) afleidt uit de tekst van 
-  de plot (NB: hier wordt niet een grafische plot bedoeld, maar de plot van de film). 
-  Valideer het model.
+- Er wordt wel eens gezegd dat Europese films meer ‘cultureel’ zijn dan Amerikaanse. 
+  Maak een model in R waarmee je kunt nagaan of  Franse films minder vaak van het 
+  genre geweld en/of horror zijn dan Amerikaanse. 
+- Maak een model waaruit je de MPAA-categorie afleidt uit de tekst van 
+  de plot valideer het model.
 + Ga na met R of er een verband is tussen de kosten van een film en de lengte ervan. 
-  Analyseer dit op een vergelijkbare manier als in vraag C4. 
-- Er wordt vaak gezegd dat naarmate actrices ouder zijn zij moeilijker een rol krijgen. Ga 
-  (met R) na of dat zo is. Je zou bijvoorbeeld een lineair regressiemodel kunnen maken 
-  met leeftijd en geslacht als onafhankelijke variabelen en aantal films per jaar als 
-  afhankelijke variabele. 
++ Ga na met R of er een verband is tussen de kosten en de rating van een film.

@@ -1,5 +1,5 @@
-# Title     : Costly length
-# Objective : Ga na of er een verband is tussen de kosten van een film en de lengte ervan.
+# Title     : Budget speeltijd
+# Objective : Ga na of er een verband is tussen speeltijd en het budget van films
 # Created by: Rendall
 # Created on: 15-1-2018
 
@@ -13,6 +13,6 @@ movies <- dbGetQuery(mydb, query)
 
 invisible(dbDisconnect(mydb))
 
-invisible(jpeg('MoviesBudget.jpg'))
-scatter.smooth(movies$Budget / 10000, movies$Duration, main="Verband tussen kosten en speeltijd van films", col = "green", lpars =list(col = "red", lwd = 3, lty = 3), xlab = "Budget in ??? x10000", ylab = "Speeltijd")
+invisible(jpeg('BudgetDuration.jpg'))
+scatter.smooth(movies$Budget / 10000, movies$Duration, main="Relation between budget and duration of movies", col = "green", lpars = list(col = "red", lwd = 3, lty = 3), xlab = "Budget in $ x10000", ylab = "Duration")
 invisible(dev.off())
