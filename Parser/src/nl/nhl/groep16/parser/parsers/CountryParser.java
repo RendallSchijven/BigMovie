@@ -11,6 +11,11 @@ public class CountryParser implements ParserInterface{
         this.countryParser = Pattern.compile("(^[^\"].*?)\\t+(.*)");
     }
 
+    /**
+     * Converts a line into an array of strings representing CSV column values
+     * @param String line
+     * @return String
+     */
     @SuppressWarnings("Duplicates")
     @Override
     public String[] convertLine(String line) {
