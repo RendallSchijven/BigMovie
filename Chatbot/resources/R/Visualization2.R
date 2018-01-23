@@ -19,7 +19,6 @@ barplot(values$Movies, names.arg = values$Years, main="Films per jaar in " + arg
                                                                                                  "lavender", "mistyrose", "cornsilk"), 
                                                                                                   horiz=FALSE, cex.names=0.5)
 
-
 invisible(dev.off())
 
 invisible(dbDisconnect(mydb))

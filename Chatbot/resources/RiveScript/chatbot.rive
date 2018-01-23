@@ -92,7 +92,7 @@
 
 //Question 5
 + which movie was the most expensive to create
-- <call>jdbc SELECT Title from Movies ORDER BY Budget DESC LIMIT 1;</call>
+- <call>jdbc SELECT Title from Movies WHERE CURRENCY = 'USD' ORDER BY Budget DESC LIMIT 1;</call>
 
 //Question 6
 + which actor has the longest movie career
@@ -116,22 +116,21 @@
 
 //Question 11
 + who is the oldest living actor
-- <call>jdbc SELECT Name FROM Persons WHERE MIN(BirthDay) AND DeathDay IS NULL;
+- <call>jdbc SELECT Name FROM Persons WHERE MIN(BirthDay) AND DeathDay IS NULL;</call>
 
 // Visualisation questions
-+ ik wil _
--<call>system rscript Chatbot/resources/R/Visualization2.R <star1><call>
+
+//Visualization 2
++ get years *
+- Just a moment please
+^ <call>system rscript Chatbot/resources/R/Visualization2.R <star1></call>
+^ <call> send photo MoviesYear.jpg</call>
 
 // R Questions
 + [*] plot [*]
 - There it is!
 ^ <call>system rscript Chatbot/resources/R/plot.R</call>
 ^ <call>send photo rplot.jpg The graph produced by R</call>
-
-+ get years *
-- Just a moment please
-^ <call>system rscript Chatbot/resources/R/Visualization2.R <star1></call>
-^ <call> send photo MoviesYear.jpg</call>
 
 // Substitutions
 ! sub i'm     = i am
