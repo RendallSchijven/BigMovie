@@ -19,7 +19,7 @@ public class Nickybot extends TelegramLongPollingBot {
     public Nickybot() {
         super();
         bot.setSubroutine("system", new SystemSubroutine());
-        bot.setSubroutine("jdbc", new JdbcSubroutine());
+        bot.setSubroutine("jdbc", new JdbcSubroutine(this));
         bot.setSubroutine("send", new SendSubroutine(this));
         bot.setSubroutine("inlineKeyboard", new InlineKeyboardSubroutine(this));
         bot.setSubroutine("rive", new riveFeaturesSubroutine());
@@ -43,6 +43,7 @@ public class Nickybot extends TelegramLongPollingBot {
             SendMessage message = new SendMessage() // Create a message object object
                     .setChatId(chat_id)
                     .setText(reply);
+            message.setParseMode("HTML");
 
             System.out.println(message_text);
             try {
@@ -51,11 +52,16 @@ public class Nickybot extends TelegramLongPollingBot {
                 e.printStackTrace();
             }
         } else if (update.hasCallbackQuery()) {
-            InlineKeyboardSubroutine.CallBack(update, bot);
+            try {
+                execute(InlineKeyboardSubroutine.CallBack(update, bot)); // Sending our message object to user
+            } catch (TelegramApiException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 
-    public static String getName(){
+    public static String getName() {
         return Nickybot.username;
     }
 

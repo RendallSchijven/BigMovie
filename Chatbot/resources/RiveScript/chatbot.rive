@@ -24,6 +24,9 @@
 + *
 - Not sure I got that. Type /help for some example questions.
 
++ search film *
+- <call>jdbc SELECT * FROM Movies WHERE Title LIKE '<star1>%' LIMIT 1</call>
+
 //Plain SQL questions Dutch
 
 //Question 1
@@ -133,7 +136,7 @@
 ^ <call> send photo MoviesYear.jpg</call>
 
 + test
-- test
+- <b>test</b>
 
 // Substitutions
 ! sub i'm     = i am

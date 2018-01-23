@@ -3,19 +3,13 @@ package Nickybot;
 import com.rivescript.RiveScript;
 import com.rivescript.macro.Subroutine;
 import org.json.JSONArray;
-import org.telegram.telegrambots.api.interfaces.BotApiObject;
-import org.telegram.telegrambots.api.interfaces.Validable;
-import org.telegram.telegrambots.api.methods.BotApiMethod;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
-import org.telegram.telegrambots.api.methods.updatingmessages.EditMessageText;
-import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.bots.DefaultAbsSender;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +27,12 @@ public class InlineKeyboardSubroutine implements Subroutine {
         for (String arg : args) jsonString = jsonString + " " + arg;
         jsonString = jsonString.trim();
 
+        MakeButtonMessage(riveScript, das, jsonString);
+
+        return "";
+    }
+
+    public static void MakeButtonMessage(RiveScript riveScript, DefaultAbsSender das, String jsonString) {
 
         SendMessage message = new SendMessage()
                 .setText("test text")
@@ -42,11 +42,11 @@ public class InlineKeyboardSubroutine implements Subroutine {
         List<List<InlineKeyboardButton>> rowButtons = new ArrayList<>();
 
         JSONArray rowJsonArray = new JSONArray(jsonString);
-        for(int i = 0; i < rowJsonArray.length(); i++){
+        for (int i = 0; i < rowJsonArray.length(); i++) {
             List<InlineKeyboardButton> colButtons = new ArrayList<>();
             JSONArray colJsonArray = rowJsonArray.getJSONArray(i);
 
-            for(int j = 0; j < colJsonArray.length(); j++){
+            for (int j = 0; j < colJsonArray.length(); j++) {
                 String text = colJsonArray.getJSONObject(j).getString("text");
                 String callback = colJsonArray.getJSONObject(j).getString("callback");
 
@@ -64,50 +64,54 @@ public class InlineKeyboardSubroutine implements Subroutine {
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
-
-        return "";
-
     }
 
-    public static void CallBack(Update update, RiveScript bot){
+    public static SendMessage CallBack(Update update, RiveScript bot) {
 // Set variables
         String call_data = update.getCallbackQuery().getData();
         long chat_id = update.getCallbackQuery().getMessage().getChatId();
 
+        String reply = "";
+
         switch (call_data) {
             case "questions_1":
-                bot.reply(String.valueOf(chat_id), "shortest movie highest rating");
+                reply = bot.reply(String.valueOf(chat_id), "shortest movie highest rating");
                 break;
             case "questions_2":
-                bot.reply(String.valueOf(chat_id), "test");
+                reply = bot.reply(String.valueOf(chat_id), "in what year between 1990 and 2018 are the most films with the word beer in the title produced");
                 break;
             case "questions_3":
-                bot.reply(String.valueOf(chat_id), "test");
+                reply = bot.reply(String.valueOf(chat_id), "test");
                 break;
             case "questions_4":
-                bot.reply(String.valueOf(chat_id), "test");
+                reply = bot.reply(String.valueOf(chat_id), "test");
                 break;
             case "questions_5":
-                bot.reply(String.valueOf(chat_id), "test");
+                reply = bot.reply(String.valueOf(chat_id), "which movie was the most expensive to create");
                 break;
             case "questions_6":
-                bot.reply(String.valueOf(chat_id), "test");
+                reply = bot.reply(String.valueOf(chat_id), "which actor has the longest movie career");
                 break;
             case "questions_7":
-                bot.reply(String.valueOf(chat_id), "test");
+                reply = bot.reply(String.valueOf(chat_id), "what are the 5 most occuring genres");
                 break;
             case "questions_8":
-                bot.reply(String.valueOf(chat_id), "test");
+                reply = bot.reply(String.valueOf(chat_id), "test");
                 break;
             case "questions_9":
-                bot.reply(String.valueOf(chat_id), "test");
+                reply = bot.reply(String.valueOf(chat_id), "which 5 countries made the most movies");
                 break;
             case "questions_10":
-                bot.reply(String.valueOf(chat_id), "test");
+                reply = bot.reply(String.valueOf(chat_id), "what are the top rated movies");
                 break;
             case "questions_11":
-                bot.reply(String.valueOf(chat_id), "test");
+                reply = bot.reply(String.valueOf(chat_id), "who is the oldest living actor");
                 break;
         }
+        SendMessage message = new SendMessage() // Create a message object object
+                .setChatId(chat_id)
+                .setText(reply);
+        message.setParseMode("HTML");
+        return message;
     }
 }
