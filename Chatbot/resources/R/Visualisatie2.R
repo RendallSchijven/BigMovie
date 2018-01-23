@@ -1,7 +1,7 @@
 # Title     : Films per land per jaar
 # Objective : Laat voor een land het aantal films zien wat in een jaar is gemaakt
 # Created by: Rendall
-# Created on: 15-1-2018
+# Created on: 23-1-2018
 
 #install.packages("RMySQL")
 library(RMySQL)
@@ -15,9 +15,9 @@ query = sprintf("SELECT m.ReleaseYear AS Years, count(*) AS Movies FROM Movies A
 values <- dbGetQuery(mydb, query)
 
 invisible(jpeg('MoviesYear.jpg'))
-barplot(values$Movies, names.arg = values$Years, main="Films per year in " + args[[1]] , col = c("lightblue","lightcyan",
-                                                                                                 "lavender", "mistyrose", "cornsilk"), 
-                                                                                                  horiz=FALSE, cex.names=0.5)
+barplot(values$Movies, names.arg = values$Years, main="Films per jaar in " + args[[1]] , col = c("lightblue","lightcyan",
+"lavender", "mistyrose", "cornsilk"),
+horiz=FALSE, cex.names=0.5)
 
 invisible(dev.off())
 

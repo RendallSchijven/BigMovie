@@ -1,0 +1,50 @@
+//Chatbotnl.rive
+//Created by: Rendall
+
+//Standaard SQL vragen
+
+//Question 1
++ Wat is de kotste film met de hoogste rating?
+- <call>jdbc SELECT Title FROM Movies WHERE rating > 8.5 AND duration IS NOT NULL ORDER BY duration ASC LIMIT 1;</call>
+
+//Question 2
++ Uit welk jaar tussen 1990 en 2018 komen de meeste films met bier in de titel
+- <call>jdbc SELECT ReleaseYear as Year FROM Movies where Title LIKE '%beer%' AND ReleaseYear > 1989 GROUP BY ReleaseYear ORDER BY COUNT(*) DESC LIMIT 1;</call>
+
+//Question 3
++ in welke films speelt _ _
+- <call>jdbc SELECT Movies.Title FROM Movies LEFT JOIN Persons_Movies ON Persons_Movies.Movie_ID = Movies.ID LEFT JOIN Persons ON Persons_Movies.Person_ID = Persons.ID WHERE Persons.Name LIKE '%<star2>, <star1>%' LIMIT 50; </call>
+
+//Question 4
++ welke regisseur heeft de meeste films gemaakt met _ _ erin
+- <call>jdbc SELECT p.Name, COUNT(*) AS Movies FROM Persons AS p LEFT JOIN Persons_Movies AS pm ON pm.Person_ID = p.ID WHERE pm.Role = 'director' AND pm.Movie_ID IN (SELECT pm.Movie_ID FROM Persons_Movies AS pm LEFT JOIN Persons AS p ON p.ID = pm.Person_ID WHERE p.Name LIKE '%<star2>, <star1>%' AND pm.Role = 'actor') GROUP BY p.Name ORDER BY Movies DESC LIMIT 1;</call>
+
+//Question 5
++ welke film was het duurst om te maken
+- <call>jdbc SELECT Title from Movies WHERE CURRENCY = 'USD' ORDER BY Budget DESC LIMIT 1;</call>
+
+//Question 6
++ wat zijn de meest voorkomende genres
+-<call>jdbc SELECT g.GenreName AS Genre, COUNT(mg.Genre_ID) AS Movies FROM Movies_Genres AS mg LEFT JOIN Genres AS g ON g.ID = mg.Genre_ID GROUP BY g.ID ORDER BY Movies DESC LIMIT 5; </call>
+
+//Question 7
++ wat is de meest voorkomende genre in *
+- <call>jdbc SELECT g.GenreName AS Genre, COUNT(mg.Genre_ID) AS Movies FROM Movies_Genres AS mg LEFT JOIN Genres AS g ON g.ID = mg.Genre_ID LEFT JOIN Movies_Countries as mc ON mc.Movie_ID = mg.Movie_ID LEFT JOIN Countries AS c ON c.ID = mc.Country_ID WHERE c.Country LIKE '%<star1>%' GROUP BY g.ID ORDER BY Movies DESC LIMIT 5;</call>
+
+//Question 8
++ welke landen hebben de meeste films gemaakt
+- <call>jdbc SELECT c.Country, COUNT(mc.Movie_ID) AS Movies FROM Movies_Countries as mc LEFT JOIN Countries AS c ON c.ID = mc.Country_ID GROUP BY Country ORDER BY Movies DESC LIMIT 5; </call>
+
+//Question 9
++ wat zijn de best gewaardeerde films
+- <call>jdbc SELECT DISTINCT Title, Rating, Votes FROM `Movies` WHERE Votes > 100000 AND Title NOT LIKE '%(VG)%' ORDER BY Rating DESC, Votes DESC LIMIT 5;</call>
+
+//Visualization 2
++ hoeveel films per jaar heeft * gemaakt
+- <call>system rscript Chatbot/resources/R/Visualisatie2.R <star1></call>
+^ <call>send photo MoviesYear.jpg </call>
+
+// R Questions
++ is er een verband tussen het budget en de speeltijd van een film
+- <call>system rscript Chatbot/resources/R/R2nl.R</call>
+^ <call>send photo MoviesBudget.jpg Zoals je ziet is er niet echt een verband tussen de speeltijd en het budget van films.</call>
