@@ -22,6 +22,12 @@
 ^ /directors
 ^ <call>inlineKeyboard ["You can ask me questions like:",[{"text":"movies", "callback":"help_movies"}],[{"text":"actors", "callback":"actors_help"}],[{"text":"directors", "callback":"directors_help"}]]</call>
 
++ * trailer
+@ trailer <star>
+
++ trailer [of] *
+- <call>trailer <star></call>
+
 + *
 - Not sure I got that. Type /help for some example questions.
 
