@@ -16,17 +16,6 @@ public class BusinessParser implements ParserInterface {
         this.regex = Pattern.compile("MV:.([^\"].+\\w.)|BT:.(...).(.+).");
     }
 
-//    @SuppressWarnings("Duplicates")
-//    @Override
-//    public String[] convertLine(String line) {
-//        String[] result = extractEditor(line);
-//        if(result == null) {
-//            return null;
-//        }
-//
-//        return result;
-//    }
-
     public String[] extractEditor(String line) {
         Matcher m = regex.matcher(line);
         if(!m.find()) {
@@ -51,12 +40,13 @@ public class BusinessParser implements ParserInterface {
                     currentCurrency = budget[1];
                 }
                 else {
-                    currentBudget += " " + budget[0];
-                    currentCurrency += " " +  budget[1];
+                    currentBudget = budget[0];
+                    currentCurrency = budget[1];
                 }
             } else if (currentBudget != null) {
                 String returnBudget = new String(currentBudget);
                 String returnCurrency = new String(currentCurrency);
+                returnBudget = returnBudget.replaceAll(",", "");
                 currentBudget = null;
                 currentCurrency = null;
                 return new String[]{currentMovie, returnBudget, returnCurrency};

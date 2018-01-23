@@ -11,9 +11,12 @@ movies <- dbGetQuery(mydb, "SELECT ID, Budget, Duration FROM Movies WHERE Durati
 
 dbDisconnect(mydb)
 
-plot(movies)
+plot(movies$Budget, movies$Duration, main="Correlatie tussen de kosten en de lengte van een film", xlab="Budget van een film", ylab="Lengte van een film")
 cor(movies)
 
 #Maak een lineair regressie model van movies
 movielm = lm(Budget ~ Duration, data=movies)
 summary(movielm)
+
+movieglm = glm(Budget ~ Duration, data=movies, family=binomial)
+summary(movieglm)

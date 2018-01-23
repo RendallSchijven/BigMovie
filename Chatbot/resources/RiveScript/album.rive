@@ -1,0 +1,23 @@
++ [*] @verbs [a] song [*]
+- Do you need help from a rockstar?
+
++*
+%do you need help from a rockstar
+*<star> == yes => First I need some answers, what is your favourite place?
+-I was waiting on a different story
+
++ *
+% first i need some answers what is your favourite place
+- <set place=<star>> What is your favourite mode of transport?
+
++ *
+% what is your favourite mode of transport
+- <set transport=<star>> Do you like men or woman?
+
++ *
+% do you like men or woman
+- <set like=<star>> What thing do you want most?
+
++ *
+% what thing do you want most
+- <set thing=<star>> Here it is \n <call> rive album <get transport> <get like> <get thing> <get place> </call>
