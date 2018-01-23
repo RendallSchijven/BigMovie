@@ -3,13 +3,19 @@ package Nickybot;
 import com.rivescript.RiveScript;
 import com.rivescript.macro.Subroutine;
 import org.json.JSONArray;
+import org.telegram.telegrambots.api.interfaces.BotApiObject;
+import org.telegram.telegrambots.api.interfaces.Validable;
+import org.telegram.telegrambots.api.methods.BotApiMethod;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
+import org.telegram.telegrambots.api.methods.updatingmessages.EditMessageText;
+import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.bots.DefaultAbsSender;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,14 +35,14 @@ public class InlineKeyboardSubroutine implements Subroutine {
 
 
         SendMessage message = new SendMessage()
+                .setText("test text")
                 .setChatId(riveScript.currentUser());
 
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> rowButtons = new ArrayList<>();
 
         JSONArray rowJsonArray = new JSONArray(jsonString);
-        message.setText(rowJsonArray.getString(0));
-        for(int i = 1; i < rowJsonArray.length(); i++){
+        for(int i = 0; i < rowJsonArray.length(); i++){
             List<InlineKeyboardButton> colButtons = new ArrayList<>();
             JSONArray colJsonArray = rowJsonArray.getJSONArray(i);
 
@@ -63,7 +69,45 @@ public class InlineKeyboardSubroutine implements Subroutine {
 
     }
 
-    public static void CallBack(Update update){
+    public static void CallBack(Update update, RiveScript bot){
+// Set variables
+        String call_data = update.getCallbackQuery().getData();
+        long chat_id = update.getCallbackQuery().getMessage().getChatId();
 
+        switch (call_data) {
+            case "questions_1":
+                bot.reply(String.valueOf(chat_id), "shortest movie highest rating");
+                break;
+            case "questions_2":
+                bot.reply(String.valueOf(chat_id), "test");
+                break;
+            case "questions_3":
+                bot.reply(String.valueOf(chat_id), "test");
+                break;
+            case "questions_4":
+                bot.reply(String.valueOf(chat_id), "test");
+                break;
+            case "questions_5":
+                bot.reply(String.valueOf(chat_id), "test");
+                break;
+            case "questions_6":
+                bot.reply(String.valueOf(chat_id), "test");
+                break;
+            case "questions_7":
+                bot.reply(String.valueOf(chat_id), "test");
+                break;
+            case "questions_8":
+                bot.reply(String.valueOf(chat_id), "test");
+                break;
+            case "questions_9":
+                bot.reply(String.valueOf(chat_id), "test");
+                break;
+            case "questions_10":
+                bot.reply(String.valueOf(chat_id), "test");
+                break;
+            case "questions_11":
+                bot.reply(String.valueOf(chat_id), "test");
+                break;
+        }
     }
 }

@@ -4,8 +4,8 @@
 + hello
 - Hi there!
 
-+ test
-- <call>inlineKeyboard ["test",[{"text":"test button 1", "callback":"inline_test_button_1"}],[{"text":"test button 3", "callback":"test_button_3"},{"text":"test button 4", "callback":"test_button_4"}]]</call>
++ all questions?
+- <call>inlineKeyboard [[{"text":"Shortest movie highest rating", "callback":"questions_1"}],[{"text":"In what year between 1990 and 2018 are the most films with the word beer in the title produced", "callback":"questions_2"}],[{"text":"In which movies does (full actor name) play", "callback":"questions_3"}],[{"text":"Which director has filmed the most movies with (full actor name)", "callback":"questions_4"}],[{"text":"Which movie was the most expensive to create", "callback":"questions_5"}],[{"text":"Which actor has the longest movie career", "callback":"questions_6"}],[{"text":"What are the 5 most occuring genres", "callback":"questions_7"}],[{"text":"what are the most occuring genres in (Country name)", "callback":"questions_8"}],[{"text":"Which 5 countries made the most movies", "callback":"questions_9"}],[{"text":"What are the top rated movies", "callback":"questions_10"}],[{"text":"Who is the oldest living actor", "callback":"questions_11"}]]</call>
 
 + [*] how are you [*]
 - I'm fine.
@@ -20,7 +20,6 @@
 ^ /movies\n
 ^ /actors\n
 ^ /directors
-^ <call>inlineKeyboard ["You can ask me questions like:",[{"text":"movies", "callback":"help_movies"}],[{"text":"actors", "callback":"actors_help"}],[{"text":"directors", "callback":"directors_help"}]]</call>
 
 + *
 - Not sure I got that. Type /help for some example questions.
@@ -132,6 +131,9 @@
 - Just a moment please
 ^ <call>system rscript Chatbot/resources/R/Visualization2.R <star1></call>
 ^ <call> send photo MoviesYear.jpg</call>
+
++ test
+- test
 
 // Substitutions
 ! sub i'm     = i am
