@@ -11,6 +11,11 @@ public class MovieParser implements ParserInterface{
         this.movieRegex = Pattern.compile("^([^\"].*?)\\t+(\\d+)?");
     }
 
+    /**
+     * Converts a line into a String Array representing the values of the CSV columns.
+     * @param String line
+     * @return String
+     */
     @Override
     public String[] convertLine(String line) {
 
@@ -21,6 +26,11 @@ public class MovieParser implements ParserInterface{
         return movie;
     }
 
+    /**
+     * Extracts the movie from the line returns null if not found
+     * @param String line
+     * @return String[]
+     */
     public String[] extractMovie(String line) {
         Matcher m = movieRegex.matcher(line);
         if (!m.find()) {

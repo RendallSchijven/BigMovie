@@ -16,6 +16,11 @@ public class BusinessParser implements ParserInterface {
         this.regex = Pattern.compile("MV:.([^\"].+\\w.)|BT:.(...).(.+).");
     }
 
+    /**
+     * Extracts the editor from a string line
+     * @param String line
+     * @return String
+     */
     public String[] extractEditor(String line) {
         Matcher m = regex.matcher(line);
         if(!m.find()) {
@@ -24,6 +29,11 @@ public class BusinessParser implements ParserInterface {
         return new String[]{m.group(1), m.group(2)};
     }
 
+    /**
+     * Converts the string line into an array of Strings which represents the columns of a csv file
+     * @param String line
+     * @return String
+     */
     @Override
     public String[] convertLine(String line) {
         String movie = extractMovie(line);
@@ -55,6 +65,11 @@ public class BusinessParser implements ParserInterface {
         return null;
     }
 
+    /**
+     * Extracts the movie from the line, returns null if not found
+     * @param String line
+     * @return String
+     */
     public String extractMovie(String line) {
         Matcher m = regex.matcher(line);
         if (!m.find()) {
@@ -64,6 +79,12 @@ public class BusinessParser implements ParserInterface {
         return m.group(1);
     }
 
+    /**
+     * Extracts the budget from a line in an array [0 = Amount of currency as a string, 1 = Currency symbol as a string]
+     * returns null if no budget is found in line.
+     * @param String line
+     * @return String
+     */
     public String[] extractBudget(String line) {
         Matcher m = regex.matcher(line);
         if (!m.find()) {

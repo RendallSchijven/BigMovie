@@ -10,6 +10,9 @@ public class ParserFactory {
 
     private Map<String, Class> mapper = new HashMap<>();
 
+    /**
+     Build a map of which filenames relate to which Parser classes
+     */
     public ParserFactory() {
         mapper.put("actors", ActorParser.class);
         mapper.put("actresses", ActorParser.class);
@@ -32,7 +35,7 @@ public class ParserFactory {
 
     /**
      *
-     * Reflection
+     * Use reflection and the map to turn strings into instances of the parser.
      *
      * @param filePath
      * @return
