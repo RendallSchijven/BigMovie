@@ -51,6 +51,8 @@ moviesSparse$MPAA = movies$MPAA
 
 #set.seed(123)
 split = sample.split(moviesSparse$MPAA, SplitRatio = 0.7)
+
+#WERKT NIET
 train = subset(moviesSparse, MPAA != 'z')
 test = subset(moviesSparse, MPAA = 'z')
 
