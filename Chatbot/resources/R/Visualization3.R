@@ -6,7 +6,7 @@
 #install.packages("RMySQL")
 library(RMySQL)
 
-mydb <- dbConnect(MySQL(), dbname="NickyBotUtf8", user="riley", password="jayden", host="db.sanderkastelein.nl")
+mydb <- dbConnect(MySQL(), dbname="NickyBotUtf82", user="riley", password="jayden", host="db.sanderkastelein.nl")
 
 query = ("SELECT c.Country AS Country, count(*) AS Movies FROM Countries AS c LEFT JOIN Movies_Countries AS mc ON mc.Country_ID = c.ID")
 
