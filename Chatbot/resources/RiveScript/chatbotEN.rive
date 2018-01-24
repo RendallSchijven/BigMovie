@@ -110,9 +110,13 @@
 
 //Visualization 2
 + get years *
-- Just a moment please
-^ <call>system rscript Chatbot/resources/R/Visualization2.R <star1></call>
-^ <call> send photo MoviesYear.jpg there it is rockstar</call>
+- <call>system rscript Chatbot/resources/R/Visualization2.R <star1></call>
+^ <call>send photo MoviesYear.jpg</call>
+
+//Visualization 3
++ get genre
+- <call>system rscript Chatbot/resources/R/Visualization3.R</call>
+^ <call>send photo GenreMovies.png</call>
 
 // R Questions
 
