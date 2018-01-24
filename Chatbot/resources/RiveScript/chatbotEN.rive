@@ -45,15 +45,15 @@
 
 //Search actor by name
 + search person _
-- <call>jdbc SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 LIMIT 10</call>
+- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
 + search person _ _
-- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 LIMIT 10</call>
+- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
 + search person _ _ _
-- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 AND INSTR(Name, '<star3>') > 0 LIMIT 10</call>
+- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 AND INSTR(Name, '<star3>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
 + search person _ _ _ _
-- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 AND INSTR(Name, '<star3>') > 0 AND INSTR(Name, '<star4>') > 0 LIMIT 10</call>
+- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 AND INSTR(Name, '<star3>') > 0 AND INSTR(Name, '<star4>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
 + search person _ _ _ _ _
-- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 AND INSTR(Name, '<star3>') > 0 AND INSTR(Name, '<star4>') > 0 AND INSTR(Name, '<star5>') > 0 LIMIT 10</call>
+- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 AND INSTR(Name, '<star3>') > 0 AND INSTR(Name, '<star4>') > 0 AND INSTR(Name, '<star5>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
 
 //Plain SQL questions English
 
