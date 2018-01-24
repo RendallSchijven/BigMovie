@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class Database {
     private static final String HOST = "db.sanderkastelein.nl";
     private static final String PORT = "3306";
-    private static final String DATABASE = "NickyBotUtf8";
+    private static final String DATABASE = "NickyBotUtf82";
     private static final String USERNAME = "riley";
     private static final String PASSWORD = "jayden";
 
@@ -29,7 +29,10 @@ public class Database {
                 int length = resultSet.getMetaData().getColumnCount();
                 for (int i = 1; i <= length; i++) {
                     if (i != 1) {
-                        result += ",\"" + resultSet.getMetaData().getColumnName(i) + "\":\"" + resultSet.getString(i) + "\"";
+                        if (resultSet.getMetaData().getColumnName(i).equals("Plot"))
+                            result += ",\"" + resultSet.getMetaData().getColumnName(i) + "\":\"" + resultSet.getString(i).replaceAll("\"", "\'") + "\"";
+                        else
+                            result += ",\"" + resultSet.getMetaData().getColumnName(i) + "\":\"" + resultSet.getString(i) + "\"";
                     } else {
                         result += "\"" + resultSet.getMetaData().getColumnName(i) + "\":\"" + resultSet.getString(i) + "\"";
                     }
