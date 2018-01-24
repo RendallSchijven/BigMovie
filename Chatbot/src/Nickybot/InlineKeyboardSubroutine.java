@@ -3,6 +3,7 @@ package Nickybot;
 import com.rivescript.RiveScript;
 import com.rivescript.macro.Subroutine;
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
@@ -36,12 +37,19 @@ public class InlineKeyboardSubroutine implements Subroutine {
 
         SendMessage message = new SendMessage()
                 .setText("test text")
-                .setChatId(riveScript.currentUser());
+                .setChatId(riveScript.currentUser())
+                .setParseMode("HTML");
 
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> rowButtons = new ArrayList<>();
 
-        JSONArray rowJsonArray = new JSONArray(jsonString);
+        System.out.println(jsonString);
+        JSONObject jsonObject = new JSONObject(jsonString);
+        System.out.println(jsonObject);
+
+        message.setText(jsonObject.getString("text"));
+
+        JSONArray rowJsonArray = jsonObject.getJSONArray("buttons");
         for (int i = 0; i < rowJsonArray.length(); i++) {
             List<InlineKeyboardButton> colButtons = new ArrayList<>();
             JSONArray colJsonArray = rowJsonArray.getJSONArray(i);
@@ -106,6 +114,16 @@ public class InlineKeyboardSubroutine implements Subroutine {
                 break;
             case "questions_11":
                 reply = bot.reply(String.valueOf(chat_id), "who is the oldest living actor");
+                break;
+            default:
+                if (call_data.startsWith("film_id_")) {
+                    String movieID = call_data.substring(8);
+                    reply = bot.reply(String.valueOf(chat_id), "search movie id " + movieID);
+                }
+                if (call_data.startsWith("film_id_")) {
+                    String movieID = call_data.substring(8);
+                    reply = bot.reply(String.valueOf(chat_id), "search movie id " + movieID);
+                }
                 break;
         }
         SendMessage message = new SendMessage() // Create a message object object
