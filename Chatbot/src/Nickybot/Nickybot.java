@@ -23,6 +23,7 @@ public class Nickybot extends TelegramLongPollingBot {
         bot.setSubroutine("send", new SendSubroutine(this));
         bot.setSubroutine("inlineKeyboard", new InlineKeyboardSubroutine(this));
         bot.setSubroutine("rive", new riveFeaturesSubroutine());
+        bot.setSubroutine("trailer", new TrailerSubroutine());
         bot.loadDirectory("Chatbot/resources/RiveScript");
         bot.sortReplies();
     }
