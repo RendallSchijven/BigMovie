@@ -3,42 +3,50 @@ package Nickybot;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class Database {
-    private static final String HOST = "db.sanderkastelein.nl";
-    private static final String PORT = "3306";
-    private static final String DATABASE = "NickyBotUtf82";
-    private static final String USERNAME = "riley";
-    private static final String PASSWORD = "jayden";
 
-    public static String query(String sql){
-        String result = "";
+    public static String query(String sql) {
+        // Load properties file
+        String rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
+        String appConfigPath = rootPath + "resources/app.properties";
+
+        Properties appProps = new Properties();
+        try {
+            appProps.load(new FileInputStream(appConfigPath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String result = "[{";
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
 
         try {
-            connection=(Connection) DriverManager.getConnection(
-                    "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE + "?autoReconnect=true&useSSL=false", USERNAME, PASSWORD);
-            statement=(Statement) connection.createStatement();
-            resultSet=statement.executeQuery(sql);
-            while(resultSet.next()) {
-                int i = resultSet.getMetaData().getColumnCount();
-                for (int j = 1; j <= i; j++) {
-                    if (result.equals("")) {
-                        result = resultSet.getString(j);
+            connection = (Connection) DriverManager.getConnection(
+                    "jdbc:mysql://" + appProps.getProperty("db_host") + ":" + appProps.getProperty("db_port") + "/" + appProps.getProperty("db_database") + "?autoReconnect=true&useSSL=false", appProps.getProperty("db_username"), appProps.getProperty("db_password"));
+            statement = (Statement) connection.createStatement();
+            resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                int length = resultSet.getMetaData().getColumnCount();
+                for (int i = 1; i <= length; i++) {
+                    if (i != 1) {
+                        result += ",\"" + resultSet.getMetaData().getColumnName(i) + "\":\"" + resultSet.getString(i) + "\"";
                     } else {
-                        result += resultSet.getString(j) + " ";
+                        result += "\"" + resultSet.getMetaData().getColumnName(i) + "\":\"" + resultSet.getString(i) + "\"";
                     }
                 }
-                if (!result.equals(""))
-                    result += "\n";
+                result += "},{";
             }
         } catch (SQLException ex) {
-        } finally{
+        } finally {
             try {
                 resultSet.close();
                 statement.close();
@@ -47,6 +55,7 @@ public class Database {
             }
         }
 
-        return result;
+        result = result.substring(0, result.length() - 2);
+        return result + "]";
     }
 }
