@@ -123,11 +123,12 @@ public class InlineKeyboardSubroutine implements Subroutine {
                     String movieID = call_data.substring(16);
                     System.out.println(movieID);
                     String sql = "SELECT Persons.Name, Persons.ID FROM Persons_Movies RIGHT JOIN Persons ON Persons.ID = Persons_Movies.Person_ID WHERE Persons_Movies.Movie_ID = " + movieID + " AND Persons_Movies.Role = \'actor\'";
-                    String dbResponse = Database.query(sql);
-                    if(dbResponse.equals("]"))
+                    String response = Database.query(sql);
+                    if (response.equals("]"))
                         reply = "No actors found that play in this movie.";
                     else {
-
+                        JSONArray JsonArray = new JSONArray(response);
+                        reply = "search person id " + JsonArray.getJSONObject(0).getString("ID");
                     }
                 } else if (call_data.startsWith("movie_info_full_")) {
                     String movieID = call_data.substring(16);
