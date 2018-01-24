@@ -73,7 +73,7 @@ public class JdbcSubroutine implements Subroutine {
 
                     jsonButtonString += "\",\"buttons\":[";
 
-                    jsonButtonString += "[{\"text\":\"Show my the trailer?\", \"callback\":\"movie_id_trailer_" + movieObject.getInt("ID") + "\"}]";
+                    jsonButtonString += "[{\"text\":\"Show me the trailer?\", \"callback\":\"movie_id_trailer_" + movieObject.getInt("ID") + "\"}]";
 
                     jsonButtonString += ",[{\"text\":\"What is the cast?\", \"callback\":\"movie_id_actors_" + movieObject.getInt("ID") + "\"}]";
 
@@ -86,9 +86,9 @@ public class JdbcSubroutine implements Subroutine {
                     System.out.println(jsonButtonString);
                     InlineKeyboardSubroutine.MakeButtonMessage(rs, das, jsonButtonString);
                     break;
-                case "actor_list":
+                case "person_list":
                     System.out.println(args[0]);
-                    jsonButtonString = "{\"text\":\"The answer is\",\"buttons\":[";
+                    jsonButtonString = "{\"text\":\"The actors/actresses are\",\"buttons\":[";
 
                     for (int i = 0; i < JsonArray.length(); i++) {
                         JSONObject jsonObject = JsonArray.getJSONObject(i);
@@ -98,11 +98,30 @@ public class JdbcSubroutine implements Subroutine {
                         jsonButtonString += "[{\"text\":\"" + jsonObject.getString("Name") + "\",\"callback\":\"person_id_" + jsonObject.getInt("ID") + "\"}]";
                     }
 
-
                     jsonButtonString += "]}";
                     System.out.println(jsonButtonString);
                     InlineKeyboardSubroutine.MakeButtonMessage(rs, das, jsonButtonString);
 
+                    break;
+                case "person_info":
+
+                    System.out.println(args[0]);
+                    JSONObject personObject = JsonArray.getJSONObject(0);
+                    jsonButtonString = "{\"text\":\"" +
+                            "<b>Title :</b> " + personObject.getString("Name") + "\\n";
+
+                    if (!personObject.getString("BirthDay").equals("null"))
+                        jsonButtonString += "<b>Birth day :</b> " + personObject.getString("BirthDay") + "\\n";
+                    if (!personObject.getString("DeathDay").equals("null"))
+                        jsonButtonString += "<b>Death day :</b> " + personObject.getString("DeathDay") + "\\n";
+                    if (!personObject.getString("Sex").equals("null"))
+                        jsonButtonString += "<b>Sex :</b> " + personObject.getString("Sex") + "\\n";
+
+                    jsonButtonString += "\",\"buttons\":[";
+
+                    jsonButtonString += "]}";
+                    System.out.println(jsonButtonString);
+                    InlineKeyboardSubroutine.MakeButtonMessage(rs, das, jsonButtonString);
                     break;
             }
 
@@ -113,8 +132,7 @@ public class JdbcSubroutine implements Subroutine {
             sql = sql.trim();
             response = Database.query(sql);
 
-            System.out.println(sql);
-
+            System.out.println(response);
 
             JSONArray JsonArray = new JSONArray(response);
             for (int i = 0; i < JsonArray.length(); i++) {
