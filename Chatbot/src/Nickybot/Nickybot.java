@@ -3,10 +3,13 @@ package Nickybot;
 import com.rivescript.Config;
 import com.rivescript.RiveScript;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
-import org.telegram.telegrambots.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
 
 /**
  * @author Groep 16
@@ -74,7 +77,16 @@ public class Nickybot extends TelegramLongPollingBot {
 
     @Override
     public String getBotToken() {
+        String rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
+        String appConfigPath = rootPath + "resources/app.properties";
+
+        Properties appProps = new Properties();
+        try {
+            appProps.load(new FileInputStream(appConfigPath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         // Return bot token from BotFather
-        return "504474641:AAHRSD9huFwZApje8nJBzK_tNIC4ZEg-tqs";
+        return appProps.getProperty("tg_apiKey");
     }
 }
