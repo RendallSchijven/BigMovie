@@ -118,18 +118,14 @@ public class InlineKeyboardSubroutine implements Subroutine {
             default:
                 if (call_data.startsWith("movie_id_trailer_")) {
                     String movieID = call_data.substring(17);
-                    reply = bot.reply(String.valueOf(chat_id), "search movie id " + movieID);
+                    String sql = "SELECT Title FROM Movies WHERE ID = " + movieID;
+                    String response = Database.query(sql);
+                    JSONObject jsonObject = new JSONArray(response).getJSONObject(0);
+                    reply = bot.reply(String.valueOf(chat_id), "trailer " + jsonObject.getString("Title"));
                 } else if (call_data.startsWith("movie_id_actors_")) {
                     String movieID = call_data.substring(16);
                     System.out.println(movieID);
-                    String sql = "SELECT Persons.Name, Persons.ID FROM Persons_Movies RIGHT JOIN Persons ON Persons.ID = Persons_Movies.Person_ID WHERE Persons_Movies.Movie_ID = " + movieID + " AND Persons_Movies.Role = \'actor\'";
-                    String response = Database.query(sql);
-                    if (response.equals("]"))
-                        reply = "No actors found that play in this movie.";
-                    else {
-                        JSONArray JsonArray = new JSONArray(response);
-                        reply = "search person id " + JsonArray.getJSONObject(0).getString("ID");
-                    }
+                    reply = bot.reply(String.valueOf(chat_id), "search person movie id " + movieID);
                 } else if (call_data.startsWith("movie_info_full_")) {
                     String movieID = call_data.substring(16);
                     reply = bot.reply(String.valueOf(chat_id), "search movie id " + movieID);
@@ -139,6 +135,9 @@ public class InlineKeyboardSubroutine implements Subroutine {
                 } else if (call_data.startsWith("movie_id_")) {
                     String movieID = call_data.substring(9);
                     reply = bot.reply(String.valueOf(chat_id), "search movie id " + movieID);
+                } else if (call_data.startsWith("person_id_")) {
+                    String movieID = call_data.substring(10);
+                    reply = bot.reply(String.valueOf(chat_id), "search person id " + movieID);
                 }
                 break;
         }
