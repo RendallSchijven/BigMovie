@@ -1,5 +1,5 @@
 # Title     : Budget rating
-# Objective : Check if there is a relation between the budget and rating of a film
+# Objective : Check if there is a relation between the budget and rating of a movie
 # Created by: Rendall
 # Created on: 23-1-2018
 
