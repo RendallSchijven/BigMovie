@@ -116,12 +116,27 @@ public class InlineKeyboardSubroutine implements Subroutine {
                 reply = bot.reply(String.valueOf(chat_id), "who is the oldest living actor");
                 break;
             default:
-                if (call_data.startsWith("film_id_")) {
-                    String movieID = call_data.substring(8);
+                if (call_data.startsWith("movie_id_trailer_")) {
+                    String movieID = call_data.substring(17);
                     reply = bot.reply(String.valueOf(chat_id), "search movie id " + movieID);
-                }
-                if (call_data.startsWith("film_id_")) {
-                    String movieID = call_data.substring(8);
+                } else if (call_data.startsWith("movie_id_actors_")) {
+                    String movieID = call_data.substring(16);
+                    System.out.println(movieID);
+                    String sql = "SELECT Persons.Name, Persons.ID FROM Persons_Movies RIGHT JOIN Persons ON Persons.ID = Persons_Movies.Person_ID WHERE Persons_Movies.Movie_ID = " + movieID + " AND Persons_Movies.Role = \'actor\'";
+                    String dbResponse = Database.query(sql);
+                    if(dbResponse.equals("]"))
+                        reply = "No actors found that play in this movie.";
+                    else {
+
+                    }
+                } else if (call_data.startsWith("movie_info_full_")) {
+                    String movieID = call_data.substring(16);
+                    reply = bot.reply(String.valueOf(chat_id), "search movie id " + movieID);
+                } else if (call_data.startsWith("movie_id_plot_")) {
+                    String movieID = call_data.substring(14);
+                    reply = bot.reply(String.valueOf(chat_id), "search movie id " + movieID);
+                } else if (call_data.startsWith("movie_id_")) {
+                    String movieID = call_data.substring(9);
                     reply = bot.reply(String.valueOf(chat_id), "search movie id " + movieID);
                 }
                 break;
