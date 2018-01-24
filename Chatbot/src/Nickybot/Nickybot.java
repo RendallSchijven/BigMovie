@@ -3,10 +3,13 @@ package Nickybot;
 import com.rivescript.Config;
 import com.rivescript.RiveScript;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
-import org.telegram.telegrambots.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
 
 /**
  * @author Groep 16
@@ -19,7 +22,7 @@ public class Nickybot extends TelegramLongPollingBot {
     public Nickybot() {
         super();
         bot.setSubroutine("system", new SystemSubroutine());
-        bot.setSubroutine("jdbc", new JdbcSubroutine());
+        bot.setSubroutine("jdbc", new JdbcSubroutine(this));
         bot.setSubroutine("send", new SendSubroutine(this));
         bot.setSubroutine("inlineKeyboard", new InlineKeyboardSubroutine(this));
         bot.setSubroutine("rive", new riveFeaturesSubroutine());
@@ -44,6 +47,7 @@ public class Nickybot extends TelegramLongPollingBot {
             SendMessage message = new SendMessage() // Create a message object object
                     .setChatId(chat_id)
                     .setText(reply);
+            message.setParseMode("HTML");
 
             System.out.println(message_text);
             try {
@@ -52,51 +56,16 @@ public class Nickybot extends TelegramLongPollingBot {
                 e.printStackTrace();
             }
         } else if (update.hasCallbackQuery()) {
-            // Set variables
-            String call_data = update.getCallbackQuery().getData();
-            long message_id = update.getCallbackQuery().getMessage().getMessageId();
-            long chat_id = update.getCallbackQuery().getMessage().getChatId();
-
-            if(call_data.contains("inline"))
-                InlineKeyboardSubroutine.CallBack(update);
-
-            String answer = "";
-            EditMessageText new_message = new EditMessageText()
-                    .setChatId(chat_id)
-                    .setMessageId((int) message_id);
-
-            switch (call_data) {
-                case "update_msg_text":
-                    answer = "Updated message text";
-                    new_message.setText(answer);
-                    break;
-                case "test_button_1":
-                    answer = "test 1";
-                    new_message.setText(answer);
-                    break;
-                case "test_button_2":
-                    answer = "test 2";
-                    new_message.setText(answer);
-                    break;
-                case "test_button_3":
-                    answer = "test 3";
-                    new_message.setText(answer);
-                    break;
-                case "test_button_4":
-                    answer = "test 4";
-                    new_message.setText(answer);
-                    break;
-            }
-
             try {
-                execute(new_message);
+                execute(InlineKeyboardSubroutine.CallBack(update, bot)); // Sending our message object to user
             } catch (TelegramApiException e) {
                 e.printStackTrace();
             }
+
         }
     }
 
-    public static String getName(){
+    public static String getName() {
         return Nickybot.username;
     }
 
@@ -108,7 +77,16 @@ public class Nickybot extends TelegramLongPollingBot {
 
     @Override
     public String getBotToken() {
+        String rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
+        String appConfigPath = rootPath + "resources/app.properties";
+
+        Properties appProps = new Properties();
+        try {
+            appProps.load(new FileInputStream(appConfigPath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         // Return bot token from BotFather
-        return "504474641:AAHRSD9huFwZApje8nJBzK_tNIC4ZEg-tqs";
+        return appProps.getProperty("tg_apiKey");
     }
 }
