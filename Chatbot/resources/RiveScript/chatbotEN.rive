@@ -46,7 +46,6 @@
 - <call>jdbc film_list SELECT Title, ID FROM Movies\s
 ^            WHERE rating > 8.5 AND duration IS NOT NULL\s
 ^            ORDER BY duration ASC LIMIT 1;</call>
-- <call>jdbc film_list SELECT Title, ID FROM Movies WHERE rating > 8.5 AND duration IS NOT NULL ORDER BY duration ASC LIMIT 1;</call>
 
 //Question 2
 + in what year between 1990 and 2018 are the most films with the word beer in the title produced
