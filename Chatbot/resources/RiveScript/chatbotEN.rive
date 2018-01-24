@@ -63,39 +63,68 @@
 
 //Question 1
 + shortest movie highest rating
-- <call>jdbc film_list SELECT Title, ID FROM Movies WHERE rating > 8.5 AND duration IS NOT NULL ORDER BY duration ASC LIMIT 1;</call>
+- <call>jdbc film_list SELECT Title, ID FROM Movies\s
+^            WHERE rating > 8.5 AND duration IS NOT NULL\s
+^            ORDER BY duration ASC LIMIT 1;</call>
 
 //Question 2
 + in what year between 1990 and 2018 are the most films with the word beer in the title produced
-- <call>jdbc SELECT ReleaseYear as Year FROM Movies where Title LIKE '%beer%' AND ReleaseYear > 1989 GROUP BY ReleaseYear ORDER BY COUNT(*) DESC LIMIT 1;</call>
+- <call>jdbc SELECT ReleaseYear as Year FROM Movies\s
+^                    WHERE Title LIKE '%beer%' AND ReleaseYear > 1989\s
+^                    GROUP BY ReleaseYear\s
+^                    ORDER BY COUNT(*) DESC LIMIT 1;</call>
 
 //Question 3
 + in which movies does _ _ play
-- <call>jdbc SELECT Movies.Title FROM Movies LEFT JOIN Persons_Movies ON Persons_Movies.Movie_ID = Movies.ID LEFT JOIN Persons ON Persons_Movies.Person_ID = Persons.ID WHERE Persons.Name LIKE '%<star2>, <star1>%' LIMIT 50; </call>
+- <call>jdbc SELECT Movies.Title FROM Movies\s
+^            LEFT JOIN Persons_Movies ON Persons_Movies.Movie_ID = Movies.ID\s
+^            LEFT JOIN Persons ON Persons_Movies.Person_ID = Persons.ID\s
+^            WHERE Persons.Name LIKE '%<star2>, <star1>%' LIMIT 50; </call>
 
 //Question 4
 + which director has filmed the most movies with _ _
-- <call>jdbc SELECT p.Name, COUNT(*) AS Movies FROM Persons AS p LEFT JOIN Persons_Movies AS pm ON pm.Person_ID = p.ID WHERE pm.Role = 'director' AND pm.Movie_ID IN (SELECT pm.Movie_ID FROM Persons_Movies AS pm LEFT JOIN Persons AS p ON p.ID = pm.Person_ID WHERE p.Name LIKE '%<star2>, <star1>%' AND pm.Role = 'actor') GROUP BY p.Name ORDER BY Movies DESC LIMIT 1;</call>
+- <call>jdbc SELECT p.Name, COUNT(*) AS Movies FROM Persons AS p\s
+^            LEFT JOIN Persons_Movies AS pm ON pm.Person_ID = p.ID\s
+^            WHERE pm.Role = 'director'\s
+^            AND pm.Movie_ID IN (SELECT pm.Movie_ID FROM Persons_Movies AS pm\s
+^                                LEFT JOIN Persons AS p ON p.ID = pm.Person_ID\s
+^                                WHERE p.Name LIKE '%<star2>, <star1>%' AND pm.Role = 'actor')\s
+^            GROUP BY p.Name\s
+^            ORDER BY Movies DESC LIMIT 1;</call>
 
 //Question 5
 + which movie was the most expensive to create
 - <call>jdbc SELECT Title from Movies WHERE CURRENCY = 'USD' ORDER BY Budget DESC LIMIT 1;</call>
 
 //Question 6
-+ what are the 5 most occuring genres
--<call>jdbc SELECT g.GenreName AS Genre, COUNT(mg.Genre_ID) AS Movies FROM Movies_Genres AS mg LEFT JOIN Genres AS g ON g.ID = mg.Genre_ID GROUP BY g.ID ORDER BY Movies DESC LIMIT 5; </call>
++ what are the most occuring genres
+-<call>jdbc SELECT g.GenreName AS Genre, COUNT(mg.Genre_ID) AS Movies FROM Movies_Genres AS mg\s
+^           LEFT JOIN Genres AS g ON g.ID = mg.Genre_ID\s
+^           GROUP BY g.ID\s
+^           ORDER BY Movies DESC LIMIT 5; </call>
 
 //Question 7
 + what are the most occuring genres in *
-- <call>jdbc SELECT g.GenreName AS Genre, COUNT(mg.Genre_ID) AS Movies FROM Movies_Genres AS mg LEFT JOIN Genres AS g ON g.ID = mg.Genre_ID LEFT JOIN Movies_Countries as mc ON mc.Movie_ID = mg.Movie_ID LEFT JOIN Countries AS c ON c.ID = mc.Country_ID WHERE c.Country LIKE '%<star1>%' GROUP BY g.ID ORDER BY Movies DESC LIMIT 5;</call>
+- <call>jdbc SELECT g.GenreName AS Genre, COUNT(mg.Genre_ID) AS Movies FROM Movies_Genres AS mg\s
+^            LEFT JOIN Genres AS g ON g.ID = mg.Genre_ID\s
+^            LEFT JOIN Movies_Countries as mc ON mc.Movie_ID = mg.Movie_ID\s
+^            LEFT JOIN Countries AS c ON c.ID = mc.Country_ID\s
+^            WHERE c.Country LIKE '%<star1>%'\s
+^            GROUP BY g.ID\s
+^            ORDER BY Movies DESC LIMIT 5;</call>
 
 //Question 8
 + which 5 countries made the most movies
-- <call>jdbc SELECT c.Country, COUNT(mc.Movie_ID) AS Movies FROM Movies_Countries as mc LEFT JOIN Countries AS c ON c.ID = mc.Country_ID GROUP BY Country ORDER BY Movies DESC LIMIT 5; </call>
+- <call>jdbc SELECT c.Country, COUNT(mc.Movie_ID) AS Movies FROM Movies_Countries AS mc\s
+^            LEFT JOIN Countries AS c ON c.ID = mc.Country_ID\s
+^            GROUP BY Country\s
+^            ORDER BY Movies DESC LIMIT 5; </call>
 
 //Question 9
 + what are the top rated movies
-- <call>jdbc SELECT DISTINCT Title, Rating, Votes FROM `Movies` WHERE Votes > 100000 AND Title NOT LIKE '%(VG)%' ORDER BY Rating DESC, Votes DESC LIMIT 5;</call>
+- <call>jdbc SELECT DISTINCT Title, Rating, Votes FROM `Movies`\s
+^            WHERE Votes > 100000 AND Title NOT LIKE '%(VG)%'\s
+^            ORDER BY Rating DESC, Votes DESC LIMIT 5;</call>
 
 // Visualisation questions
 
@@ -109,6 +138,11 @@
 + is there a relation between the cost and duration of movies
 - <call>system rscript Chatbot/resources/R/R2en.R</call>
 ^ <call>send photo MoviesBudget.jpg As you can see there is not really a relation between the budget and duration of a movie</call>
+
+//R question 1
++ does * have more violent movies than *
+- <call>system rscript Chatbot/resources/r/R1en.R '<star1>' '<star2>'</call>
+^ <call>send photo violence.jpg</call>
 
 // Substitutions
 ! sub i'm     = i am
