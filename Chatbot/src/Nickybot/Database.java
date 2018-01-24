@@ -3,18 +3,27 @@ package Nickybot;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class Database {
-    private static final String HOST = "db.sanderkastelein.nl";
-    private static final String PORT = "3306";
-    private static final String DATABASE = "NickyBotUtf8";
-    private static final String USERNAME = "riley";
-    private static final String PASSWORD = "jayden";
 
     public static String query(String sql) {
+        // Load properties file
+        String rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
+        String appConfigPath = rootPath + "resources/app.properties";
+
+        Properties appProps = new Properties();
+        try {
+            appProps.load(new FileInputStream(appConfigPath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         String result = "[{";
         Connection connection = null;
         Statement statement = null;
@@ -22,7 +31,7 @@ public class Database {
 
         try {
             connection = (Connection) DriverManager.getConnection(
-                    "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE + "?autoReconnect=true&useSSL=false", USERNAME, PASSWORD);
+                    "jdbc:mysql://" + appProps.getProperty("db_host") + ":" + appProps.getProperty("db_port") + "/" + appProps.getProperty("db_database") + "?autoReconnect=true&useSSL=false", appProps.getProperty("db_username"), appProps.getProperty("db_password"));
             statement = (Statement) connection.createStatement();
             resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
