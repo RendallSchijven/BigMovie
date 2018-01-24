@@ -5,12 +5,11 @@ import org.apache.commons.io.IOUtils;
 import org.apache.http.client.utils.URIBuilder;
 import org.json.JSONObject;
 
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.Properties;
 
 /**
  * @author Groep 16
@@ -19,26 +18,40 @@ public class TrailerSubroutine implements Subroutine {
 
     @Override
     public String call(com.rivescript.RiveScript rs, String[] args) {
+        // Load properties file
+        String rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
+        String appConfigPath = rootPath + "resources/app.properties";
+
+        // Build search string
         String keyword = "";
         for (String arg : args) keyword = keyword + arg + "%20";
-        //TODO add to properties file
-        String apiKey = "AIzaSyCtpI8KqxHAUexIJ1iGXcVa2X8-x37beg0";
+
+        // Init variables
         String id = "";
         URIBuilder url = null;
+
         try {
+            // Load properties file
+            Properties appProps = new Properties();
+            appProps.load(new FileInputStream(appConfigPath));
+
+            // Build URL
             url = new URIBuilder("https://www.googleapis.com/youtube/v3/search");
             url.addParameter("part", "snippet");
             url.addParameter("maxResults", "1");
             url.addParameter("q", keyword + "trailer");
             url.addParameter("type", "video");
-            url.addParameter("key", apiKey);
+            url.addParameter("key", appProps.getProperty("yt_apiKey"));
 
+            // Get JSON result from GET request
             JSONObject json = new JSONObject(IOUtils.toString(url.build(), Charset.forName("UTF-8")));
 
+            // Check if JSON has search results
             if (json.getJSONArray("items").length() == 0){
                 return "hmm, can't seem to find a trailer for this";
             }
 
+            // Get Video ID from JSON
             id = json.getJSONArray("items").getJSONObject(0).getJSONObject("id").getString("videoId");
 
         } catch (URISyntaxException | IOException e) {
@@ -46,6 +59,7 @@ public class TrailerSubroutine implements Subroutine {
         }
 
         if(!id.isEmpty()){
+            // Return youtube link for trailer video
             return "https://www.youtube.com/watch?v=" + id;
         }
         return "My brain stopped working";
