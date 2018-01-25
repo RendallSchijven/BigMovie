@@ -33,7 +33,7 @@ public class Nickybot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-
+        SendMessage message = null;
         // We check if the update has a message and the message has text
         if (update.hasMessage() && update.getMessage().hasText()) {
             // Set variables
@@ -44,24 +44,21 @@ public class Nickybot extends TelegramLongPollingBot {
 
             String reply = bot.reply(String.valueOf(chat_id), message_text);
 
-            SendMessage message = new SendMessage() // Create a message object object
+            message = new SendMessage() // Create a message object object
                     .setChatId(chat_id)
                     .setText(reply);
             message.setParseMode("HTML");
 
             System.out.println(message_text);
+        } else if (update.hasCallbackQuery()) {
+            message = InlineKeyboardSubroutine.CallBack(update, bot);
+        }
+        if (message != null) {
             try {
                 execute(message); // Sending our message object to user
             } catch (TelegramApiException e) {
                 e.printStackTrace();
             }
-        } else if (update.hasCallbackQuery()) {
-            try {
-                execute(InlineKeyboardSubroutine.CallBack(update, bot)); // Sending our message object to user
-            } catch (TelegramApiException e) {
-                e.printStackTrace();
-            }
-
         }
     }
 
