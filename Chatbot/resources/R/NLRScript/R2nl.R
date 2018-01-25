@@ -5,14 +5,14 @@
 
 library(RMySQL)
 
-mydb <- dbConnect(MySQL(), dbname="NickyBotUtf82", user="riley", password="jayden", host="db.sanderkastelein.nl")
+mydb <- dbConnect(MySQL(), dbname="NickyBotUtf8", user="riley", password="jayden", host="db.sanderkastelein.nl")
 
-query <- ("SELECT Budget, Rating, Duration FROM Movies WHERE Duration IS NOT NULL AND Budget IS NOT NULL AND Currency = 'EUR' AND Rating IS NOT NULL")
-  
+query <- ("SELECT Budget, Duration FROM Movies WHERE Duration IS NOT NULL AND Budget IS NOT NULL AND Currency = 'USD'")
+
 movies <- dbGetQuery(mydb, query)
 
 invisible(dbDisconnect(mydb))
 
 invisible(jpeg('BudgetDuration.jpg'))
-scatter.smooth(movies$Budget / 10000, movies$Duration, main="Relation between budget and duration of movies", col = "green", lpars = list(col = "red", lwd = 3, lty = 3), xlab = "Budget in $ x10000", ylab = "Duration")
+scatter.smooth(movies$Budget / 10000, movies$Duration, main="Verband tussen budget en speeltijd van films", col = "green", lpars = list(col = "red", lwd = 3, lty = 3), xlab = "Budget in ??? x10000", ylab = "Speeltijd")
 invisible(dev.off())
