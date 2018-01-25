@@ -20,6 +20,7 @@ public class Main {
     public static void main(String[] args) throws ScriptException {
         String rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
         String appConfigPath = rootPath + "resources/app.properties";
+        System.out.println(appConfigPath);
 
         Properties appProps = new Properties();
         try {

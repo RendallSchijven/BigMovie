@@ -89,10 +89,10 @@ public class InlineKeyboardSubroutine implements Subroutine {
                 reply = bot.reply(String.valueOf(chat_id), "in what year between 1990 and 2018 are the most films with the word beer in the title produced");
                 break;
             case "questions_3":
-                reply = bot.reply(String.valueOf(chat_id), "test");
+                reply = bot.reply(String.valueOf(chat_id), "In which movies does Liam Neeson play");
                 break;
             case "questions_4":
-                reply = bot.reply(String.valueOf(chat_id), "test");
+                reply = bot.reply(String.valueOf(chat_id), "Which director has filmed the most movies with dwayne johnson");
                 break;
             case "questions_5":
                 reply = bot.reply(String.valueOf(chat_id), "which movie was the most expensive to create");
@@ -104,7 +104,7 @@ public class InlineKeyboardSubroutine implements Subroutine {
                 reply = bot.reply(String.valueOf(chat_id), "what are the 5 most occuring genres");
                 break;
             case "questions_8":
-                reply = bot.reply(String.valueOf(chat_id), "test");
+                reply = bot.reply(String.valueOf(chat_id), "what are the most occuring genres in Netherlands");
                 break;
             case "questions_9":
                 reply = bot.reply(String.valueOf(chat_id), "which 5 countries made the most movies");
