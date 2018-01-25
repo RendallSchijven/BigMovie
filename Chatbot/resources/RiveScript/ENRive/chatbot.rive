@@ -182,7 +182,7 @@
 - <call>jdbc film_plot SELECT ID, Title, Plot FROM Movies WHERE ID = <star1></call>
 
 + search movie actor id *
-- <call>jdbc film_list SELECT Movies.*, Persons_Movies.Role FROM Persons_Movies LEFT JOIN Movies ON Movies.ID = Persons_Movies.Movie_ID WHERE Persons_Movies.Person_ID = <star1></call>
+- <call>jdbc film_list SELECT Movies.*, Persons_Movies.Role FROM Persons_Movies LEFT JOIN Movies ON Movies.ID = Persons_Movies.Movie_ID WHERE Persons_Movies.Person_ID = <star1> AND Movies.Votes > 500 AND NOT INSTR(Movies.Title, '(TV)') ORDER BY Movies.Rating DESC, Movies.Title = <star1></call>
 
 //Search movies by name
 + search movie *
