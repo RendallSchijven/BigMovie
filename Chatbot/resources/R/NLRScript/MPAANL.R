@@ -85,11 +85,20 @@ moviesSparse$ID <- movies$ID
 train <- subset(moviesSparse, ID != testMovieID)
 test <- subset(moviesSparse, ID == testMovieID)
 
+#Make a cart model of the dataset
 movieCart = rpart(MPAA ~ ., data=moviesSparse, method = "class")
 
+#Make a prediction using the cart model and the test data
 MPAA <- predict(movieCart, newdata = test, type = "class")
 
+#Put the prediction data in a table
 table <-data.frame(table(test$MPAA, MPAA))
+
+#Collect the row from the table where a rating is 1
 row <- table[table[,3] == 1,]
+
+#Put the rating in a string
 return <- sprintf("%s",row$MPAA)
-cat("De voorspelde kijkwijzer is: ", return)
+
+#Print this so it is returned to java
+cat("The predicted MPAA is: ", return)
