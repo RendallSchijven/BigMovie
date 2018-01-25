@@ -146,6 +146,7 @@
 ^ /rm   returns a random movie\n
 ^ /rmc  returns 25 random movies from a chosen country\n
 ^ /rmg  returns 25 random movies from a chosen genre\n
+^ /i    quick image search
 
 
 + /m *
