@@ -15,6 +15,11 @@ public class KeywordParser implements ParserInterface{
         this.keywordParser = Pattern.compile("(^[^\"].*[^\\t])\\t+(\\S+)");
     }
 
+    /**
+     * Convserts a line into a Array of Strings representing the value in CSV columns.
+     * @param String line
+     * @return String
+     */
     @SuppressWarnings("Duplicates")
     @Override
     public String[] convertLine(String line) {

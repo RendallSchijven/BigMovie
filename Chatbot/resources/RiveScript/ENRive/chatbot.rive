@@ -1,0 +1,257 @@
+//Chatbot.rive
+//Created by: Rendall
+
++ hello
+- Hi there!
+
++ [*] start [*]
+- I'm Nickelbot! Ask me questions about your favorite movies. Type help for some example questions.
+
++ * trailer
+@ trailer <star>
+
++ trailer [of] *
+- <call>trailer <star></call>
+
+//Question 1
++ [*] shortest movie [*] highest rating [*]
+- <call>jdbc film_list -m The shortest movie with the highest rating is: SELECT Title, ID FROM Movies\s
+^            WHERE rating > 8.5 AND duration IS NOT NULL\s
+^            ORDER BY duration ASC LIMIT 1;</call>
+
+//Question 2
++ what year from 1990 produced the most movies with beer in the title
+- <call>jdbc -m The year where the most movies with beer in the title where produced is SELECT ReleaseYear as Year FROM Movies\s
+^                    WHERE Title LIKE '%beer%' AND ReleaseYear > 1989\s
+^                    GROUP BY ReleaseYear\s
+^                    ORDER BY COUNT(*) DESC LIMIT 1;</call>
+
+//Question 3
++ give me movies _ _ played in
+- <call>jdbc film_list SELECT Movies.Title, Movies.ID FROM Movies\s
+^            LEFT JOIN Persons_Movies ON Persons_Movies.Movie_ID = Movies.ID\s
+^            LEFT JOIN Persons ON Persons_Movies.Person_ID = Persons.ID\s
+^            WHERE Persons.Name LIKE '%<star2>, <star1>%' ORDER BY RAND() LIMIT 10; </call>
+
+//Question 4
++ which director has filmed the most movies with _ _
+- <call>jdbc SELECT p.Name, COUNT(*) AS Movies FROM Persons AS p\s
+^            LEFT JOIN Persons_Movies AS pm ON pm.Person_ID = p.ID\s
+^            WHERE pm.Role = 'director'\s
+^            AND pm.Movie_ID IN (SELECT pm.Movie_ID FROM Persons_Movies AS pm\s
+^                                LEFT JOIN Persons AS p ON p.ID = pm.Person_ID\s
+^                                WHERE p.Name LIKE '%<star2>, <star1>%' AND pm.Role = 'actor')\s
+^            GROUP BY p.Name\s
+^            ORDER BY Movies DESC LIMIT 1;</call>
+
+//Question 5
++ which movie [was|is] [the] most expensive [to] [make|create]
+- <call>jdbc film_info -m The most expensive movie to create was SELECT * from Movies WHERE CURRENCY = 'USD' ORDER BY Budget DESC LIMIT 1;</call>
+
+//Question 6
++ [what are the] # most occuring genres
+- <call>jdbc -m SELECT g.GenreName AS Genre, COUNT(mg.Genre_ID) AS Movies FROM Movies_Genres AS mg\s
+^           LEFT JOIN Genres AS g ON g.ID = mg.Genre_ID\s
+^           GROUP BY g.ID\s
+^           ORDER BY Movies DESC LIMIT <star>; </call>
+
++ [what are the] most occuring genres
+@ 5 most occuring genres
+
++ [what is the] most occuring genre
+@ 1 most occuring genres
+
+//Question 7
++ [what are the] most occuring genres in *
+- <call>jdbc -m SELECT g.GenreName AS Genre, COUNT(mg.Genre_ID) AS Movies FROM Movies_Genres AS mg\s
+^            LEFT JOIN Genres AS g ON g.ID = mg.Genre_ID\s
+^            LEFT JOIN Movies_Countries as mc ON mc.Movie_ID = mg.Movie_ID\s
+^            LEFT JOIN Countries AS c ON c.ID = mc.Country_ID\s
+^            WHERE c.Country LIKE '%<star1>%'\s
+^            GROUP BY g.ID\s
+^            ORDER BY Movies DESC LIMIT 5;</call>
+
+//Question 8
++ which # countries made the most movies
+- <call>jdbc SELECT c.Country, COUNT(mc.Movie_ID) AS Movies FROM Movies_Countries AS mc\s
+^            LEFT JOIN Countries AS c ON c.ID = mc.Country_ID\s
+^            GROUP BY Country\s
+^            ORDER BY Movies DESC LIMIT <star>; </call>
+
++ which countries made the most movies
+@ which 5 countries made the most movies
+
++ which country made the most movies
+@ which 1 countries made the most movies
+
+//Question 9
++ what are the top # rated movies
+- <call>jdbc film_list -m The top rated movies are: SELECT DISTINCT Title, Rating, ID, Votes FROM `Movies`\s
+^            WHERE Votes > 100000 AND Title NOT LIKE '%(VG)%'\s
+^            ORDER BY Rating DESC, Votes DESC LIMIT <star>;</call>
+
++ what are the top rated movies
+@ what are the top 5 rated movies
+
+// Visualisation questions
+
+//Visualization 1
++ [show me the movies per] year [of] *
+- <call>system rscript Chatbot/resources/R/Visualization/Visualization1.R <star1></call>
+^ <call>send photo MoviesYear.jpg</call>
+
+//Visualization 2
++ show me the distribution of genres
+- <call>system rscript Chatbot/resources/R/Visualization/Visualization2.R</call>
+^ <call>send photo genreMovies.png</call>
+
+// R Questions
+
+//R question 1
++ does * have more violent movies than *
+- <call>system rscript Chatbot/resources/R/ENRScript/R1en.R <star1> / <star2></call>
+^ <call>send photo violence.jpg</call>
+
+//R question 2
++ is there a relation between the cost and duration of movies
+- <call>system rscript Chatbot/resources/R/ENRScript/R2en.R</call>
+^ <call>send photo BudgetDuration.jpg</call>
+
+//R question 3
++ is there a relation between the cost and rating of movies
+- <call>system rscript Chatbot/resources/R/ENRScript/R3en.R</call>
+^ <call>send photo BudgetRating.jpg</call>
+
+//R MPAA Question
++ mpaa *
+- <call>system rscript Chatbot/resources/R/ENRscript/MPAA.R <star1></call>
+
+// !Commands
++ /command
+- /m    for a quick movie search, returns basic information about the movie (budget, releaseyear, etc)\n
+^ /a    for a quick actor search, returns all movies in wich (s)he has played\n
+^ /k    for a quick keyword search, returns all the movies with that keyword\n
+^ /rm   returns a random movie\n
+^ /rmc  returns 10 random movies from a chosen country\n
+^ /rmg  returns 10 random movies from a chosen genre\n
+^ /rmr  returns 10 random movies higher then the chosen rating (rounded number)\n
+^ /i    quick image search
+
+
++ /m *
+@ movie <star1>
+
++ /a *
+@ search person <star1>
+
++ /k *
+- <call>jdbc SELECT m.Title, m.ID AS Movies FROM Movies_Keywords AS mk LEFT JOIN Movies AS m ON m.ID = mk.Movie_ID WHERE mk.Keyword_ID = (SELECT ID FROM Keywords WHERE Keyword LIKE '%<star1>%' LIMIT 1);</call>
+
++ /rm
+- <call>jdbc film_list -m I chose a random movie for you: SELECT Title, ID FROM Movies ORDER BY RAND() LIMIT 1;</call>
+
++ /rmc *
+- <call>jdbc film_list -m Some random movies from <star1> SELECT m.Title, m.ID AS Movies FROM Movies_Countries AS mc LEFT JOIN Movies AS m ON m.ID = mc.Movie_ID WHERE mc.Country_ID = (SELECT ID FROM Countries WHERE Country LIKE '%<star1>%' LIMIT 1) ORDER BY RAND() LIMIT 10;</call>
+
++ /rmg *
+- <call>jdbc film_list -m Some random movies with genre <star1> SELECT m.Title, m.ID AS Movies FROM Movies_Genres AS mg LEFT JOIN Movies AS m ON m.ID = mg.Movie_ID WHERE mg.Genre_ID = (SELECT ID FROM Genres WHERE GenreName LIKE '%<star1>%' LIMIT 1) ORDER BY RAND() LIMIT 10;</call>
+
++ /rmr *
+- <call>jdbc film_list -m Some random movies with rating higher then <star1> SELECT m.Title, m.ID AS Movies FROM Movies_Genres AS mg LEFT JOIN Movies AS m ON m.ID = mg.Movie_ID WHERE m.Rating > <star1> ORDER BY RAND() LIMIT 10;</call>
+
++ /i * *
+- <call>image <star1> <star2>;</call>
+
+
+
+//Search movies by id
++ search movie id *
+- <call>jdbc film_info SELECT * FROM Movies WHERE ID = <star1>;</call>
+
++ search movie full id *
+- <call>jdbc film_info SELECT * FROM Movies WHERE ID = <star1>;</call>
+
++ search movie plot id *
+- <call>jdbc film_plot SELECT ID, Title, Plot FROM Movies WHERE ID = <star1>;</call>
+
++ search movie actor id *
+- <call>jdbc film_list SELECT Movies.*, Persons_Movies.Role FROM Persons_Movies LEFT JOIN Movies ON Movies.ID = Persons_Movies.Movie_ID WHERE Persons_Movies.Person_ID = <star1> AND Movies.Votes > 500 AND NOT INSTR(Movies.Title, '(TV)') ORDER BY RAND() LIMIT 5;</call>
+
+//Search movies by name
++ [search] movie *
+- <call>jdbc film_list -m The movies with <star1> in the title are: SELECT * FROM Movies WHERE INSTR(Title, '<star1>') > 0 LIMIT 10;</call>
+
+//Search actor by id
++ search person id *
+- <call>jdbc person_info SELECT * FROM Persons WHERE ID = <star1> LIMIT 1;</call>
+
+//Search person movie id
++ search actor movie id *
+- <call>jdbc person_list -m Some of the cast mebers are: SELECT Persons.Name, Persons.ID FROM Persons_Movies RIGHT JOIN Persons ON Persons.ID = Persons_Movies.Person_ID WHERE Persons_Movies.Movie_ID = <star1> AND Persons_Movies.Role = 'actor' ORDER BY RAND() LIMIT 5;</call>
+
++ search non-actor movie id *
+- <call>jdbc person_list -m The people who worked on this movie are: SELECT Persons.Name, Persons.ID FROM Persons_Movies RIGHT JOIN Persons ON Persons.ID = Persons_Movies.Person_ID WHERE Persons_Movies.Movie_ID = <star1> AND Persons_Movies.Role != 'actor';</call>
+
+//Search actor by name
++ search person _
+- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 ORDER BY LENGTH(Name) LIMIT 10;</call>
+
++ search person _ _
+- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 ORDER BY LENGTH(Name) LIMIT 10;</call>
+
++ search person _ _ _
+- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 AND INSTR(Name, '<star3>') > 0 ORDER BY LENGTH(Name) LIMIT 10;</call>
+
++ search person _ _ _ _
+- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 AND INSTR(Name, '<star3>') > 0 AND INSTR(Name, '<star4>') > 0 ORDER BY LENGTH(Name) LIMIT 10;</call>
+
++ search person _ _ _ _ _
+- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 AND INSTR(Name, '<star3>') > 0 AND INSTR(Name, '<star4>') > 0 AND INSTR(Name, '<star5>') > 0 ORDER BY LENGTH(Name) LIMIT 10;</call>
+
+
+//Select random movies
++ [*] random (movie|movies) with rating # [*]
+@ /rmr <star2>
+
++ [*] random (movie|movies) with genre _ [*]
+@ /rmg <star2>
+
++ [*] random (movie|movies) with _ as genre [*]
+@ /rmg <star2>
+
++ [*] random (movie|movies) from *
+@ /rmc <star2>
+
++ [*] random movie [*]
+@ /rm
+
+
++ all questions
+- <call>inlineKeyboard {'text':'This are some things I can do','buttons':[[{'text':'Shortest movie with the highest rating','callback':'questions_1'}],[{'text':'In what year between 1990 and 2018 are the most films with the word beer in the title produced','callback':'questions_2'}],[{'text':'In which movies does (full actor name) play','callback':'questions_3'}],[{'text':'Which director has filmed the most movies with (full actor name)','callback':'questions_4'}],[{'text':'Which movie was the most expensive to create','callback':'questions_5'}],[{'text':'What are the most occuring genres','callback':'questions_6'}],[{'text':'What are the 5 most occuring genres','callback':'questions_7'}],[{'text':'what are the most occuring genres in (Country name)','callback':'questions_8'}],[{'text':'Which 10 countries made the most movies','callback':'questions_9'}],[{'text':'What are the top rated movies','callback':'questions_10'}]]}</call>
+
++ [*] help [*]
+@ all questions
+
++ what can you do?
+@ all questions
+
++ *
+- Not sure I got that. Type /help for some example questions.
+
+// Substitutions
+! sub i'm     = i am
+! sub i'd     = i would
+! sub i've    = i have
+! sub i'll    = i will
+! sub don't   = do not
+! sub isn't   = is not
+! sub you'd   = you would
+! sub you're  = you are
+! sub you've  = you have
+! sub you'll  = you will
+! sub what's  = what is
+! sub whats   = what is
+! sub what're = what are
+! sub what've = what have
+! sub what'll = what will
+! sub who's   = who is

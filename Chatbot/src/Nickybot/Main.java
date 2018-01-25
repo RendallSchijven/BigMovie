@@ -5,7 +5,9 @@ import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 import javax.script.ScriptException;
-import java.io.FileNotFoundException;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
 
 /**
  *
@@ -16,6 +18,18 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws ScriptException {
+        String rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
+        String appConfigPath = rootPath + "resources/app.properties";
+        System.out.println(appConfigPath);
+
+        Properties appProps = new Properties();
+        try {
+            appProps.load(new FileInputStream(appConfigPath));
+        } catch (IOException e) {
+            System.out.println("app.properties not found.");
+            return;
+        }
+
         // Initialize Api Context
         ApiContextInitializer.init();
 
