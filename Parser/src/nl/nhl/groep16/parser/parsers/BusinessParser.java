@@ -92,7 +92,7 @@ public class BusinessParser implements ParserInterface {
         }
 
         String currency = m.group(2);
-        String amount = m.group(3);
+        String amount = m.group(3).replaceAll(",", ""); // remove useless US number formatting
         return new String[] {amount, currency};
     }
 
