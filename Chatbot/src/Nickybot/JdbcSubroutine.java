@@ -181,6 +181,7 @@ public class JdbcSubroutine implements Subroutine {
                     if (!jsonObject.getString("Sex").equals("null"))
                         jsonButtonString += "<b>Sex :</b> " + jsonObject.getString("Sex") + "\\n";
 
+                    jsonButtonString += ImageSearchSubroutine.getImage(jsonObject.getString("Name"), true) + "\\n";
                     jsonButtonString += "\",\"buttons\":[";
                     jsonButtonString += "[{\"text\":\"Movies worked on\", \"callback\":\"actor_id_movie_" + jsonObject.getInt("ID") + "\"}]";
 
