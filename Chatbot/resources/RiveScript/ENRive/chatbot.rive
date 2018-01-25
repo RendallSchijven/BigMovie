@@ -99,7 +99,7 @@
 
 //Question 9
 + what are the top # rated movies
-- <call>jdbc SELECT DISTINCT Title, Rating, Votes FROM `Movies`\s
+- <call>jdbc film_list -m The top rated movies are SELECT DISTINCT Title, Rating, ID, Votes FROM `Movies`\s
 ^            WHERE Votes > 100000 AND Title NOT LIKE '%(VG)%'\s
 ^            ORDER BY Rating DESC, Votes DESC LIMIT <star>;</call>
 
