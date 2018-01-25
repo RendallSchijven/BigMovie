@@ -32,7 +32,7 @@ getPG <- ("SELECT ID, MPAA, Plot FROM Movies WHERE MPAA = 'PG' AND Plot IS NOT N
 getPG13 <- ("SELECT ID, MPAA, Plot FROM Movies WHERE MPAA = 'PG-13' AND Plot IS NOT NULL ORDER BY Plot LIMIT 1783")
 
 #Get the movie data from the movie the user entered
-getTestMovie <- sprintf("SELECT ID, Plot, MPAA FROM Movies WHERE Title LIKE '%%%s%%' LIMIT 1", movieArgs)
+getTestMovie <- sprintf("SELECT ID, Plot, MPAA FROM Movies WHERE ID = %s LIMIT 1", args[[1]])
 testMovie <- dbGetQuery(mydb, getTestMovie)
 
 #Make MPAA empty so we can predict it
@@ -85,11 +85,20 @@ moviesSparse$ID <- movies$ID
 train <- subset(moviesSparse, ID != testMovieID)
 test <- subset(moviesSparse, ID == testMovieID)
 
+#Make a cart model of the dataset
 movieCart = rpart(MPAA ~ ., data=moviesSparse, method = "class")
 
+#Make a prediction using the cart model and the test data
 MPAA <- predict(movieCart, newdata = test, type = "class")
 
+#Put the prediction data in a table
 table <-data.frame(table(test$MPAA, MPAA))
+
+#Collect the row from the table where a rating is 1
 row <- table[table[,3] == 1,]
+
+#Put the rating in a string
 return <- sprintf("%s",row$MPAA)
+
+#Print this so it is returned to java
 cat("The predicted MPAA is: ", return)
