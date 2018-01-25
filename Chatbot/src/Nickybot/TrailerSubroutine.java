@@ -42,6 +42,7 @@ public class TrailerSubroutine implements Subroutine {
             url.addParameter("q", keyword + "trailer");
             url.addParameter("type", "video");
             url.addParameter("key", appProps.getProperty("yt_apiKey"));
+            System.out.println(url.build());
 
             // Get JSON result from GET request
             JSONObject json = new JSONObject(IOUtils.toString(url.build(), Charset.forName("UTF-8")));
@@ -60,7 +61,7 @@ public class TrailerSubroutine implements Subroutine {
 
         if(!id.isEmpty()){
             // Return youtube link for trailer video
-            return "https://www.youtube.com/watch?v=" + id;
+            return "<a href=\"https://www.youtube.com/watch?v=" + id + "\">trailer</a>";
         }
         return "My brain stopped working";
     }
