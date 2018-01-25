@@ -8,14 +8,14 @@
 #install.packages("webshot")
 library(RMySQL)
 library(plotly)
-library(webshot)
+#library(webshot)
 
 #Set plotly username and api key for exporting image
 Sys.setenv("plotly_username" = "Nickelbot")
 Sys.setenv("plotly_api_key" = "qh6P6EyGmQ41lH0WTu11")
 
 #Conection string to connect to database
-mydb <- dbConnect(MySQL(), dbname="NickyBotUtf82", user="riley", password="jayden", host="db.sanderkastelein.nl")
+mydb <- dbConnect(MySQL(), dbname="NickyBotUtf8", user="riley", password="jayden", host="db.sanderkastelein.nl")
 
 #Query for getting the amount of movies per genre
 getMoviesPerGenre <- ("SELECT g.GenreName AS Genre, COUNT(*) AS Movies FROM Genres AS g

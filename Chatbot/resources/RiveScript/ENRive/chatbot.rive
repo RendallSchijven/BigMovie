@@ -114,7 +114,7 @@
 
 //R question 1
 + does * have more violent movies than *
-- <call>system rscript Chatbot/resources/R/ENRScript/R1en.R '<star1>' '<star2>'</call>
+- <call>system rscript Chatbot/resources/R/ENRScript/R1en.R <star1> / <star2></call>
 ^ <call>send photo violence.jpg</call>
 
 + is there a relation between the cost and duration of movies

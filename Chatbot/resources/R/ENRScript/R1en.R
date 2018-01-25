@@ -8,18 +8,29 @@
 library(RMySQL)
 library(ggplot2)
 
-mydb <- dbConnect(MySQL(), dbname="NickyBotUtf82", user="riley", password="jayden", host="db.sanderkastelein.nl")
+mydb <- dbConnect(MySQL(), dbname="NickyBotUtf8", user="riley", password="jayden", host="db.sanderkastelein.nl")
 
+#Get the arguments that java sent
 args <- commandArgs(trailingOnly = TRUE)
 
-getCountry1 <- sprintf("SELECT Country FROM Countries WHERE Country LIKE '%%%s%%' LIMIT 1;", args[[1]])
-getCountry2 <- sprintf("SELECT Country FROM Countries WHERE Country LIKE '%%%s%%' LIMIT 1;", args[[2]])
+#Make a string and put all the arguments in iut
+countryString = ""
+for(arg in args){countryString <- paste(countryString, arg)}
 
+#Trim the countries on /. In java we put a / between the country variables
+split = unlist(strsplit(countryString, "/"))
+
+#Save the countries in a variable and trim them so there are no spaces infront or behind
+arg1 = trimws(split[1])
+arg2 = trimws(split[2])
+
+#The queries to get the country from the database
+getCountry1 <- sprintf("SELECT Country FROM Countries WHERE Country LIKE '%%%s%%' LIMIT 1;", arg1)
+getCountry2 <- sprintf("SELECT Country FROM Countries WHERE Country LIKE '%%%s%%' LIMIT 1;", arg2)
+
+#Run the queries and save the results
 country1 <- dbGetQuery(mydb, getCountry1)
 country2 <- dbGetQuery(mydb, getCountry2)
-
-country1
-country2
 
 #Get the total amount of movies from each country and the total amount of violent movies
 #We considered the gernes 'Horror', 'Thriller', 'War', and 'Action' as violent
@@ -54,16 +65,19 @@ Country2Violent <- dbGetQuery(mydb, getCountry2Violent)
 c1Percentage = (Country1Violent / Country1Movies) * 100
 c2Percentage = (Country2Violent / Country2Movies) * 100
 
+#Make a dataset of the data we retrieved
 countries = c(toString(country1), toString(country2))
 violence = c(c1Percentage, c2Percentage, recursive = TRUE)
 countriesViolence = data.frame(countries, violence)
 
+#This statement checks which country has the higher percentage and sends the correct string back to the user
 if(c1Percentage > c2Percentage){
   cat(sprintf("As you can see %s has a higher percentage of violent movies than %s",country1, country2))
 } else{
   cat(sprintf("As you can see %s has a higher percentage of violent movies than %s",country2, country1))
 }
 
+#Create the barplot and save it as jpg
 invisible(jpeg('violence.jpg'))
 ggplot(countriesViolence, aes(countries, violence)) +
   geom_bar(stat = "identity", position = "dodge") +
