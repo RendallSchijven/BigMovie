@@ -126,8 +126,8 @@
 + /m *
 - <call>jdbc film_list SELECT ID, Title, Plot, ReleaseYear, Rating, Votes, MPAA, Currency, Budget, Duration FROM Movies WHERE Title like'%<star1>%' LIMIT 20;</call>
 
-+ /a _ _
-- <call>jdbc SELECT Movies.Title FROM Movies LEFT JOIN Persons_Movies ON Persons_Movies.Movie_ID = Movies.ID LEFT JOIN Persons ON Persons_Movies.Person_ID = Persons.ID WHERE Persons.Name LIKE '%<star2>, <star1>%' LIMIT 50; </call>
++ /a *
+@ search person <star1>
 
 + /k *
 - <call>jdbc SELECT m.Title AS Movies FROM Movies_Keywords AS mk LEFT JOIN Movies AS m ON m.ID = mk.Movie_ID WHERE mk.Keyword_ID = (SELECT ID FROM Keywords WHERE Keyword LIKE '%<star1>%' LIMIT 1);</call>
@@ -140,6 +140,11 @@
 
 + /rmg *
 - <call>jdbc SELECT m.Title AS Movies FROM Movies_Genres AS mg LEFT JOIN Movies AS m ON m.ID = mg.Movie_ID WHERE mg.Genre_ID = (SELECT ID FROM Genres WHERE GenreName LIKE '%Drama%' LIMIT 1) ORDER BY RAND() LIMIT 25;</call>
+
++ /i * *
+- <call>image <star1> <star2></call>
+
+
 
 //Search movies by id
 + search movie id *
@@ -172,12 +177,16 @@
 //Search actor by name
 + search person _
 - <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
+
 + search person _ _
 - <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
+
 + search person _ _ _
 - <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 AND INSTR(Name, '<star3>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
+
 + search person _ _ _ _
 - <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 AND INSTR(Name, '<star3>') > 0 AND INSTR(Name, '<star4>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
+
 + search person _ _ _ _ _
 - <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 AND INSTR(Name, '<star3>') > 0 AND INSTR(Name, '<star4>') > 0 AND INSTR(Name, '<star5>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
 
