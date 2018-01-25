@@ -27,6 +27,35 @@ public class riveFeaturesSubroutine implements Subroutine {
                 result = "Daddy";
             }
         }
+        if(args[0].equals("dateCheck")){
+            if(Calendar.getInstance().get(Calendar.MONTH)==6&&Calendar.getInstance().get(Calendar.DAY_OF_MONTH)==1){
+                result="Happy Canada day!";
+            }
+            if(Calendar.getInstance().get(Calendar.MONTH)==11&&Calendar.getInstance().get(Calendar.DAY_OF_MONTH)==25){
+                result="Merry Christmas!";
+            }
+            if(Calendar.getInstance().get(Calendar.MONTH)==0&&Calendar.getInstance().get(Calendar.DAY_OF_MONTH)==1){
+                result="Happy NewYear's day!";
+            }
+            if(Calendar.getInstance().get(Calendar.MONTH)==1&&Calendar.getInstance().get(Calendar.DAY_OF_MONTH)==14){
+                result="Happy Valentines!";
+            }
+            if(Calendar.getInstance().get(Calendar.MONTH)==1&&Calendar.getInstance().get(Calendar.DAY_OF_MONTH)==2){
+                result="Happy Groundhog day!";
+            }
+            if(Calendar.getInstance().get(Calendar.MONTH)==1&&Calendar.getInstance().get(Calendar.DAY_OF_MONTH)==15){
+                result="Happy National flag of Canada day!";
+            }
+            if(Calendar.getInstance().get(Calendar.MONTH)==2&&Calendar.getInstance().get(Calendar.DAY_OF_MONTH)==17){
+                result="Happy St Patrick's Day!";
+            }
+            if(Calendar.getInstance().get(Calendar.MONTH)==3&&Calendar.getInstance().get(Calendar.DAY_OF_MONTH)==1){
+                result="April fools!";
+            }
+            if(Calendar.getInstance().get(Calendar.MONTH)==9&&Calendar.getInstance().get(Calendar.DAY_OF_MONTH)==31){
+                result="Happy Halloween!";
+            }
+        }
         if(args[0].equals("album")){
             result += "I'm gonna trade this life for fortune and fame\n";
             result += "I'd even cut my hair and change my name\n";
