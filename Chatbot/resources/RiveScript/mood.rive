@@ -1,4 +1,4 @@
-+ how are you
++ how are you [*]
 * <get mood> == -20 => I have been better <sub mood=20>
 * <get mood> == -40 => Sort of doing alright <sub mood=20>
 * <get mood> == -60 =>  I've been wrong, I've been down ,Been to the bottom of every bottle <sub mood=20>
@@ -7,19 +7,22 @@
 - I'm ok i guess <sub mood=20>
 
 + how you doing
-@how are you
+@how are you [*]
 
 +how are things
-@how are you
+@how are you [*]
+
++how is it
+@how are you [*]
 
 +how is life
-@how are you
+@how are you [*]
 
 + what do you think about yourself
-@how are you
+@how are you [*]
 
 + what do you think about you
-@how are you
+@how are you [*]
 
 +[*] @compliments [*]
 - <add mood=20> I said I love you and I swear I still do
@@ -27,4 +30,10 @@
 >topic dead
   + *
   - Here lies nickelBot <bot birthyear> - <bot year> \n may he rest in peace
+
+  + i think your [new] album is @compliments
+  - <add mood=20> I'm back {topic=random}
+
+  + i [really] like your [new] album
+  - <add mood=20> I'm back {topic=random}
 <topic
