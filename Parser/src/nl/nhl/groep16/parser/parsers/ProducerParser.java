@@ -15,6 +15,11 @@ public class ProducerParser implements ParserInterface{
         this.infoRegex = Pattern.compile("\\t+(\\w.*)\\s{2,}\\(([^\\)]+)\\).*");
     }
 
+    /**
+     * Converts a line into a Array of Strings representing the columns of a CSV
+     * @param String line
+     * @return String[]
+     */
     @SuppressWarnings("Duplicates")
     @Override
     public String[] convertLine(String line) {
@@ -36,6 +41,10 @@ public class ProducerParser implements ParserInterface{
         return new String[]{currentProducer, extractedInfo[0], extractedInfo[1]};
     }
 
+    /** Extracts the producer from the line, returns null if not found.
+     * @param String line
+     * @return String
+     */
     public String extractProducer(String line) {
         Matcher m = producerRegex.matcher(line);
         if(!m.find()) {
@@ -44,6 +53,11 @@ public class ProducerParser implements ParserInterface{
         return m.group(1);
     }
 
+    /**
+     * TODO: real comment explaining something.
+     * @param String line
+     * @return String[]
+     */
     public String[] extractInfo(String line) {
         Matcher m = infoRegex.matcher(line);
         if(!m.find()) {

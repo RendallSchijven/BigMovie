@@ -1,0 +1,67 @@
+//Chatbotnl.rive
+//Created by: Rendall
+
+// Visualisatie vragen
+
+//Visualisatie 1
++ [laat me de films per] jaar [zien van] *
+- <call>system rscript Chatbot/resources/R/Visualisatie/visualisatie1.R <star1></call>
+^ <call>send photo MoviesYear.jpg</call>
+
+//Visualisatie 2
++ [laat me de] verdeling van genres [zien]
+- <call>system rscript Chatbot/resources/R/Visualisatie/Visualisatie2.R</call>
+^ <call>send photo genreMovies.png</call>
+
+// R vragen
+
+//R vraag 1
++ heeft * meer geweldadige films dan *
+- <call>system rscript Chatbot/resources/R/NLRscript/R1nl.R <star1> / <star2></call>
+^ <call>send photo violence.jpg</call>
+
+//R vraag 2
++ [is er een verband tussen de] kosten en speeltijd [van films]
+- <call>system rscript Chatbot/resources/R/NLRscript/R2nl.R</call>
+^ <call>send photo BudgetDuration.jpg</call>
+
+//R vraag 3
++ [is er een verband tussen de] kosten en waardering [van films]
+- <call>system rscript Chatbot/resources/R/NLRscript/R3nl.R</call>
+^ <call>send photo BudgetRating.jpg</call>
+
+//R MPAA vraag
++ mpaa *
+- <call>system rscript Chatbot/resources/R/NLRscript/MPAANL.R <star1></call>
+
+// !Commands
++ /command
+- /m    snelle film zoeker, geeft de basis informatie over een film terug\n
+^ /a    snelle acteur zoeker, geeft alle films terug waarin zij/hij heeft gespeeld\n
+^ /k    snelle trefwoord zoeker, geeft alle films terug met dat trefwoord\n
+^ /rm   krijg een willekeurige film\n
+^ /rmc  krijg een willekeurige film van een gekozen land\n
+^ /rmg  krijg een willekeurige film van een gekozen genre\n
+^ /i    krijg een plaatje terug met de gezochte naam\n
+
++ /m *
+- <call>jdbc film_list SELECT ID, Title, Plot, ReleaseYear, Rating, Votes, MPAA, Currency, Budget, Duration FROM Movies WHERE Title like'%<star1>%' LIMIT 20;</call>
+
++ /a * *
+- <call>image <star1> <star2></call>
+@ search person <star1> <star2>
+
++ /k *
+- <call>jdbc SELECT m.Title AS Movies FROM Movies_Keywords AS mk LEFT JOIN Movies AS m ON m.ID = mk.Movie_ID WHERE mk.Keyword_ID = (SELECT ID FROM Keywords WHERE Keyword LIKE '%<star1>%' LIMIT 1);</call>
+
++ /rm
+- <call>jdbc SELECT Title FROM Movies ORDER BY RAND() LIMIT 1;</call>
+
++ /rmc *
+- <call>jdbc SELECT m.Title AS Movies FROM Movies_Countries AS mc LEFT JOIN Movies AS m ON m.ID = mc.Movie_ID WHERE mc.Country_ID = (SELECT ID FROM Countries WHERE Country LIKE '%<star1>%' LIMIT 1) ORDER BY RAND() LIMIT 25;</call>
+
++ /rmg *
+- <call>jdbc SELECT m.Title AS Movies FROM Movies_Genres AS mg LEFT JOIN Movies AS m ON m.ID = mg.Movie_ID WHERE mg.Genre_ID = (SELECT ID FROM Genres WHERE GenreName LIKE '%Drama%' LIMIT 1) ORDER BY RAND() LIMIT 25;</call>
+
++ /i * *
+- <call>image <star1> <star2></call>
