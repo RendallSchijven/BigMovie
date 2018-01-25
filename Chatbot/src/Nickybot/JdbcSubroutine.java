@@ -25,10 +25,16 @@ public class JdbcSubroutine implements Subroutine {
         String sql = "";
         String response;
         String result = "";
+        String message = "";
 
         if (!args[0].equals("SELECT")) {
             for (int i = 1; i < args.length; i++) {
                 sql = sql + " " + args[i];
+            }
+
+            if(args[1].equals("-m")){
+                message = sql.substring(4,sql.indexOf("SELECT")-1);
+                sql = sql.substring(sql.indexOf("SELECT"),sql.length()-1);
             }
 
             sql = sql.trim();
@@ -43,7 +49,12 @@ public class JdbcSubroutine implements Subroutine {
             switch (args[0]) {
                 case "film_list":
                     System.out.println(args[0]);
-                    jsonButtonString = "{\"text\":\"The answer is\",\"buttons\":[";
+                    if(message.isEmpty()){
+                        jsonButtonString = "{\"text\":\"The answer is\",\"buttons\":[";
+                    }
+                    else{
+                        jsonButtonString = "{\"text\":\"" + message + "\",\"buttons\":[";
+                    }
 
                     for (int i = 0; i < JsonArray.length(); i++) {
                         jsonObject = JsonArray.getJSONObject(i);
