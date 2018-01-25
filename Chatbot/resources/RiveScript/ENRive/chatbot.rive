@@ -100,7 +100,7 @@
 //Visualization 3
 + get genre
 - <call>system rscript Chatbot/resources/R/Visualization/Visualization3.R</call>
-^ <call>send photo GenreMovies.png</call>
+^ <call>send photo genreMovies.png</call>
 
 // R Questions
 
@@ -112,9 +112,12 @@
 //R question 2
 + is there a relation between the cost and duration of movies
 - <call>system rscript Chatbot/resources/R/ENRScript/R2en.R</call>
-^ <call>send photo MoviesBudget.jpg</call>
+^ <call>send photo BudgetDuration.jpg</call>
 
 //R question 3
++ is there a relation between the cost and rating of movies
+- <call>system rscript Chatbot/resources/R/ENRScript/R3en.R</call>
+^ <call>send photo BudgetRating.jpg</call>
 
 //R MPAA Question
 + mpaa *

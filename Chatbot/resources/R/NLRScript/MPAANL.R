@@ -32,7 +32,7 @@ getPG <- ("SELECT ID, MPAA, Plot FROM Movies WHERE MPAA = 'PG' AND Plot IS NOT N
 getPG13 <- ("SELECT ID, MPAA, Plot FROM Movies WHERE MPAA = 'PG-13' AND Plot IS NOT NULL ORDER BY Plot LIMIT 1783")
 
 #Get the movie data from the movie the user entered
-getTestMovie <- sprintf("SELECT ID, Plot, MPAA FROM Movies WHERE Title LIKE '%%%s%%'", movieArgs)
+getTestMovie <- sprintf("SELECT ID, Plot, MPAA FROM Movies WHERE Title LIKE '%%%s%%' LIMIT 1", movieArgs)
 testMovie <- dbGetQuery(mydb, getTestMovie)
 
 #Make MPAA empty so we can predict it
@@ -86,7 +86,6 @@ train <- subset(moviesSparse, ID != testMovieID)
 test <- subset(moviesSparse, ID == testMovieID)
 
 movieCart = rpart(MPAA ~ ., data=moviesSparse, method = "class")
-prp(movieCart)
 
 MPAA <- predict(movieCart, newdata = test, type = "class")
 
