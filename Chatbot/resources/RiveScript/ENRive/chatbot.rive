@@ -1,4 +1,4 @@
-//Chatbot.rive
+    //Chatbot.rive
 //Created by: Rendall
 
 + hello
@@ -21,19 +21,11 @@
 + *
 - Not sure I got that. Type /help for some example questions.
 
-//Search movies by name
-+ search movie id *
-- <call>jdbc film_info SELECT * FROM Movies WHERE ID = <star1> LIMIT 1</call>
-
-//Search movies by name
-+ search movie *
-- <call>jdbc SELECT * FROM Movies WHERE INSTR(Title, '<star1>') > 0 LIMIT 10</call>
-
 //Plain SQL questions English
 
 //Question 1
 + shortest movie highest rating
-- <call>jdbc film_list SELECT Title, ID FROM Movies\s
+- <call>jdbc film_list -m The shortest movie with the highest rating is: SELECT Title, ID FROM Movies\s
 ^            WHERE rating > 8.5 AND duration IS NOT NULL\s
 ^            ORDER BY duration ASC LIMIT 1;</call>
 
@@ -54,7 +46,7 @@
 
 //Question 4
 + which director has filmed the most movies with _ _
-- which director has filmed the most movies with <star>?\n
+- which director has filmed the most movies with <star1>?\n
 ^ <call>jdbc SELECT p.Name, COUNT(*) AS Movies FROM Persons AS p\s
 ^            LEFT JOIN Persons_Movies AS pm ON pm.Person_ID = p.ID\s
 ^            WHERE pm.Role = 'director'\s
@@ -132,7 +124,7 @@
 
 
 + /m *
-- <call>jdbc SELECT Title, Plot, ReleaseYear, Rating, Votes, MPAA, Currency, Budget, Duration FROM Movies WHERE Title like'%<star1>%' LIMIT 1;</call>
+- <call>jdbc film_list SELECT ID, Title, Plot, ReleaseYear, Rating, Votes, MPAA, Currency, Budget, Duration FROM Movies WHERE Title like'%<star1>%' LIMIT 20;</call>
 
 + /a _ _
 - <call>jdbc SELECT Movies.Title FROM Movies LEFT JOIN Persons_Movies ON Persons_Movies.Movie_ID = Movies.ID LEFT JOIN Persons ON Persons_Movies.Person_ID = Persons.ID WHERE Persons.Name LIKE '%<star2>, <star1>%' LIMIT 50; </call>
@@ -149,9 +141,97 @@
 + /rmg *
 - <call>jdbc SELECT m.Title AS Movies FROM Movies_Genres AS mg LEFT JOIN Movies AS m ON m.ID = mg.Movie_ID WHERE mg.Genre_ID = (SELECT ID FROM Genres WHERE GenreName LIKE '%Drama%' LIMIT 1) ORDER BY RAND() LIMIT 25;</call>
 
+//Search movies by id
++ search movie id *
+- <call>jdbc film_info SELECT * FROM Movies WHERE ID = <star1></call>
+
++ search movie full id *
+- <call>jdbc film_info SELECT * FROM Movies WHERE ID = <star1></call>
+
++ search movie plot id *
+- <call>jdbc film_plot SELECT ID, Title, Plot FROM Movies WHERE ID = <star1></call>
+
++ search movie actor id *
+- <call>jdbc film_list SELECT Movies.*, Persons_Movies.Role FROM Persons_Movies LEFT JOIN Movies ON Movies.ID = Persons_Movies.Movie_ID WHERE Persons_Movies.Person_ID = <star1></call>
+
+//Search movies by name
++ search movie *
+- <call>jdbc film_list SELECT * FROM Movies WHERE INSTR(Title, '<star1>') > 0 LIMIT 10</call>
+
+//Search actor by id
++ search person id *
+- <call>jdbc person_info SELECT * FROM Persons WHERE ID = <star1> LIMIT 1</call>
+
+//Search person movie id
++ search actor movie id *
+- <call>jdbc person_list SELECT Persons.Name, Persons.ID FROM Persons_Movies RIGHT JOIN Persons ON Persons.ID = Persons_Movies.Person_ID WHERE Persons_Movies.Movie_ID = <star1> AND Persons_Movies.Role = 'actor'</call>
+
++ search non-actor movie id *
+- <call>jdbc person_list SELECT Persons.Name, Persons.ID FROM Persons_Movies RIGHT JOIN Persons ON Persons.ID = Persons_Movies.Person_ID WHERE Persons_Movies.Movie_ID = <star1> AND Persons_Movies.Role != 'actor'</call>
+
+//Search actor by name
++ search person _
+- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
++ search person _ _
+- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
++ search person _ _ _
+- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 AND INSTR(Name, '<star3>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
++ search person _ _ _ _
+- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 AND INSTR(Name, '<star3>') > 0 AND INSTR(Name, '<star4>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
++ search person _ _ _ _ _
+- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 AND INSTR(Name, '<star3>') > 0 AND INSTR(Name, '<star4>') > 0 AND INSTR(Name, '<star5>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
+
+
 
 + all questions
-- <call>inlineKeyboard {'text':'All questions are:', 'buttons':[[{'text':'Shortest movie highest rating', 'callback':'questions_1'}],[{'text':'In what year between 1990 and 2018 are the most films with the word beer in the title produced', 'callback':'questions_2'}],[{'text':'In which movies does (full actor name) play', 'callback':'questions_3'}],[{'text':'Which director has filmed the most movies with (full actor name)', 'callback':'questions_4'}],[{'text':'Which movie was the most expensive to create', 'callback':'questions_5'}],[{'text':'Which actor has the longest movie career', 'callback':'questions_6'}],[{'text':'What are the 5 most occuring genres', 'callback':'questions_7'}],[{'text':'what are the most occuring genres in (Country name)', 'callback':'questions_8'}],[{'text':'Which 5 countries made the most movies', 'callback':'questions_9'}],[{'text':'What are the top rated movies', 'callback':'questions_10'}],[{'text':'Who is the oldest living actor', 'callback':'questions_11'}]]}</call>
+- <call>inlineKeyboard {
+^   	'text': 'All questions are:',
+^   	'buttons': [[{
+^   				'text': 'Shortest movie highest rating',
+^   				'callback': 'questions_1'
+^   			}
+^   		], [{
+^   				'text': 'In what year between 1990 and 2018 are the most films with the word beer in the title produced',
+^   				'callback': 'questions_2'
+^   			}
+^   		], [{
+^   				'text': 'In which movies does (full actor name) play',
+^   				'callback': 'questions_3'
+^   			}
+^   		], [{
+^   				'text': 'Which director has filmed the most movies with (full actor name)',
+^   				'callback': 'questions_4'
+^   			}
+^   		], [{
+^   				'text': 'Which movie was the most expensive to create',
+^   				'callback': 'questions_5'
+^   			}
+^   		], [{
+^   				'text': 'Which actor has the longest movie career',
+^   				'callback': 'questions_6'
+^   			}
+^   		], [{
+^   				'text': 'What are the 5 most occuring genres',
+^   				'callback': 'questions_7'
+^   			}
+^   		], [{
+^   				'text': 'what are the most occuring genres in (Country name)',
+^   				'callback': 'questions_8'
+^   			}
+^   		], [{
+^   				'text': 'Which 5 countries made the most movies',
+^   				'callback': 'questions_9'
+^   			}
+^   		], [{
+^   				'text': 'What are the top rated movies',
+^   				'callback': 'questions_10'
+^   			}
+^   		], [{
+^   				'text': 'Who is the oldest living actor',
+^   				'callback': 'questions_11'
+^   			}
+^   		]]
+^   }</call>
 
 + [*] help [*]
 @ all questions
