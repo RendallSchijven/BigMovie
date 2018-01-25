@@ -22,11 +22,21 @@ public class ReleaseParser implements ParserInterface {
         formatterFinal = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
     }
 
+    /**
+     * Converts a line into a Array of Strings representing the columns of a CSV
+     * @param String line
+     * @return String[]
+     */
     @Override
     public String[] convertLine(String line) {
         return extractRelease(line);
     }
 
+    /**
+     * Converts a line into a Array of Strings representing the columns of a CSV
+     * @param String line
+     * @return String[]
+     */
     public String[] extractRelease(String line) {
         Matcher m = releaseRegex.matcher(line);
         if (!m.find()) {

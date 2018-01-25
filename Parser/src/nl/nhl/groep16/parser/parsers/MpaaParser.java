@@ -17,6 +17,11 @@ public class MpaaParser implements ParserInterface{
     }
 
 
+    /**
+     * Converts a line into CSV columns
+     * @param String line
+     * @return String[]
+     */
     @Override
     public String[] convertLine(String line) {
         String movie = extractMovie(line);
@@ -34,6 +39,11 @@ public class MpaaParser implements ParserInterface{
         return null;
     }
 
+    /**
+     * Extracts a movie from the line, returns null if not found
+     * @param String line
+     * @return String
+     */
     public String extractMovie(String line) {
         Matcher m = moviesRegex.matcher(line);
         if (!m.find()) {
@@ -43,6 +53,11 @@ public class MpaaParser implements ParserInterface{
         return m.group(1);
     }
 
+    /**
+     * Extracts rating from the line, returns null if not found
+     * @param String line
+     * @return String
+     */
     public String extractRatings(String line) {
         Matcher m = ratingRegex.matcher(line);
         if (!m.find()) {
