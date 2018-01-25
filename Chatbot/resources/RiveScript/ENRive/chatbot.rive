@@ -130,19 +130,53 @@
 
 //Visualization 2
 + get years *
-- Just a moment please
-^ <call>system rscript Chatbot/resources/R/Visualization2.R <star1></call>
-^ <call> send photo MoviesYear.jpg there it is rockstar</call>
+- <call>system rscript Chatbot/resources/R/Visualization/Visualization2.R <star1></call>
+^ <call>send photo MoviesYear.jpg</call>
+
+//Visualization 3
++ get genre
+- <call>system rscript Chatbot/resources/R/Visualization/Visualization3.R</call>
+^ <call>send photo GenreMovies.png</call>
 
 // R Questions
-+ is there a relation between the cost and duration of movies
-- <call>system rscript Chatbot/resources/R/R2en.R</call>
-^ <call>send photo MoviesBudget.jpg As you can see there is not really a relation between the budget and duration of a movie</call>
 
 //R question 1
 + does * have more violent movies than *
-- <call>system rscript Chatbot/resources/r/R1en.R '<star1>' '<star2>'</call>
+- <call>system rscript Chatbot/resources/R/ENRScript/R1en.R '<star1>' '<star2>'</call>
 ^ <call>send photo violence.jpg</call>
+
++ is there a relation between the cost and duration of movies
+- <call>system rscript Chatbot/resources/R/ENRScript/R2en.R</call>
+^ <call>send photo MoviesBudget.jpg As you can see there is not really a relation between the budget and duration of a movie</call>
+
+// !Commands
++ /command
+- /m    for a quick movie search, returns basic information about the movie (budget, releaseyear, etc)\n
+^ /a    for a quick actor search, returns all movies in wich (s)he has played\n
+^ /k    for a quick keyword search, returns all the movies with that keyword\n
+^ /rm   returns a random movie\n
+^ /rmc  returns 25 random movies from a chosen country\n
+^ /rmg  returns 25 random movies from a chosen genre\n
+
+
++ /m *
+- <call>jdbc SELECT Title, Plot, ReleaseYear, Rating, Votes, MPAA, Currency, Budget, Duration FROM Movies WHERE Title like'%<star1>%' LIMIT 1;</call>
+
++ /a _ _
+- <call>jdbc SELECT Movies.Title FROM Movies LEFT JOIN Persons_Movies ON Persons_Movies.Movie_ID = Movies.ID LEFT JOIN Persons ON Persons_Movies.Person_ID = Persons.ID WHERE Persons.Name LIKE '%<star2>, <star1>%' LIMIT 50; </call>
+
++ /k *
+- <call>jdbc SELECT m.Title AS Movies FROM Movies_Keywords AS mk LEFT JOIN Movies AS m ON m.ID = mk.Movie_ID WHERE mk.Keyword_ID = (SELECT ID FROM Keywords WHERE Keyword LIKE '%<star1>%' LIMIT 1);</call>
+
++ /rm
+- <call>jdbc SELECT Title FROM Movies ORDER BY RAND() LIMIT 1;</call>
+
++ /rmc *
+- <call>jdbc SELECT m.Title AS Movies FROM Movies_Countries AS mc LEFT JOIN Movies AS m ON m.ID = mc.Movie_ID WHERE mc.Country_ID = (SELECT ID FROM Countries WHERE Country LIKE '%<star1>%' LIMIT 1) ORDER BY RAND() LIMIT 25;</call>
+
++ /rmg *
+- <call>jdbc SELECT m.Title AS Movies FROM Movies_Genres AS mg LEFT JOIN Movies AS m ON m.ID = mg.Movie_ID WHERE mg.Genre_ID = (SELECT ID FROM Genres WHERE GenreName LIKE '%Drama%' LIMIT 1) ORDER BY RAND() LIMIT 25;</call>
+
 
 // Substitutions
 ! sub i'm     = i am
