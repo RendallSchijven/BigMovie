@@ -34,7 +34,7 @@ public class JdbcSubroutine implements Subroutine {
             }
 
             if (args[0].equals("-m") || args[1].equals("-m")) {
-                message = sql.substring(sql.lastIndexOf("-m")+1, sql.indexOf("SELECT") - 1);
+                message = sql.substring(sql.lastIndexOf("-m") + 1, sql.indexOf("SELECT") - 1);
                 sql = sql.substring(sql.indexOf("SELECT"), sql.length() - 1);
             }
 
@@ -61,27 +61,47 @@ public class JdbcSubroutine implements Subroutine {
                     String jsonWriterString = "{\"text\":\"Wrote\",\"buttons\":[";
                     String jsonEditorString = "{\"text\":\"Edited\",\"buttons\":[";
 
+                    int jsonButtonCount = 0;
+                    int jsonActorCount = 0;
+                    int jsonDirectorCount = 0;
+                    int jsonProducerCount = 0;
+                    int jsonWriterCount = 0;
+                    int jsonEditorCount = 0;
+                    int maxFilms = 20;
+
                     for (int i = 0; i < JsonArray.length(); i++) {
                         jsonObject = JsonArray.getJSONObject(i);
                         if (jsonObject.has("Role")) {
                             switch (jsonObject.getString("Role")) {
                                 case "actor":
-                                    jsonActorString += "[{\"text\":\"" + jsonObject.getString("Title") + "\",\"callback\":\"movie_id_" + jsonObject.getInt("ID") + "\"}],";
+                                    if (jsonActorCount < maxFilms)
+                                        jsonActorString += "[{\"text\":\"" + jsonObject.getString("Title") + "\",\"callback\":\"movie_id_" + jsonObject.getInt("ID") + "\"}],";
+                                    jsonActorCount++;
                                     break;
                                 case "director":
-                                    jsonDirectorString += "[{\"text\":\"" + jsonObject.getString("Title") + "\",\"callback\":\"movie_id_" + jsonObject.getInt("ID") + "\"}],";
+                                    if (jsonDirectorCount < maxFilms)
+                                        jsonDirectorString += "[{\"text\":\"" + jsonObject.getString("Title") + "\",\"callback\":\"movie_id_" + jsonObject.getInt("ID") + "\"}],";
+                                    jsonDirectorCount++;
                                     break;
                                 case "producer":
-                                    jsonProducerString += "[{\"text\":\"" + jsonObject.getString("Title") + "\",\"callback\":\"movie_id_" + jsonObject.getInt("ID") + "\"}],";
+                                    if (jsonProducerCount < maxFilms)
+                                        jsonProducerString += "[{\"text\":\"" + jsonObject.getString("Title") + "\",\"callback\":\"movie_id_" + jsonObject.getInt("ID") + "\"}],";
+                                    jsonProducerCount++;
                                     break;
                                 case "writer":
-                                    jsonWriterString += "[{\"text\":\"" + jsonObject.getString("Title") + "\",\"callback\":\"movie_id_" + jsonObject.getInt("ID") + "\"}],";
+                                    if (jsonWriterCount < maxFilms)
+                                        jsonWriterString += "[{\"text\":\"" + jsonObject.getString("Title") + "\",\"callback\":\"movie_id_" + jsonObject.getInt("ID") + "\"}],";
+                                    jsonWriterCount++;
                                     break;
                                 case "editor":
-                                    jsonEditorString += "[{\"text\":\"" + jsonObject.getString("Title") + "\",\"callback\":\"movie_id_" + jsonObject.getInt("ID") + "\"}],";
+                                    if (jsonEditorCount < maxFilms)
+                                        jsonEditorString += "[{\"text\":\"" + jsonObject.getString("Title") + "\",\"callback\":\"movie_id_" + jsonObject.getInt("ID") + "\"}],";
+                                    jsonEditorCount++;
                                     break;
                                 default:
-                                    jsonButtonString += "[{\"text\":\"" + jsonObject.getString("Title") + "\",\"callback\":\"movie_id_" + jsonObject.getInt("ID") + "\"}],";
+                                    if (jsonButtonCount < maxFilms)
+                                        jsonButtonString += "[{\"text\":\"" + jsonObject.getString("Title") + "\",\"callback\":\"movie_id_" + jsonObject.getInt("ID") + "\"}],";
+                                    jsonButtonCount++;
                                     break;
                             }
                         } else
