@@ -13,19 +13,6 @@
 + trailer [of] *
 - <call>trailer <star></call>
 
-+ *
-- Not sure I got that. Type /help for some example questions.
-
-//Search movies by name
-+ [search] movie id *
-- <call>jdbc film_info SELECT * FROM Movies WHERE ID = <star1> LIMIT 1;</call>
-
-//Search movies by name
-+ [search] movie *
-- <call>jdbc film_list -m The movies with <star1> in the title are: SELECT * FROM Movies WHERE INSTR(Title, '<star1>') > 0 LIMIT 10;</call>
-
-//Plain SQL questions English
-
 //Question 1
 + [*] shortest movie [*] highest rating [*]
 - <call>jdbc film_list -m The shortest movie with the highest rating is: SELECT Title, ID FROM Movies\s
@@ -152,7 +139,7 @@
 
 
 + /m *
-- <call>jdbc film_list SELECT ID, Title, Plot, ReleaseYear, Rating, Votes, MPAA, Currency, Budget, Duration FROM Movies WHERE Title like'%<star1>%' LIMIT 20;</call>
+@ movie <star1>
 
 + /a *
 @ search person <star1>
@@ -173,53 +160,53 @@
 - <call>jdbc film_list -m Some random movies with rating higher then <star1> SELECT m.Title, m.ID AS Movies FROM Movies_Genres AS mg LEFT JOIN Movies AS m ON m.ID = mg.Movie_ID WHERE m.Rating > <star1> ORDER BY RAND() LIMIT 10;</call>
 
 + /i * *
-- <call>image <star1> <star2></call>
+- <call>image <star1> <star2>;</call>
 
 
 
 //Search movies by id
 + search movie id *
-- <call>jdbc film_info SELECT * FROM Movies WHERE ID = <star1></call>
+- <call>jdbc film_info SELECT * FROM Movies WHERE ID = <star1>;</call>
 
 + search movie full id *
-- <call>jdbc film_info SELECT * FROM Movies WHERE ID = <star1></call>
+- <call>jdbc film_info SELECT * FROM Movies WHERE ID = <star1>;</call>
 
 + search movie plot id *
-- <call>jdbc film_plot SELECT ID, Title, Plot FROM Movies WHERE ID = <star1></call>
+- <call>jdbc film_plot SELECT ID, Title, Plot FROM Movies WHERE ID = <star1>;</call>
 
 + search movie actor id *
-- <call>jdbc film_list SELECT Movies.*, Persons_Movies.Role FROM Persons_Movies LEFT JOIN Movies ON Movies.ID = Persons_Movies.Movie_ID WHERE Persons_Movies.Person_ID = <star1> AND Movies.Votes > 500 AND NOT INSTR(Movies.Title, '(TV)') ORDER BY Movies.Rating DESC, Movies.Title = <star1></call>
+- <call>jdbc film_list SELECT Movies.*, Persons_Movies.Role FROM Persons_Movies LEFT JOIN Movies ON Movies.ID = Persons_Movies.Movie_ID WHERE Persons_Movies.Person_ID = <star1> AND Movies.Votes > 500 AND NOT INSTR(Movies.Title, '(TV)') ORDER BY RAND() LIMIT 5;</call>
 
 //Search movies by name
-+ search movie *
-- <call>jdbc film_list SELECT * FROM Movies WHERE INSTR(Title, '<star1>') > 0 LIMIT 10</call>
++ [search] movie *
+- <call>jdbc film_list -m The movies with <star1> in the title are: SELECT * FROM Movies WHERE INSTR(Title, '<star1>') > 0 LIMIT 10;</call>
 
 //Search actor by id
 + search person id *
-- <call>jdbc person_info SELECT * FROM Persons WHERE ID = <star1> LIMIT 1</call>
+- <call>jdbc person_info SELECT * FROM Persons WHERE ID = <star1> LIMIT 1;</call>
 
 //Search person movie id
 + search actor movie id *
-- <call>jdbc person_list SELECT Persons.Name, Persons.ID FROM Persons_Movies RIGHT JOIN Persons ON Persons.ID = Persons_Movies.Person_ID WHERE Persons_Movies.Movie_ID = <star1> AND Persons_Movies.Role = 'actor'</call>
+- <call>jdbc person_list -m Some of the cast mebers are: SELECT Persons.Name, Persons.ID FROM Persons_Movies RIGHT JOIN Persons ON Persons.ID = Persons_Movies.Person_ID WHERE Persons_Movies.Movie_ID = <star1> AND Persons_Movies.Role = 'actor' ORDER BY RAND() LIMIT 5;</call>
 
 + search non-actor movie id *
-- <call>jdbc person_list -m The people who worked on this movie are: SELECT Persons.Name, Persons.ID FROM Persons_Movies RIGHT JOIN Persons ON Persons.ID = Persons_Movies.Person_ID WHERE Persons_Movies.Movie_ID = <star1> AND Persons_Movies.Role != 'actor'</call>
+- <call>jdbc person_list -m The people who worked on this movie are: SELECT Persons.Name, Persons.ID FROM Persons_Movies RIGHT JOIN Persons ON Persons.ID = Persons_Movies.Person_ID WHERE Persons_Movies.Movie_ID = <star1> AND Persons_Movies.Role != 'actor';</call>
 
 //Search actor by name
 + search person _
-- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
+- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 ORDER BY LENGTH(Name) LIMIT 10;</call>
 
 + search person _ _
-- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
+- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 ORDER BY LENGTH(Name) LIMIT 10;</call>
 
 + search person _ _ _
-- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 AND INSTR(Name, '<star3>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
+- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 AND INSTR(Name, '<star3>') > 0 ORDER BY LENGTH(Name) LIMIT 10;</call>
 
 + search person _ _ _ _
-- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 AND INSTR(Name, '<star3>') > 0 AND INSTR(Name, '<star4>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
+- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 AND INSTR(Name, '<star3>') > 0 AND INSTR(Name, '<star4>') > 0 ORDER BY LENGTH(Name) LIMIT 10;</call>
 
 + search person _ _ _ _ _
-- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 AND INSTR(Name, '<star3>') > 0 AND INSTR(Name, '<star4>') > 0 AND INSTR(Name, '<star5>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
+- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 AND INSTR(Name, '<star3>') > 0 AND INSTR(Name, '<star4>') > 0 AND INSTR(Name, '<star5>') > 0 ORDER BY LENGTH(Name) LIMIT 10;</call>
 
 
 //Select random movies
@@ -247,6 +234,9 @@
 
 + what can you do?
 @ all questions
+
++ *
+- Not sure I got that. Type /help for some example questions.
 
 // Substitutions
 ! sub i'm     = i am
