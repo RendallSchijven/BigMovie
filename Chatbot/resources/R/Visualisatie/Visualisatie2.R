@@ -21,11 +21,12 @@ query = sprintf("SELECT m.ReleaseYear AS Years, count(*) AS Movies
 
 values <- dbGetQuery(mydb, query)
 
+invisible(dbDisconnect(mydb))
+
+cat("There you go Rockstar")
+
 invisible(jpeg('MoviesYear.jpg'))
 barplot(values$Movies, names.arg = values$Years, main="Films per jaar in " + args[[1]] , col = c("lightblue","lightcyan",
-"lavender", "mistyrose", "cornsilk"),
-horiz=FALSE, cex.names=0.5)
-
+                                                                                                  "lavender", "mistyrose", "cornsilk"), 
+        horiz=FALSE, cex.names=0.5)
 invisible(dev.off())
-
-invisible(dbDisconnect(mydb))
