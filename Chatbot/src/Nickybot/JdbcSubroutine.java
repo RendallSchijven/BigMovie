@@ -33,8 +33,8 @@ public class JdbcSubroutine implements Subroutine {
                 sql = sql + " " + args[i];
             }
 
-            if (args[1].equals("-m")) {
-                message = sql.substring(4, sql.indexOf("SELECT") - 1);
+            if (args[0].equals("-m") || args[1].equals("-m")) {
+                message = sql.substring(sql.lastIndexOf("-m")+1, sql.indexOf("SELECT") - 1);
                 sql = sql.substring(sql.indexOf("SELECT"), sql.length() - 1);
             }
 
@@ -225,12 +225,29 @@ public class JdbcSubroutine implements Subroutine {
                     if (!jsonObject.getString("Sex").equals("null"))
                         jsonButtonString += "<b>Sex :</b> " + jsonObject.getString("Sex") + "\\n";
 
+                    jsonButtonString += ImageSearchSubroutine.getImage(jsonObject.getString("Name"), true) + "\\n";
                     jsonButtonString += "\",\"buttons\":[";
                     jsonButtonString += "[{\"text\":\"Movies worked on\", \"callback\":\"actor_id_movie_" + jsonObject.getInt("ID") + "\"}]";
 
                     jsonButtonString += "]}";
                     System.out.println(jsonButtonString);
                     InlineKeyboardSubroutine.MakeButtonMessage(rs, das, jsonButtonString);
+                    break;
+                case "-m":
+                    for (int i = 0; i < JsonArray.length(); i++) {
+                        jsonObject = JsonArray.getJSONObject(i);
+                        Iterator jsonIterator = jsonObject.keys();
+                        boolean isFirst = true;
+                        while (jsonIterator.hasNext()) {
+                            String key = (String) jsonIterator.next();
+                            if (isFirst) {
+                                result += message + " " + jsonObject.getString(key);
+                                isFirst = false;
+                            } else
+                                result += " | " + message + " " + jsonObject.getString(key);
+                        }
+                        result += "\n";
+                    }
                     break;
             }
 

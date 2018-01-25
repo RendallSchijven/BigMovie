@@ -4,13 +4,8 @@
 + hello
 - Hi there!
 
-+ [*] how are you [*]
-- I'm fine.
-- Splendid!
-- Couldn't be better!
-
 + [*] start [*]
-- I'm Movie Buff bot! Ask me questions about your favorite movies. Type /help for some example questions.
+- I'm Nickelbot! Ask me questions about your favorite movies. Type help for some example questions.
 
 + * trailer
 @ trailer <star>
@@ -21,29 +16,37 @@
 + *
 - Not sure I got that. Type /help for some example questions.
 
+//Search movies by name
++ [search] movie id *
+- <call>jdbc film_info SELECT * FROM Movies WHERE ID = <star1> LIMIT 1</call>
+
+//Search movies by name
++ [search] movie *
+- <call>jdbc SELECT * FROM Movies WHERE INSTR(Title, '<star1>') > 0 LIMIT 10</call>
+
 //Plain SQL questions English
 
 //Question 1
-+ shortest movie highest rating
++ [*] shortest movie [*] highest rating [*]
 - <call>jdbc film_list -m The shortest movie with the highest rating is: SELECT Title, ID FROM Movies\s
 ^            WHERE rating > 8.5 AND duration IS NOT NULL\s
 ^            ORDER BY duration ASC LIMIT 1;</call>
 
 //Question 2
 + in what year between 1990 and 2018 are the most films with the word beer in the title produced
-- <call>jdbc SELECT ReleaseYear as Year FROM Movies\s
+- <call>jdbc -m The year where the most movies with beer in the title where produced was SELECT ReleaseYear as Year FROM Movies\s
 ^                    WHERE Title LIKE '%beer%' AND ReleaseYear > 1989\s
 ^                    GROUP BY ReleaseYear\s
 ^                    ORDER BY COUNT(*) DESC LIMIT 1;</call>
-
+//TODO make it work for all names
 //Question 3
 + in which movies does _ _ play
 - in which movies does <star> play?\n
-^ <call>jdbc SELECT Movies.Title FROM Movies\s
+^ <call>jdbc film_list SELECT Movies.Title, Movies.ID FROM Movies\s
 ^            LEFT JOIN Persons_Movies ON Persons_Movies.Movie_ID = Movies.ID\s
 ^            LEFT JOIN Persons ON Persons_Movies.Person_ID = Persons.ID\s
 ^            WHERE Persons.Name LIKE '%<star2>, <star1>%' LIMIT 50; </call>
-
+//TODO make it work for all names
 //Question 4
 + which director has filmed the most movies with _ _
 - which director has filmed the most movies with <star1>?\n
@@ -57,19 +60,25 @@
 ^            ORDER BY Movies DESC LIMIT 1;</call>
 
 //Question 5
-+ which movie was the most expensive to create
-- <call>jdbc SELECT Title from Movies WHERE CURRENCY = 'USD' ORDER BY Budget DESC LIMIT 1;</call>
++ which movie [was|is] [the] most expensive [to] [make|create]
+- <call>jdbc -m The most expensive movie to create was SELECT Title from Movies WHERE CURRENCY = 'USD' ORDER BY Budget DESC LIMIT 1;</call>
 
 //Question 6
-+ what are the most occuring genres
-- <call>jdbc SELECT g.GenreName AS Genre, COUNT(mg.Genre_ID) AS Movies FROM Movies_Genres AS mg\s
++ [what are the] # most occuring genres
+- <call>jdbc -m SELECT g.GenreName AS Genre, COUNT(mg.Genre_ID) AS Movies FROM Movies_Genres AS mg\s
 ^           LEFT JOIN Genres AS g ON g.ID = mg.Genre_ID\s
 ^           GROUP BY g.ID\s
-^           ORDER BY Movies DESC LIMIT 5; </call>
+^           ORDER BY Movies DESC LIMIT <star>; </call>
+
++ [what are the] most occuring genres
+@ 5 most occuring genres
+
++ [what is the] most occuring genre
+@ 1 most occuring genres
 
 //Question 7
-+ what are the most occuring genres in *
-- <call>jdbc SELECT g.GenreName AS Genre, COUNT(mg.Genre_ID) AS Movies FROM Movies_Genres AS mg\s
++ [what are the] most occuring genres in *
+- <call>jdbc -m SELECT g.GenreName AS Genre, COUNT(mg.Genre_ID) AS Movies FROM Movies_Genres AS mg\s
 ^            LEFT JOIN Genres AS g ON g.ID = mg.Genre_ID\s
 ^            LEFT JOIN Movies_Countries as mc ON mc.Movie_ID = mg.Movie_ID\s
 ^            LEFT JOIN Countries AS c ON c.ID = mc.Country_ID\s
@@ -78,17 +87,26 @@
 ^            ORDER BY Movies DESC LIMIT 5;</call>
 
 //Question 8
-+ which 5 countries made the most movies
++ which # countries made the most movies
 - <call>jdbc SELECT c.Country, COUNT(mc.Movie_ID) AS Movies FROM Movies_Countries AS mc\s
 ^            LEFT JOIN Countries AS c ON c.ID = mc.Country_ID\s
 ^            GROUP BY Country\s
-^            ORDER BY Movies DESC LIMIT 5; </call>
+^            ORDER BY Movies DESC LIMIT <star>; </call>
+
++ which countries made the most movies
+@ which 5 countries made the most movies
+
++ which country made the most movies
+@ which 1 countries made the most movies
 
 //Question 9
-+ what are the top rated movies
++ what are the top # rated movies
 - <call>jdbc SELECT DISTINCT Title, Rating, Votes FROM `Movies`\s
 ^            WHERE Votes > 100000 AND Title NOT LIKE '%(VG)%'\s
-^            ORDER BY Rating DESC, Votes DESC LIMIT 5;</call>
+^            ORDER BY Rating DESC, Votes DESC LIMIT <star>;</call>
+
++ what are the top rated movies
+@ what are the top 5 rated movies
 
 // Visualisation questions
 
@@ -106,12 +124,19 @@
 
 //R question 1
 + does * have more violent movies than *
-- <call>system rscript Chatbot/resources/R/ENRScript/R1en.R '<star1>' '<star2>'</call>
+- <call>system rscript Chatbot/resources/R/ENRScript/R1en.R <star1> / <star2></call>
 ^ <call>send photo violence.jpg</call>
 
+//R question 2
 + is there a relation between the cost and duration of movies
 - <call>system rscript Chatbot/resources/R/ENRScript/R2en.R</call>
-^ <call>send photo MoviesBudget.jpg As you can see there is not really a relation between the budget and duration of a movie</call>
+^ <call>send photo MoviesBudget.jpg</call>
+
+//R question 3
+
+//R MPAA Question
++ mpaa *
+- <call>system rscript Chatbot/resources/R/ENRscript/MPAA.R <star1></call>
 
 // !Commands
 + /command
@@ -126,8 +151,8 @@
 + /m *
 - <call>jdbc film_list SELECT ID, Title, Plot, ReleaseYear, Rating, Votes, MPAA, Currency, Budget, Duration FROM Movies WHERE Title like'%<star1>%' LIMIT 20;</call>
 
-+ /a _ _
-- <call>jdbc SELECT Movies.Title FROM Movies LEFT JOIN Persons_Movies ON Persons_Movies.Movie_ID = Movies.ID LEFT JOIN Persons ON Persons_Movies.Person_ID = Persons.ID WHERE Persons.Name LIKE '%<star2>, <star1>%' LIMIT 50; </call>
++ /a *
+@ search person <star1>
 
 + /k *
 - <call>jdbc SELECT m.Title AS Movies FROM Movies_Keywords AS mk LEFT JOIN Movies AS m ON m.ID = mk.Movie_ID WHERE mk.Keyword_ID = (SELECT ID FROM Keywords WHERE Keyword LIKE '%<star1>%' LIMIT 1);</call>
@@ -140,6 +165,11 @@
 
 + /rmg *
 - <call>jdbc SELECT m.Title AS Movies FROM Movies_Genres AS mg LEFT JOIN Movies AS m ON m.ID = mg.Movie_ID WHERE mg.Genre_ID = (SELECT ID FROM Genres WHERE GenreName LIKE '%Drama%' LIMIT 1) ORDER BY RAND() LIMIT 25;</call>
+
++ /i * *
+- <call>image <star1> <star2></call>
+
+
 
 //Search movies by id
 + search movie id *
@@ -172,66 +202,23 @@
 //Search actor by name
 + search person _
 - <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
+
 + search person _ _
 - <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
+
 + search person _ _ _
 - <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 AND INSTR(Name, '<star3>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
+
 + search person _ _ _ _
 - <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 AND INSTR(Name, '<star3>') > 0 AND INSTR(Name, '<star4>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
+
 + search person _ _ _ _ _
 - <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 AND INSTR(Name, '<star3>') > 0 AND INSTR(Name, '<star4>') > 0 AND INSTR(Name, '<star5>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
 
 
 
 + all questions
-- <call>inlineKeyboard {
-^   	'text': 'All questions are:',
-^   	'buttons': [[{
-^   				'text': 'Shortest movie highest rating',
-^   				'callback': 'questions_1'
-^   			}
-^   		], [{
-^   				'text': 'In what year between 1990 and 2018 are the most films with the word beer in the title produced',
-^   				'callback': 'questions_2'
-^   			}
-^   		], [{
-^   				'text': 'In which movies does (full actor name) play',
-^   				'callback': 'questions_3'
-^   			}
-^   		], [{
-^   				'text': 'Which director has filmed the most movies with (full actor name)',
-^   				'callback': 'questions_4'
-^   			}
-^   		], [{
-^   				'text': 'Which movie was the most expensive to create',
-^   				'callback': 'questions_5'
-^   			}
-^   		], [{
-^   				'text': 'Which actor has the longest movie career',
-^   				'callback': 'questions_6'
-^   			}
-^   		], [{
-^   				'text': 'What are the 5 most occuring genres',
-^   				'callback': 'questions_7'
-^   			}
-^   		], [{
-^   				'text': 'what are the most occuring genres in (Country name)',
-^   				'callback': 'questions_8'
-^   			}
-^   		], [{
-^   				'text': 'Which 5 countries made the most movies',
-^   				'callback': 'questions_9'
-^   			}
-^   		], [{
-^   				'text': 'What are the top rated movies',
-^   				'callback': 'questions_10'
-^   			}
-^   		], [{
-^   				'text': 'Who is the oldest living actor',
-^   				'callback': 'questions_11'
-^   			}
-^   		]]
-^   }</call>
+- <call>inlineKeyboard {'text':'This are some things I can do','buttons':[[{'text':'Shortest movie with the highest rating','callback':'questions_1'}],[{'text':'In what year between 1990 and 2018 are the most films with the word beer in the title produced','callback':'questions_2'}],[{'text':'In which movies does (full actor name) play','callback':'questions_3'}],[{'text':'Which director has filmed the most movies with (full actor name)','callback':'questions_4'}],[{'text':'Which movie was the most expensive to create','callback':'questions_5'}],[{'text':'What are the most occuring genres','callback':'questions_6'}],[{'text':'What are the 5 most occuring genres','callback':'questions_7'}],[{'text':'what are the most occuring genres in (Country name)','callback':'questions_8'}],[{'text':'Which 5 countries made the most movies','callback':'questions_9'}],[{'text':'What are the top rated movies','callback':'questions_10'}]]}</call>
 
 + [*] help [*]
 @ all questions
