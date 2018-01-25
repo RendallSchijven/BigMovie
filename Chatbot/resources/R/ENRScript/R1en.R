@@ -1,5 +1,5 @@
 # Title     : Cultural genre
-# Objective : Check if france or USA have more violence/horror movies
+# Objective : Check if country1 or country2 have more violence/horror movies
 # Created by: Rendall
 # Created on: 15-1-2018
 
@@ -79,9 +79,10 @@ if(c1Percentage > c2Percentage){
 
 #Create the barplot and save it as jpg
 invisible(jpeg('violence.jpg'))
-ggplot(countriesViolence, aes(countries, violence)) +
+ggplot(countriesViolence, aes(countries, violence, fill="#FF6666")) +
   geom_bar(stat = "identity", position = "dodge") +
   xlab("Country") +
   ylab("Violent movies in %") +
-  ggtitle("Violent movies as percentage of total movies")
+  ggtitle("Violent movies as percentage of total movies") +
+  guides(fill=FALSE)
 invisible(dev.off())
