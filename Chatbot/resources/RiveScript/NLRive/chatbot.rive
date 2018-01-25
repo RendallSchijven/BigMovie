@@ -4,11 +4,11 @@
 //Standaard SQL vragen
 
 //Question 1
-+ Wat is de kotste film met de hoogste rating?
++ wat is de kotste film met de hoogste rating?
 - <call>jdbc SELECT Title FROM Movies WHERE rating > 8.5 AND duration IS NOT NULL ORDER BY duration ASC LIMIT 1;</call>
 
 //Question 2
-+ Uit welk jaar tussen 1990 en 2018 komen de meeste films met bier in de titel
++ uit welk jaar tussen 1990 en 2018 komen de meeste films met bier in de titel
 - <call>jdbc SELECT ReleaseYear as Year FROM Movies where Title LIKE '%beer%' AND ReleaseYear > 1989 GROUP BY ReleaseYear ORDER BY COUNT(*) DESC LIMIT 1;</call>
 
 //Question 3
