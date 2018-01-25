@@ -33,24 +33,22 @@
 ^            ORDER BY duration ASC LIMIT 1;</call>
 
 //Question 2
-+ in what year between 1990 and 2018 are the most films with the word beer in the title produced
-- <call>jdbc -m The year where the most movies with beer in the title where produced was SELECT ReleaseYear as Year FROM Movies\s
++ what year from 1990 produced the most movies with beer in the title
+- <call>jdbc -m The year where the most movies with beer in the title where produced is SELECT ReleaseYear as Year FROM Movies\s
 ^                    WHERE Title LIKE '%beer%' AND ReleaseYear > 1989\s
 ^                    GROUP BY ReleaseYear\s
 ^                    ORDER BY COUNT(*) DESC LIMIT 1;</call>
-//TODO make it work for all names
+
 //Question 3
-+ in which movies does _ _ play
-- in which movies does <star> play?\n
-^ <call>jdbc film_list SELECT Movies.Title, Movies.ID FROM Movies\s
++ give me movies _ _ played in
+- <call>jdbc film_list SELECT Movies.Title, Movies.ID FROM Movies\s
 ^            LEFT JOIN Persons_Movies ON Persons_Movies.Movie_ID = Movies.ID\s
 ^            LEFT JOIN Persons ON Persons_Movies.Person_ID = Persons.ID\s
-^            WHERE Persons.Name LIKE '%<star2>, <star1>%' LIMIT 50; </call>
+^            WHERE Persons.Name LIKE '%<star2>, <star1>%' ORDER BY RAND() LIMIT 10; </call>
 //TODO make it work for all names
 //Question 4
 + which director has filmed the most movies with _ _
-- which director has filmed the most movies with <star1>?\n
-^ <call>jdbc SELECT p.Name, COUNT(*) AS Movies FROM Persons AS p\s
+- <call>jdbc SELECT p.Name, COUNT(*) AS Movies FROM Persons AS p\s
 ^            LEFT JOIN Persons_Movies AS pm ON pm.Person_ID = p.ID\s
 ^            WHERE pm.Role = 'director'\s
 ^            AND pm.Movie_ID IN (SELECT pm.Movie_ID FROM Persons_Movies AS pm\s
@@ -61,7 +59,7 @@
 
 //Question 5
 + which movie [was|is] [the] most expensive [to] [make|create]
-- <call>jdbc -m The most expensive movie to create was SELECT Title from Movies WHERE CURRENCY = 'USD' ORDER BY Budget DESC LIMIT 1;</call>
+- <call>jdbc film_info -m The most expensive movie to create was SELECT * from Movies WHERE CURRENCY = 'USD' ORDER BY Budget DESC LIMIT 1;</call>
 
 //Question 6
 + [what are the] # most occuring genres
