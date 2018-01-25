@@ -89,31 +89,25 @@ public class InlineKeyboardSubroutine implements Subroutine {
                 reply = bot.reply(String.valueOf(chat_id), "in what year between 1990 and 2018 are the most films with the word beer in the title produced");
                 break;
             case "questions_3":
-                reply = bot.reply(String.valueOf(chat_id), "In which movies does Liam Neeson play");
+                reply = bot.reply(String.valueOf(chat_id), "in which movies does Liam Neeson play");
                 break;
             case "questions_4":
-                reply = bot.reply(String.valueOf(chat_id), "Which director has filmed the most movies with dwayne johnson");
+                reply = bot.reply(String.valueOf(chat_id), "which director has filmed the most movies with dwayne johnson");
                 break;
             case "questions_5":
                 reply = bot.reply(String.valueOf(chat_id), "which movie was the most expensive to create");
                 break;
             case "questions_6":
-                reply = bot.reply(String.valueOf(chat_id), "which actor has the longest movie career");
+                reply = bot.reply(String.valueOf(chat_id), "what are the most occuring genres");
                 break;
             case "questions_7":
-                reply = bot.reply(String.valueOf(chat_id), "what are the 5 most occuring genres");
-                break;
-            case "questions_8":
                 reply = bot.reply(String.valueOf(chat_id), "what are the most occuring genres in Netherlands");
                 break;
-            case "questions_9":
+            case "questions_8":
                 reply = bot.reply(String.valueOf(chat_id), "which 5 countries made the most movies");
                 break;
-            case "questions_10":
+            case "questions_9":
                 reply = bot.reply(String.valueOf(chat_id), "what are the top rated movies");
-                break;
-            case "questions_11":
-                reply = bot.reply(String.valueOf(chat_id), "who is the oldest living actor");
                 break;
             default:
                 if (call_data.startsWith("movie_id_trailer_")) {
