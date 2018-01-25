@@ -22,7 +22,7 @@
 
 //Search movies by name
 + [search] movie *
-- <call>jdbc SELECT * FROM Movies WHERE INSTR(Title, '<star1>') > 0 LIMIT 10</call>
+- <call>jdbc film_list SELECT * FROM Movies WHERE INSTR(Title, '<star1>') > 0 LIMIT 10</call>
 
 //Plain SQL questions English
 
@@ -149,7 +149,7 @@
 ^ /rm   returns a random movie\n
 ^ /rmc  returns 10 random movies from a chosen country\n
 ^ /rmg  returns 10 random movies from a chosen genre\n
-^ /rmg  returns 10 random movies higher then the chosen rating (rounded number)\n
+^ /rmr  returns 10 random movies higher then the chosen rating (rounded number)\n
 ^ /i    quick image search
 
 
