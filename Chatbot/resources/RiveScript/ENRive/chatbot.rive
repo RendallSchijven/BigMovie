@@ -18,11 +18,11 @@
 
 //Search movies by name
 + [search] movie id *
-- <call>jdbc film_info SELECT * FROM Movies WHERE ID = <star1> LIMIT 1</call>
+- <call>jdbc film_info SELECT * FROM Movies WHERE ID = <star1> LIMIT 1;</call>
 
 //Search movies by name
 + [search] movie *
-- <call>jdbc film_list SELECT * FROM Movies WHERE INSTR(Title, '<star1>') > 0 LIMIT 10</call>
+- <call>jdbc film_list -m The movies with <star1> in the title are: SELECT * FROM Movies WHERE INSTR(Title, '<star1>') > 0 LIMIT 10;</call>
 
 //Plain SQL questions English
 
