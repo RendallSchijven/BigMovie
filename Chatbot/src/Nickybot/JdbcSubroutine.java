@@ -133,23 +133,30 @@ public class JdbcSubroutine implements Subroutine {
                     jsonButtonString += "]}";
                     System.out.println(jsonButtonString);
                     InlineKeyboardSubroutine.MakeButtonMessage(rs, das, jsonButtonString);
-
                     break;
                 case "person_info":
 
                     System.out.println(args[0]);
-                    JSONObject personObject = JsonArray.getJSONObject(0);
+                    jsonObject = JsonArray.getJSONObject(0);
                     jsonButtonString = "{\"text\":\"" +
-                            "<b>Title :</b> " + personObject.getString("Name") + "\\n";
+                            "<b>Title :</b> " + jsonObject.getString("Name") + "\\n";
 
-                    if (!personObject.getString("BirthDay").equals("null"))
-                        jsonButtonString += "<b>Birth day :</b> " + personObject.getString("BirthDay") + "\\n";
-                    if (!personObject.getString("DeathDay").equals("null"))
-                        jsonButtonString += "<b>Death day :</b> " + personObject.getString("DeathDay") + "\\n";
-                    if (!personObject.getString("Sex").equals("null"))
-                        jsonButtonString += "<b>Sex :</b> " + personObject.getString("Sex") + "\\n";
+                    if (!jsonObject.getString("BirthDay").equals("null")) {
+                        int age = 0;
+                        if (!jsonObject.getString("DeathDay").equals("null")){
+
+                        }
+                        jsonButtonString += "<b>Age :</b> " + age + "\\n";
+                        jsonButtonString += "<b>Birth day :</b> " + jsonObject.getString("BirthDay") + "\\n";
+
+                    }
+                    if (!jsonObject.getString("DeathDay").equals("null"))
+                        jsonButtonString += "<b>Death day :</b> " + jsonObject.getString("DeathDay") + "\\n";
+                    if (!jsonObject.getString("Sex").equals("null"))
+                        jsonButtonString += "<b>Sex :</b> " + jsonObject.getString("Sex") + "\\n";
 
                     jsonButtonString += "\",\"buttons\":[";
+                    jsonButtonString += "[{\"text\":\"Movies worked on\", \"callback\":\"actor_id_movie_" + jsonObject.getInt("ID") + "\"}]";
 
                     jsonButtonString += "]}";
                     System.out.println(jsonButtonString);

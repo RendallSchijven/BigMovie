@@ -141,9 +141,15 @@ public class InlineKeyboardSubroutine implements Subroutine {
                 } else if (call_data.startsWith("movie_id_")) {
                     String movieID = call_data.substring(9);
                     reply = bot.reply(String.valueOf(chat_id), "search movie id " + movieID);
-                } else if (call_data.startsWith("actors_id_")) {
-                    String movieID = call_data.substring(10);
-                    reply = bot.reply(String.valueOf(chat_id), "search actor id " + movieID);
+                } else if (call_data.startsWith("actor_id_movie_")) {
+                    String personID = call_data.substring(15);
+                    reply = bot.reply(String.valueOf(chat_id), "search movie actor id " + personID);
+                } else if (call_data.startsWith("actor_id_")) {
+                    String personID = call_data.substring(10);
+                    reply = bot.reply(String.valueOf(chat_id), "search actor id " + personID);
+                } else if (call_data.startsWith("person_id_")) {
+                    String personID = call_data.substring(10);
+                    reply = bot.reply(String.valueOf(chat_id), "search person id " + personID);
                 }
                 break;
         }
