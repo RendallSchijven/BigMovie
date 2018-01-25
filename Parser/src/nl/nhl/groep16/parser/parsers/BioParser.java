@@ -31,7 +31,12 @@ public class BioParser implements ParserInterface {
         formatterFinal = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
     }
 
-
+    /**
+     * Converts a string line into an array of strings (columns) which can be used to generate CSV a row.
+     *
+     * @param String line
+     * @return String[]
+     */
     @Override
     public String[] convertLine(String line) {
 
@@ -62,6 +67,11 @@ public class BioParser implements ParserInterface {
         return null;
     }
 
+    /**
+     * Extracts a person from the line, return null if not found.
+     * @param String line
+     * @return String
+     */
     public String extractPerson(String line) {
         Matcher m = personRegex.matcher(line);
         if (!m.find()) {
@@ -71,6 +81,11 @@ public class BioParser implements ParserInterface {
         return m.group(1);
     }
 
+    /**
+     * Extracts a string birthdate
+     * @param String line
+     * @return String
+     */
     public String extractBirthDay(String line) {
         Matcher m = birthDayRegex.matcher(line);
         if (!m.find()) {
@@ -85,6 +100,11 @@ public class BioParser implements ParserInterface {
         return  null;
     }
 
+    /**
+     * Extracts a string death date from the line.
+     * @param line
+     * @return
+     */
     public String extractDeathDay(String line) {
         Matcher m = deathDayRegex.matcher(line);
         if (!m.find()) {

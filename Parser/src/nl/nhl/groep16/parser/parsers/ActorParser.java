@@ -15,6 +15,12 @@ public class ActorParser implements ParserInterface{
         this.movieRegex = Pattern.compile("\\t+([^\"]\\w.*(?<=[0-9IV\\?])\\))");
     }
 
+    /**
+     * Converts a string line into an array of strings (columns) which can be used to generate CSV a row.
+     *
+     * @param String line
+     * @return String[]
+     */
     @Override
     public String[] convertLine(String line) {
 
@@ -35,6 +41,11 @@ public class ActorParser implements ParserInterface{
         return new String[]{ currentActor, movie };
     }
 
+    /**
+     * Extracts the actor from the current line, return null if not found
+     * @param String line
+     * @return String
+     */
     public String extractActor(String line) {
         Matcher m = actorRegex.matcher(line);
         if(!m.find()) {
@@ -43,6 +54,11 @@ public class ActorParser implements ParserInterface{
         return m.group(1);
     }
 
+    /**
+     * Extracts the movie from the current line, returns null if not found
+     * @param String line
+     * @return String
+     */
     public String extractMovie(String line) {
         Matcher m = movieRegex.matcher(line);
         if(!m.find()) {

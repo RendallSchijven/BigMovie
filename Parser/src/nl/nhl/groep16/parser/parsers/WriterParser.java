@@ -15,6 +15,11 @@ public class WriterParser implements ParserInterface{
         this.movieRegex = Pattern.compile("\\t+(.*?)  ");
     }
 
+    /**
+     * Converts a line into a Array of Strings representing the columns of a CSV
+     * @param String line
+     * @return String[]
+     */
     @SuppressWarnings("Duplicates")
     @Override
     public String[] convertLine(String line) {
@@ -36,6 +41,11 @@ public class WriterParser implements ParserInterface{
         return new String[]{currentWriter, movie };
     }
 
+    /**
+     * Extracts the writer from the line, if non-existant return null
+     * @param String line
+     * @return String
+     */
     public String extractWriter(String line) {
         Matcher m = writerRegex.matcher(line);
         if(!m.find()) {
@@ -44,6 +54,11 @@ public class WriterParser implements ParserInterface{
         return m.group(1);
     }
 
+    /**
+     * Try and find a movie in the line, if not found return null
+     * @param String line
+     * @return String
+     */
     public String extractMovie(String line) {
         Matcher m = movieRegex.matcher(line);
         if(!m.find()) {
