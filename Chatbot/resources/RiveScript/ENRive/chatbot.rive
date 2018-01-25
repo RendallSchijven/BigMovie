@@ -1,4 +1,4 @@
-    //Chatbot.rive
+//Chatbot.rive
 //Created by: Rendall
 
 + hello
@@ -13,19 +13,6 @@
 + trailer [of] *
 - <call>trailer <star></call>
 
-+ *
-- Not sure I got that. Type /help for some example questions.
-
-//Search movies by name
-+ [search] movie id *
-- <call>jdbc film_info SELECT * FROM Movies WHERE ID = <star1> LIMIT 1</call>
-
-//Search movies by name
-+ [search] movie *
-- <call>jdbc SELECT * FROM Movies WHERE INSTR(Title, '<star1>') > 0 LIMIT 10</call>
-
-//Plain SQL questions English
-
 //Question 1
 + [*] shortest movie [*] highest rating [*]
 - <call>jdbc film_list -m The shortest movie with the highest rating is: SELECT Title, ID FROM Movies\s
@@ -33,24 +20,22 @@
 ^            ORDER BY duration ASC LIMIT 1;</call>
 
 //Question 2
-+ in what year between 1990 and 2018 are the most films with the word beer in the title produced
-- <call>jdbc -m The year where the most movies with beer in the title where produced was SELECT ReleaseYear as Year FROM Movies\s
++ what year from 1990 produced the most movies with beer in the title
+- <call>jdbc -m The year where the most movies with beer in the title where produced is SELECT ReleaseYear as Year FROM Movies\s
 ^                    WHERE Title LIKE '%beer%' AND ReleaseYear > 1989\s
 ^                    GROUP BY ReleaseYear\s
 ^                    ORDER BY COUNT(*) DESC LIMIT 1;</call>
-//TODO make it work for all names
+
 //Question 3
-+ in which movies does _ _ play
-- in which movies does <star> play?\n
-^ <call>jdbc film_list SELECT Movies.Title, Movies.ID FROM Movies\s
++ give me movies _ _ played in
+- <call>jdbc film_list SELECT Movies.Title, Movies.ID FROM Movies\s
 ^            LEFT JOIN Persons_Movies ON Persons_Movies.Movie_ID = Movies.ID\s
 ^            LEFT JOIN Persons ON Persons_Movies.Person_ID = Persons.ID\s
-^            WHERE Persons.Name LIKE '%<star2>, <star1>%' LIMIT 50; </call>
-//TODO make it work for all names
+^            WHERE Persons.Name LIKE '%<star2>, <star1>%' ORDER BY RAND() LIMIT 10; </call>
+
 //Question 4
 + which director has filmed the most movies with _ _
-- which director has filmed the most movies with <star1>?\n
-^ <call>jdbc SELECT p.Name, COUNT(*) AS Movies FROM Persons AS p\s
+- <call>jdbc SELECT p.Name, COUNT(*) AS Movies FROM Persons AS p\s
 ^            LEFT JOIN Persons_Movies AS pm ON pm.Person_ID = p.ID\s
 ^            WHERE pm.Role = 'director'\s
 ^            AND pm.Movie_ID IN (SELECT pm.Movie_ID FROM Persons_Movies AS pm\s
@@ -61,7 +46,7 @@
 
 //Question 5
 + which movie [was|is] [the] most expensive [to] [make|create]
-- <call>jdbc -m The most expensive movie to create was SELECT Title from Movies WHERE CURRENCY = 'USD' ORDER BY Budget DESC LIMIT 1;</call>
+- <call>jdbc film_info -m The most expensive movie to create was SELECT * from Movies WHERE CURRENCY = 'USD' ORDER BY Budget DESC LIMIT 1;</call>
 
 //Question 6
 + [what are the] # most occuring genres
@@ -101,7 +86,7 @@
 
 //Question 9
 + what are the top # rated movies
-- <call>jdbc SELECT DISTINCT Title, Rating, Votes FROM `Movies`\s
+- <call>jdbc film_list -m The top rated movies are: SELECT DISTINCT Title, Rating, ID, Votes FROM `Movies`\s
 ^            WHERE Votes > 100000 AND Title NOT LIKE '%(VG)%'\s
 ^            ORDER BY Rating DESC, Votes DESC LIMIT <star>;</call>
 
@@ -111,13 +96,13 @@
 // Visualisation questions
 
 //Visualization 1
-+ get years *
-- <call>system rscript Chatbot/resources/R/Visualization/Visualization2.R <star1></call>
++ [show me the movies per] year [of] *
+- <call>system rscript Chatbot/resources/R/Visualization/Visualization1.R <star1></call>
 ^ <call>send photo MoviesYear.jpg</call>
 
 //Visualization 2
 + show me the distribution of genres
-- <call>system rscript Chatbot/resources/R/Visualization/Visualization3.R</call>
+- <call>system rscript Chatbot/resources/R/Visualization/Visualization2.R</call>
 ^ <call>send photo genreMovies.png</call>
 
 // R Questions
@@ -149,12 +134,12 @@
 ^ /rm   returns a random movie\n
 ^ /rmc  returns 10 random movies from a chosen country\n
 ^ /rmg  returns 10 random movies from a chosen genre\n
-^ /rmg  returns 10 random movies higher then the chosen rating (rounded number)\n
+^ /rmr  returns 10 random movies higher then the chosen rating (rounded number)\n
 ^ /i    quick image search
 
 
 + /m *
-- <call>jdbc film_list SELECT ID, Title, Plot, ReleaseYear, Rating, Votes, MPAA, Currency, Budget, Duration FROM Movies WHERE Title like'%<star1>%' LIMIT 20;</call>
+@ movie <star1>
 
 + /a *
 @ search person <star1>
@@ -175,53 +160,53 @@
 - <call>jdbc film_list -m Some random movies with rating higher then <star1> SELECT m.Title, m.ID AS Movies FROM Movies_Genres AS mg LEFT JOIN Movies AS m ON m.ID = mg.Movie_ID WHERE m.Rating > <star1> ORDER BY RAND() LIMIT 10;</call>
 
 + /i * *
-- <call>image <star1> <star2></call>
+- <call>image <star1> <star2>;</call>
 
 
 
 //Search movies by id
 + search movie id *
-- <call>jdbc film_info SELECT * FROM Movies WHERE ID = <star1></call>
+- <call>jdbc film_info SELECT * FROM Movies WHERE ID = <star1>;</call>
 
 + search movie full id *
-- <call>jdbc film_info SELECT * FROM Movies WHERE ID = <star1></call>
+- <call>jdbc film_info SELECT * FROM Movies WHERE ID = <star1>;</call>
 
 + search movie plot id *
-- <call>jdbc film_plot SELECT ID, Title, Plot FROM Movies WHERE ID = <star1></call>
+- <call>jdbc film_plot SELECT ID, Title, Plot FROM Movies WHERE ID = <star1>;</call>
 
 + search movie actor id *
-- <call>jdbc film_list SELECT Movies.*, Persons_Movies.Role FROM Persons_Movies LEFT JOIN Movies ON Movies.ID = Persons_Movies.Movie_ID WHERE Persons_Movies.Person_ID = <star1> AND Movies.Votes > 500 AND NOT INSTR(Movies.Title, '(TV)') ORDER BY Movies.Rating DESC, Movies.Title = <star1></call>
+- <call>jdbc film_list SELECT Movies.*, Persons_Movies.Role FROM Persons_Movies LEFT JOIN Movies ON Movies.ID = Persons_Movies.Movie_ID WHERE Persons_Movies.Person_ID = <star1> AND Movies.Votes > 500 AND NOT INSTR(Movies.Title, '(TV)') ORDER BY RAND() LIMIT 5;</call>
 
 //Search movies by name
-+ search movie *
-- <call>jdbc film_list SELECT * FROM Movies WHERE INSTR(Title, '<star1>') > 0 LIMIT 10</call>
++ [search] movie *
+- <call>jdbc film_list -m The movies with <star1> in the title are: SELECT * FROM Movies WHERE INSTR(Title, '<star1>') > 0 LIMIT 10;</call>
 
 //Search actor by id
 + search person id *
-- <call>jdbc person_info SELECT * FROM Persons WHERE ID = <star1> LIMIT 1</call>
+- <call>jdbc person_info SELECT * FROM Persons WHERE ID = <star1> LIMIT 1;</call>
 
 //Search person movie id
 + search actor movie id *
-- <call>jdbc person_list SELECT Persons.Name, Persons.ID FROM Persons_Movies RIGHT JOIN Persons ON Persons.ID = Persons_Movies.Person_ID WHERE Persons_Movies.Movie_ID = <star1> AND Persons_Movies.Role = 'actor'</call>
+- <call>jdbc person_list -m Some of the cast mebers are: SELECT Persons.Name, Persons.ID FROM Persons_Movies RIGHT JOIN Persons ON Persons.ID = Persons_Movies.Person_ID WHERE Persons_Movies.Movie_ID = <star1> AND Persons_Movies.Role = 'actor' ORDER BY RAND() LIMIT 5;</call>
 
 + search non-actor movie id *
-- <call>jdbc person_list SELECT Persons.Name, Persons.ID FROM Persons_Movies RIGHT JOIN Persons ON Persons.ID = Persons_Movies.Person_ID WHERE Persons_Movies.Movie_ID = <star1> AND Persons_Movies.Role != 'actor'</call>
+- <call>jdbc person_list -m The people who worked on this movie are: SELECT Persons.Name, Persons.ID FROM Persons_Movies RIGHT JOIN Persons ON Persons.ID = Persons_Movies.Person_ID WHERE Persons_Movies.Movie_ID = <star1> AND Persons_Movies.Role != 'actor';</call>
 
 //Search actor by name
 + search person _
-- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
+- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 ORDER BY LENGTH(Name) LIMIT 10;</call>
 
 + search person _ _
-- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
+- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 ORDER BY LENGTH(Name) LIMIT 10;</call>
 
 + search person _ _ _
-- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 AND INSTR(Name, '<star3>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
+- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 AND INSTR(Name, '<star3>') > 0 ORDER BY LENGTH(Name) LIMIT 10;</call>
 
 + search person _ _ _ _
-- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 AND INSTR(Name, '<star3>') > 0 AND INSTR(Name, '<star4>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
+- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 AND INSTR(Name, '<star3>') > 0 AND INSTR(Name, '<star4>') > 0 ORDER BY LENGTH(Name) LIMIT 10;</call>
 
 + search person _ _ _ _ _
-- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 AND INSTR(Name, '<star3>') > 0 AND INSTR(Name, '<star4>') > 0 AND INSTR(Name, '<star5>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
+- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 AND INSTR(Name, '<star3>') > 0 AND INSTR(Name, '<star4>') > 0 AND INSTR(Name, '<star5>') > 0 ORDER BY LENGTH(Name) LIMIT 10;</call>
 
 
 //Select random movies
@@ -249,6 +234,9 @@
 
 + what can you do?
 @ all questions
+
++ *
+- Not sure I got that. Type /help for some example questions.
 
 // Substitutions
 ! sub i'm     = i am

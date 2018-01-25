@@ -14,6 +14,7 @@ movies <- dbGetQuery(mydb, query)
 
 invisible(dbDisconnect(mydb))
 
+#Make a scatter plot of the movie data so it can be displayed to the user
 invisible(jpeg('BudgetDuration.jpg'))
 par(bg = "grey")
 scatter.smooth(movies$Budget / 10000, movies$Duration, main="Relation between budget and duration of movies", 

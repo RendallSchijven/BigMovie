@@ -134,7 +134,7 @@ public class InlineKeyboardSubroutine implements Subroutine {
                     reply = bot.reply(String.valueOf(chat_id), "search movie plot id " + movieID);
                 } else if (call_data.startsWith("movie_id_mpaa_")) {
                     String movieID = call_data.substring(14);
-                    reply = bot.reply(String.valueOf(chat_id), "search movie id " + movieID);
+                    reply = bot.reply(String.valueOf(chat_id), "mpaa " + movieID);
                 } else if (call_data.startsWith("movie_id_")) {
                     String movieID = call_data.substring(9);
                     reply = bot.reply(String.valueOf(chat_id), "search movie id " + movieID);
