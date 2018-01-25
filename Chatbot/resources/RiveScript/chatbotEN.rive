@@ -4,9 +4,6 @@
 + hello
 - Hi there!
 
-+ all questions?
-- <call>inlineKeyboard {'text':'All questions are:', 'buttons':[[{'text':'Shortest movie highest rating', 'callback':'questions_1'}],[{'text':'In what year between 1990 and 2018 are the most films with the word beer in the title produced', 'callback':'questions_2'}],[{'text':'In which movies does (full actor name) play', 'callback':'questions_3'}],[{'text':'Which director has filmed the most movies with (full actor name)', 'callback':'questions_4'}],[{'text':'Which movie was the most expensive to create', 'callback':'questions_5'}],[{'text':'Which actor has the longest movie career', 'callback':'questions_6'}],[{'text':'What are the 5 most occuring genres', 'callback':'questions_7'}],[{'text':'what are the most occuring genres in (Country name)', 'callback':'questions_8'}],[{'text':'Which 5 countries made the most movies', 'callback':'questions_9'}],[{'text':'What are the top rated movies', 'callback':'questions_10'}],[{'text':'Who is the oldest living actor', 'callback':'questions_11'}]]}</call>
-
 + [*] how are you [*]
 - I'm fine.
 - Splendid!
@@ -14,13 +11,6 @@
 
 + [*] start [*]
 - I'm Movie Buff bot! Ask me questions about your favorite movies. Type /help for some example questions.
-
-+ [*] help [*]
-- You can ask me questions like:\n
-^ /movies\n
-^ /actors\n
-^ /directors
-^ <call>inlineKeyboard {'text':'You can ask me questions like:', 'buttons':[[{'text':'movies', 'callback':'help_movies'}],[{'text':'actors', 'callback':'actors_help'}],[{'text':'directors', 'callback':'directors_help'}]]}</call>
 
 + * trailer
 @ trailer <star>
@@ -56,14 +46,16 @@
 
 //Question 3
 + in which movies does _ _ play
-- <call>jdbc SELECT Movies.Title FROM Movies\s
+- in which movies does <star> play?\n
+^ <call>jdbc SELECT Movies.Title FROM Movies\s
 ^            LEFT JOIN Persons_Movies ON Persons_Movies.Movie_ID = Movies.ID\s
 ^            LEFT JOIN Persons ON Persons_Movies.Person_ID = Persons.ID\s
 ^            WHERE Persons.Name LIKE '%<star2>, <star1>%' LIMIT 50; </call>
 
 //Question 4
 + which director has filmed the most movies with _ _
-- <call>jdbc SELECT p.Name, COUNT(*) AS Movies FROM Persons AS p\s
+- which director has filmed the most movies with <star>?\n
+^ <call>jdbc SELECT p.Name, COUNT(*) AS Movies FROM Persons AS p\s
 ^            LEFT JOIN Persons_Movies AS pm ON pm.Person_ID = p.ID\s
 ^            WHERE pm.Role = 'director'\s
 ^            AND pm.Movie_ID IN (SELECT pm.Movie_ID FROM Persons_Movies AS pm\s
@@ -78,7 +70,7 @@
 
 //Question 6
 + what are the most occuring genres
--<call>jdbc SELECT g.GenreName AS Genre, COUNT(mg.Genre_ID) AS Movies FROM Movies_Genres AS mg\s
+- <call>jdbc SELECT g.GenreName AS Genre, COUNT(mg.Genre_ID) AS Movies FROM Movies_Genres AS mg\s
 ^           LEFT JOIN Genres AS g ON g.ID = mg.Genre_ID\s
 ^           GROUP BY g.ID\s
 ^           ORDER BY Movies DESC LIMIT 5; </call>
@@ -123,6 +115,15 @@
 + does * have more violent movies than *
 - <call>system rscript Chatbot/resources/r/R1en.R '<star1>' '<star2>'</call>
 ^ <call>send photo violence.jpg</call>
+
++ all questions
+- <call>inlineKeyboard {'text':'All questions are:', 'buttons':[[{'text':'Shortest movie highest rating', 'callback':'questions_1'}],[{'text':'In what year between 1990 and 2018 are the most films with the word beer in the title produced', 'callback':'questions_2'}],[{'text':'In which movies does (full actor name) play', 'callback':'questions_3'}],[{'text':'Which director has filmed the most movies with (full actor name)', 'callback':'questions_4'}],[{'text':'Which movie was the most expensive to create', 'callback':'questions_5'}],[{'text':'Which actor has the longest movie career', 'callback':'questions_6'}],[{'text':'What are the 5 most occuring genres', 'callback':'questions_7'}],[{'text':'what are the most occuring genres in (Country name)', 'callback':'questions_8'}],[{'text':'Which 5 countries made the most movies', 'callback':'questions_9'}],[{'text':'What are the top rated movies', 'callback':'questions_10'}],[{'text':'Who is the oldest living actor', 'callback':'questions_11'}]]}</call>
+
++ [*] help [*]
+@ all questions
+
++ what can you do?
+@ all questions
 
 // Substitutions
 ! sub i'm     = i am
