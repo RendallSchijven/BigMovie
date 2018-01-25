@@ -23,7 +23,7 @@ for(i in args){movieArgs <- paste(movieArgs, i)}
 movieArgs <- trimws(movieArgs)
 
 #The connection string for the database
-mydb <- dbConnect(MySQL(), dbname="NickyBotUtf8", user="riley", password="jayden", host="db.sanderkastelein.nl")
+mydb <- dbConnect(MySQL(), dbname="NickyBotUtf82", user="riley", password="jayden", host="db.sanderkastelein.nl")
 
 #The queries for getting the different MPAA we left out NC-17 and G because only 1% of the movies had this MPAA
 #We limited to 1783 so the model would be fairly distributed over all 3 values

@@ -110,13 +110,13 @@
 
 // Visualisation questions
 
-//Visualization 2
+//Visualization 1
 + get years *
 - <call>system rscript Chatbot/resources/R/Visualization/Visualization2.R <star1></call>
 ^ <call>send photo MoviesYear.jpg</call>
 
-//Visualization 3
-+ get genre
+//Visualization 2
++ show me the distribution of genres
 - <call>system rscript Chatbot/resources/R/Visualization/Visualization3.R</call>
 ^ <call>send photo genreMovies.png</call>
 

@@ -1,8 +1,6 @@
 package Nickybot;
 
 import com.rivescript.macro.Subroutine;
-import com.sun.javafx.fxml.builder.URLBuilder;
-
 import org.apache.commons.io.IOUtils;
 import org.apache.http.client.utils.URIBuilder;
 import org.json.JSONObject;
@@ -12,8 +10,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 import java.util.Properties;
-import java.util.Scanner;
-import java.net.URL;
 
 /**
  * @author Groep 16

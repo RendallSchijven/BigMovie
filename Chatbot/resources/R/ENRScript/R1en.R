@@ -8,7 +8,7 @@
 library(RMySQL)
 library(ggplot2)
 
-mydb <- dbConnect(MySQL(), dbname="NickyBotUtf8", user="riley", password="jayden", host="db.sanderkastelein.nl")
+mydb <- dbConnect(MySQL(), dbname="NickyBotUtf82", user="riley", password="jayden", host="db.sanderkastelein.nl")
 
 #Get the arguments that java sent
 args <- commandArgs(trailingOnly = TRUE)
@@ -25,8 +25,8 @@ arg1 = trimws(split[1])
 arg2 = trimws(split[2])
 
 #The queries to get the country from the database
-getCountry1 <- sprintf("SELECT Country FROM Countries WHERE Country LIKE '%%%s%%' LIMIT 1;", arg1)
-getCountry2 <- sprintf("SELECT Country FROM Countries WHERE Country LIKE '%%%s%%' LIMIT 1;", arg2)
+getCountry1 <- sprintf("SELECT Country FROM Countries WHERE Country LIKE '%%%s%%' ORDER BY LENGTH(Country) LIMIT 1;", arg1)
+getCountry2 <- sprintf("SELECT Country FROM Countries WHERE Country LIKE '%%%s%%' ORDER BY LENGTH(Country) LIMIT 1;", arg2)
 
 #Run the queries and save the results
 country1 <- dbGetQuery(mydb, getCountry1)
@@ -69,6 +69,8 @@ c2Percentage = (Country2Violent / Country2Movies) * 100
 countries = c(toString(country1), toString(country2))
 violence = c(c1Percentage, c2Percentage, recursive = TRUE)
 countriesViolence = data.frame(countries, violence)
+
+cat("Look at this graph!\n")
 
 #This statement checks which country has the higher percentage and sends the correct string back to the user
 if(c1Percentage > c2Percentage){

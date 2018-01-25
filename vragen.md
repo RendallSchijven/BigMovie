@@ -1,4 +1,4 @@
-# vragen
+#De vragen die wij hebben gekozen om te beantwoorden waarvan een aantal van blackboard en aantal zelf bedacht
 
 SQL
 + 1. Wat is de kortste film met een waardering van 8.5 of hoger?
@@ -12,13 +12,10 @@ SQL
 + 8. Welke 5 landen komen de meeste films vandaan?
 + 9. Wat is de hoogst gewaardeerde film?
 
-Visualazation
-- 1. Maak een visuele presentatie van de in de loop van de tijd veranderende populariteit van 
-  onderwerpen (genre) van films. Denk daarbij aan horror, science-fiction, romance, 
-  geweld etc. Zoek zelf naar een goede manier om dit te presenteren. 
-+ 2. Geef het aantal films dat in een land gemaakt is weer in de tijd. Dwz maak een grafiek 
+Visualisatie
++ 1. Geef het aantal films dat in een land gemaakt is weer in de tijd. Dwz maak een grafiek 
   waarin op de x-as het jaar staat en op de y-as het aantal gemaakte films. Maak het land variabel.
-+ 3. Geef een chart van de verdeling van genres
++ 2. Geef een chart van de verdeling van genres
 
 R
 + 1. Er wordt wel eens gezegd dat Europese films meer ‘cultureel’ zijn dan Amerikaanse. 
