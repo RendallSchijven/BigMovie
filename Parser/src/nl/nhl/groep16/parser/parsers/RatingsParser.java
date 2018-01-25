@@ -11,11 +11,21 @@ public class RatingsParser implements ParserInterface{
         this.ratingRegex = Pattern.compile("\\s(\\d+)\\s+(\\d[\\.]\\d)\\s+(.*)");
     }
 
+    /**
+     * Converts a line into a Array of Strings representing the columns of a CSV
+     * @param String line
+     * @return String[]
+     */
     @Override
     public String[] convertLine(String line) {
         return extractMovieRating(line);
     }
 
+    /**
+     * Converts a line into a Array of Strings representing the columns of a CSV
+     * @param String line
+     * @return String[]
+     */
     public String[] extractMovieRating(String line) {
         Matcher m = ratingRegex.matcher(line);
         if (!m.find()) {

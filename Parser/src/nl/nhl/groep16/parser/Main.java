@@ -21,11 +21,13 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
+        // Simple check for a help flag
         if (args[0].toString().equals("--help") || args[0].toString().equals("-h")) {
             Main.printHelp();
             return;
         }
 
+        // Write alll output to an output directory
         File dir = new File("out");
         dir.mkdir();
 
@@ -81,6 +83,10 @@ public class Main {
 //        System.out.println("Done\nTime: " + time);
 //    }
 
+
+    /**
+     * Print help info
+     */
     static private void printHelp() {
         System.out.println("Parser: ./parser movies.list mpaa-rating.list -l 50 -o outputDir/\n\targuments:\n\t-l\tamount of lines to parse");
     }
