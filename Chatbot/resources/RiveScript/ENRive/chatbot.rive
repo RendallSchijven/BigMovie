@@ -203,7 +203,7 @@
 - <call>jdbc person_list SELECT Persons.Name, Persons.ID FROM Persons_Movies RIGHT JOIN Persons ON Persons.ID = Persons_Movies.Person_ID WHERE Persons_Movies.Movie_ID = <star1> AND Persons_Movies.Role = 'actor'</call>
 
 + search non-actor movie id *
-- <call>jdbc person_list SELECT Persons.Name, Persons.ID FROM Persons_Movies RIGHT JOIN Persons ON Persons.ID = Persons_Movies.Person_ID WHERE Persons_Movies.Movie_ID = <star1> AND Persons_Movies.Role != 'actor'</call>
+- <call>jdbc person_list -m The people who worked on this movie are: SELECT Persons.Name, Persons.ID FROM Persons_Movies RIGHT JOIN Persons ON Persons.ID = Persons_Movies.Person_ID WHERE Persons_Movies.Movie_ID = <star1> AND Persons_Movies.Role != 'actor'</call>
 
 //Search actor by name
 + search person _
