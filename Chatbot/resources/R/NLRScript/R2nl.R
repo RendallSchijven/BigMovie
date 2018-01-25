@@ -3,16 +3,23 @@
 # Created by: Rendall
 # Created on: 15-1-2018
 
+#install.packages("RMySQL")
 library(RMySQL)
 
-mydb <- dbConnect(MySQL(), dbname="NickyBotUtf8", user="riley", password="jayden", host="db.sanderkastelein.nl")
+mydb <- dbConnect(MySQL(), dbname="NickyBotUtf82", user="riley", password="jayden", host="db.sanderkastelein.nl")
 
-query <- ("SELECT Budget, Duration FROM Movies WHERE Duration IS NOT NULL AND Budget IS NOT NULL AND Currency = 'USD'")
+query <- ("SELECT Budget, Duration FROM Movies WHERE Duration IS NOT NULL AND Budget IS NOT NULL AND Currency = 'EUR'")
 
 movies <- dbGetQuery(mydb, query)
 
 invisible(dbDisconnect(mydb))
 
 invisible(jpeg('BudgetDuration.jpg'))
-scatter.smooth(movies$Budget / 10000, movies$Duration, main="Verband tussen budget en speeltijd van films", col = "green", lpars = list(col = "red", lwd = 3, lty = 3), xlab = "Budget in ??? x10000", ylab = "Speeltijd")
+par(bg = "grey")
+scatter.smooth(movies$Budget / 10000, movies$Duration, main="Verband tussen budget en speeltijd van films", 
+               col = "blue", lpars = list(col = "red", lwd = 1, lty = 1), 
+               xlab = "Budget in ??? x10000", ylab = "Duration")
+cat("De blauwe stipjes zijn de datapunten, zoals je ziet is er niet bepaald een verband tussen deze punten de meeste films hebben ongeveer dezelde speeltijd.
+    De rode lijn is de lijn die we hadden voorspeld dat de data punten volgden, zoals je ziet is dit niet het geval.")
 invisible(dev.off())
+
