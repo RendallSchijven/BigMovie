@@ -5,13 +5,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.telegram.telegrambots.bots.DefaultAbsSender;
 
-import javax.xml.crypto.Data;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.*;
+import java.util.Iterator;
 
 
 /**
@@ -46,31 +42,79 @@ public class JdbcSubroutine implements Subroutine {
             response = Database.query(sql);
             if (response.equals("]"))
                 return "I can't find any information on that.";
-            System.out.println(response);
+
             JSONArray JsonArray = new JSONArray(response);
             JSONObject jsonObject;
             String jsonButtonString;
 
             switch (args[0]) {
                 case "film_list":
-                    System.out.println(args[0]);
                     if (message.isEmpty()) {
                         jsonButtonString = "{\"text\":\"The answer is\",\"buttons\":[";
                     } else {
                         jsonButtonString = "{\"text\":\"" + message + "\",\"buttons\":[";
                     }
 
+                    String jsonActorString = "{\"text\":\"Played in\",\"buttons\":[";
+                    String jsonDirectorString = "{\"text\":\"Directed\",\"buttons\":[";
+                    String jsonProducerString = "{\"text\":\"Produced\",\"buttons\":[";
+                    String jsonWriterString = "{\"text\":\"Wrote\",\"buttons\":[";
+                    String jsonEditorString = "{\"text\":\"Edited\",\"buttons\":[";
+
                     for (int i = 0; i < JsonArray.length(); i++) {
                         jsonObject = JsonArray.getJSONObject(i);
-                        if (i != 0)
-                            jsonButtonString += ",";
-
-                        jsonButtonString += "[{\"text\":\"" + jsonObject.getString("Title") + "\",\"callback\":\"movie_id_" + jsonObject.getInt("ID") + "\"}]";
+                        if (jsonObject.has("Role")) {
+                            switch (jsonObject.getString("Role")) {
+                                case "actor":
+                                    jsonActorString += "[{\"text\":\"" + jsonObject.getString("Title") + "\",\"callback\":\"movie_id_" + jsonObject.getInt("ID") + "\"}],";
+                                    break;
+                                case "director":
+                                    jsonDirectorString += "[{\"text\":\"" + jsonObject.getString("Title") + "\",\"callback\":\"movie_id_" + jsonObject.getInt("ID") + "\"}],";
+                                    break;
+                                case "producer":
+                                    jsonProducerString += "[{\"text\":\"" + jsonObject.getString("Title") + "\",\"callback\":\"movie_id_" + jsonObject.getInt("ID") + "\"}],";
+                                    break;
+                                case "writer":
+                                    jsonWriterString += "[{\"text\":\"" + jsonObject.getString("Title") + "\",\"callback\":\"movie_id_" + jsonObject.getInt("ID") + "\"}],";
+                                    break;
+                                case "editor":
+                                    jsonEditorString += "[{\"text\":\"" + jsonObject.getString("Title") + "\",\"callback\":\"movie_id_" + jsonObject.getInt("ID") + "\"}],";
+                                    break;
+                                default:
+                                    jsonButtonString += "[{\"text\":\"" + jsonObject.getString("Title") + "\",\"callback\":\"movie_id_" + jsonObject.getInt("ID") + "\"}],";
+                                    break;
+                            }
+                        } else
+                            jsonButtonString += "[{\"text\":\"" + jsonObject.getString("Title") + "\",\"callback\":\"movie_id_" + jsonObject.getInt("ID") + "\"}],";
                     }
 
+                    jsonButtonString = jsonButtonString.substring(0, jsonButtonString.length() - 1);
+                    jsonActorString = jsonActorString.substring(0, jsonActorString.length() - 1);
+                    jsonDirectorString = jsonDirectorString.substring(0, jsonDirectorString.length() - 1);
+                    jsonProducerString = jsonProducerString.substring(0, jsonProducerString.length() - 1);
+                    jsonWriterString = jsonWriterString.substring(0, jsonWriterString.length() - 1);
+                    jsonEditorString = jsonEditorString.substring(0, jsonEditorString.length() - 1);
+
                     jsonButtonString += "]}";
+                    jsonActorString += "]}";
+                    jsonDirectorString += "]}";
+                    jsonProducerString += "]}";
+                    jsonWriterString += "]}";
+                    jsonEditorString += "]}";
+
                     System.out.println(jsonButtonString);
-                    InlineKeyboardSubroutine.MakeButtonMessage(rs, das, jsonButtonString);
+                    if (jsonButtonString.length() > 40)
+                        InlineKeyboardSubroutine.MakeButtonMessage(rs, das, jsonButtonString);
+                    if (jsonActorString.length() > 40)
+                        InlineKeyboardSubroutine.MakeButtonMessage(rs, das, jsonActorString);
+                    if (jsonDirectorString.length() > 40)
+                        InlineKeyboardSubroutine.MakeButtonMessage(rs, das, jsonDirectorString);
+                    if (jsonProducerString.length() > 40)
+                        InlineKeyboardSubroutine.MakeButtonMessage(rs, das, jsonProducerString);
+                    if (jsonWriterString.length() > 40)
+                        InlineKeyboardSubroutine.MakeButtonMessage(rs, das, jsonWriterString);
+                    if (jsonEditorString.length() > 40)
+                        InlineKeyboardSubroutine.MakeButtonMessage(rs, das, jsonEditorString);
 
                     break;
                 case "film_info":
@@ -181,6 +225,7 @@ public class JdbcSubroutine implements Subroutine {
                     if (!jsonObject.getString("Sex").equals("null"))
                         jsonButtonString += "<b>Sex :</b> " + jsonObject.getString("Sex") + "\\n";
 
+                    jsonButtonString += ImageSearchSubroutine.getImage(jsonObject.getString("Name"), true) + "\\n";
                     jsonButtonString += "\",\"buttons\":[";
                     jsonButtonString += "[{\"text\":\"Movies worked on\", \"callback\":\"actor_id_movie_" + jsonObject.getInt("ID") + "\"}]";
 

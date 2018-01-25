@@ -118,7 +118,7 @@
 //Visualization 3
 + get genre
 - <call>system rscript Chatbot/resources/R/Visualization/Visualization3.R</call>
-^ <call>send photo GenreMovies.png</call>
+^ <call>send photo genreMovies.png</call>
 
 // R Questions
 
@@ -130,9 +130,12 @@
 //R question 2
 + is there a relation between the cost and duration of movies
 - <call>system rscript Chatbot/resources/R/ENRScript/R2en.R</call>
-^ <call>send photo MoviesBudget.jpg</call>
+^ <call>send photo BudgetDuration.jpg</call>
 
 //R question 3
++ is there a relation between the cost and rating of movies
+- <call>system rscript Chatbot/resources/R/ENRScript/R3en.R</call>
+^ <call>send photo BudgetRating.jpg</call>
 
 //R MPAA Question
 + mpaa *
@@ -146,13 +149,14 @@
 ^ /rm   returns a random movie\n
 ^ /rmc  returns 25 random movies from a chosen country\n
 ^ /rmg  returns 25 random movies from a chosen genre\n
+^ /i    quick image search
 
 
 + /m *
 - <call>jdbc film_list SELECT ID, Title, Plot, ReleaseYear, Rating, Votes, MPAA, Currency, Budget, Duration FROM Movies WHERE Title like'%<star1>%' LIMIT 20;</call>
 
-+ /a _ _
-- <call>jdbc SELECT Movies.Title FROM Movies LEFT JOIN Persons_Movies ON Persons_Movies.Movie_ID = Movies.ID LEFT JOIN Persons ON Persons_Movies.Person_ID = Persons.ID WHERE Persons.Name LIKE '%<star2>, <star1>%' LIMIT 50; </call>
++ /a *
+@ search person <star1>
 
 + /k *
 - <call>jdbc SELECT m.Title AS Movies FROM Movies_Keywords AS mk LEFT JOIN Movies AS m ON m.ID = mk.Movie_ID WHERE mk.Keyword_ID = (SELECT ID FROM Keywords WHERE Keyword LIKE '%<star1>%' LIMIT 1);</call>
@@ -165,6 +169,11 @@
 
 + /rmg *
 - <call>jdbc SELECT m.Title AS Movies FROM Movies_Genres AS mg LEFT JOIN Movies AS m ON m.ID = mg.Movie_ID WHERE mg.Genre_ID = (SELECT ID FROM Genres WHERE GenreName LIKE '%Drama%' LIMIT 1) ORDER BY RAND() LIMIT 25;</call>
+
++ /i * *
+- <call>image <star1> <star2></call>
+
+
 
 //Search movies by id
 + search movie id *
@@ -197,12 +206,16 @@
 //Search actor by name
 + search person _
 - <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
+
 + search person _ _
 - <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
+
 + search person _ _ _
 - <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 AND INSTR(Name, '<star3>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
+
 + search person _ _ _ _
 - <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 AND INSTR(Name, '<star3>') > 0 AND INSTR(Name, '<star4>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
+
 + search person _ _ _ _ _
 - <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 AND INSTR(Name, '<star3>') > 0 AND INSTR(Name, '<star4>') > 0 AND INSTR(Name, '<star5>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
 

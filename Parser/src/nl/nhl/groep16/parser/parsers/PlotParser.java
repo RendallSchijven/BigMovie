@@ -16,6 +16,11 @@ public class PlotParser implements ParserInterface{
         this.moviesRegex = Pattern.compile("MV: (.[^\"].*)");
     }
 
+    /**
+     * Converts a line into an array of Strings representing the values of the CSV columns in a row.
+     * @param String line
+     * @return String[]
+     */
     @Override
     public String[] convertLine(String line) {
         String movie = extractMovie(line);
@@ -39,6 +44,10 @@ public class PlotParser implements ParserInterface{
         return null;
     }
 
+    /**
+     * @param String line
+     * @return String
+     */
     public String extractMovie(String line) {
         Matcher m = moviesRegex.matcher(line);
         if (!m.find()) {
@@ -48,6 +57,10 @@ public class PlotParser implements ParserInterface{
         return m.group(1);
     }
 
+    /**
+     * @param String line
+     * @return String
+     */
     public String extractPlot(String line) {
         Matcher m = plotRegex.matcher(line);
         if (!m.find()) {
