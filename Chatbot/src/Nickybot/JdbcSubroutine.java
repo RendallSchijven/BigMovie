@@ -141,9 +141,10 @@ public class JdbcSubroutine implements Subroutine {
                     System.out.println(args[0]);
                     jsonObject = JsonArray.getJSONObject(0);
                     jsonButtonString = "{\"text\":\"" +
-                            "<b>Title :</b> " + jsonObject.getString("Title") + "\\n" +
-                            "<b>Release year :</b> " + jsonObject.getString("ReleaseYear") + "\\n";
+                            "<b>Title :</b> " + jsonObject.getString("Title") + "\\n";
 
+                    if (!jsonObject.getString("ReleaseYear").equals("null"))
+                        jsonButtonString += "<b>Release year :</b> " + jsonObject.getString("ReleaseYear") + "\\n";
                     if (!jsonObject.getString("MPAA").equals("null"))
                         jsonButtonString += "<b>MPAA rating :</b> " + jsonObject.getString("MPAA") + "\\n";
                     if (!jsonObject.getString("Duration").equals("null"))
@@ -155,11 +156,11 @@ public class JdbcSubroutine implements Subroutine {
 
                     jsonButtonString += "\",\"buttons\":[";
 
-                    jsonButtonString += "[{\"text\":\"Show me the trailer?\", \"callback\":\"movie_id_trailer_" + jsonObject.getInt("ID") + "\"}]";
+                    jsonButtonString += "[{\"text\":\"Show me the trailer\", \"callback\":\"movie_id_trailer_" + jsonObject.getInt("ID") + "\"}]";
 
-                    jsonButtonString += ",[{\"text\":\"What is the cast?\", \"callback\":\"movie_id_cast_" + jsonObject.getInt("ID") + "\"}]";
+                    jsonButtonString += ",[{\"text\":\"Show me the cast\", \"callback\":\"movie_id_cast_" + jsonObject.getInt("ID") + "\"}]";
 
-                    jsonButtonString += ",[{\"text\":\"Which people work on the movie?\", \"callback\":\"movie_id_staff_" + jsonObject.getInt("ID") + "\"}]";
+                    jsonButtonString += ",[{\"text\":\"Show me the people who worked on the movie\", \"callback\":\"movie_id_staff_" + jsonObject.getInt("ID") + "\"}]";
 
                     if (!jsonObject.getString("Plot").equals("null")) {
                         jsonButtonString += ",[{\"text\":\"What is the story?\", \"callback\":\"movie_id_plot_" + jsonObject.getInt("ID") + "\"}";
