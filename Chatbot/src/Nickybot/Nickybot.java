@@ -10,6 +10,7 @@ import org.telegram.telegrambots.exceptions.TelegramApiException;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.Scanner;
 
 /**
  * @author Groep 16
@@ -27,6 +28,7 @@ public class Nickybot extends TelegramLongPollingBot {
         bot.setSubroutine("inlineKeyboard", new InlineKeyboardSubroutine(this));
         bot.setSubroutine("rive", new riveFeaturesSubroutine());
         bot.setSubroutine("trailer", new TrailerSubroutine());
+        bot.setSubroutine("image", new ImageSearchSubroutine());
         bot.loadDirectory("Chatbot/resources/RiveScript/ENRive");
         bot.loadDirectory("Chatbot/resources/RiveScript/NLRive");
         bot.sortReplies();
