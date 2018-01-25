@@ -15,6 +15,11 @@ public class EditorParser implements ParserInterface{
         this.movieRegex = Pattern.compile("\\t+(\\w.*)");
     }
 
+    /**
+     * Converts a string line into an array of Strings representing the values of the columns in a CSVs
+     * @param String line
+     * @return String
+     */
     @SuppressWarnings("Duplicates")
     @Override
     public String[] convertLine(String line) {
@@ -36,6 +41,11 @@ public class EditorParser implements ParserInterface{
         return new String[]{currentEditor, movie };
     }
 
+    /**
+     * Extracts the editor from a line, returns null if not found
+     * @param String line
+     * @return String
+     */
     public String extractEditor(String line) {
         Matcher m = editorRegex.matcher(line);
         if(!m.find()) {
@@ -44,6 +54,11 @@ public class EditorParser implements ParserInterface{
         return m.group(1);
     }
 
+    /**
+     * Extracts a movie from the line, returns null if not found
+     * @param String line
+     * @return String
+     */
     public String extractMovie(String line) {
         Matcher m = movieRegex.matcher(line);
         if(!m.find()) {

@@ -20,6 +20,12 @@ public class ParserReader extends Thread{
         this.reader = new BufferedReader(reader);
     }
 
+    /**
+     * Build a ParserReader with only a filePath using the map in the ParserFactory
+     *
+     * @param filePath
+     * @throws Exception
+     */
     public ParserReader(String filePath) throws Exception {
         this.filePath = filePath;
         ParserFactory parserFactory = new ParserFactory();
@@ -27,7 +33,12 @@ public class ParserReader extends Thread{
         this.reader = new BufferedReader(new FileReader(filePath));
     }
 
-
+    /**
+     * Writes the current member reader until EOF to the CSVPrinter object
+     *
+     * @param csvPrinter
+     * @throws IOException
+     */
     public void writeToCsvPrinter(CSVPrinter csvPrinter) throws IOException {
         String line;
         while ((line = reader.readLine()) != null) {
@@ -39,6 +50,13 @@ public class ParserReader extends Thread{
         csvPrinter.flush();
     }
 
+    /**
+     * Write the current member reader until EOF or numLines has been reacher to the CSVPrinter object
+     *
+     * @param csvPrinter
+     * @param numLines
+     * @throws IOException
+     */
     public void writeToCsvPrinter(CSVPrinter csvPrinter, int numLines) throws IOException {
         String line;
         int count = 0;
@@ -54,7 +72,7 @@ public class ParserReader extends Thread{
 
     /**
      *
-     * for multi-threading
+     * For multi-threading
      *
      */
     @Override

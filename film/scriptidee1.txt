@@ -1,0 +1,67 @@
+== Scene 0 (Intro) ==
+
+Voice over: In a world.... where entertainment has taken over.
+Voice over: One team tried to figure it all out...
+
+*Groepje in labcoats in een laberatorium*
+*Supercut*: alle groepsleden met een korte ondertekst (naam, opleiding, laatste maaltijd)
+
+*Laptop met code twee groepsleden werken hard aan (run parser)* 
+Skeptisch groepslid achter laptop: Dit gaat nooit werken, die Regexes & SQL-code & R-analyses dit gaat nooit werken!
+Ander groepslid: *Glimlacht en drukt op enter* loopt, naar smartphone toe
+
+*1 ander groepspersoon gooit per ongeluk een reageerbuisje meel/poeder/vloeistof over een smartphone heen*
+*Iedereen kijkt verbaasd naar de smartphone*
+
+Transitie: fade out... zwart voor 3 seconden.
+
+== Scene 1 ==
+Binnen, rotzooi, donker, enige licht van de tv.
+Man 1 zit op stoel; lege bier blikjes op de grond.
+
+Voice Over: Herkent u zich in deze situatie?
+Man 1: *knikt ja*
+
+Voice Over: Wilt u ook alles uit uw actieve leven halen?
+Man 1: *knikt ja*
+
+Voice Over: Voeg NickleBot toe, het antwoord op alle vragen!
+Man 1: *Pakt telefoon en drukt op slechte overgeacteerde wijze op het scherm*
+
+Transition: lichtflits of anders cheesy slecht transition effect (MovieMaker is bonus punten)
+
+== Scene 2 ==
+Buiten, zonnig.
+Man 1 is actief, blij.
+
+Man 1: NickleBot welk land maakt meer adult films, Frankrijk of Engeland? *Typt tegelijkertijd op telefoon*
+NickleBot: *TELEGRAM BLEEP*
+Man 1: Lacht op overgeacteerde wijze.
+
+== Scene 3 ==
+Buiten, zonnig.
+Man 1 is actief, blij.
+Man 2: Zit op de stoeprand, hopeloos, kijkt naar beneden.
+
+Man 2: *Mompelt overgacteerd hard op* Oh als ik nou wist wat de 5 meest voorkomende filmgenre's zijn, dan zou mijn vrouw me niet verlaten.
+Man 1: *Kijkt naar Man 2 op de stoeprand & pakt zijn telefoon*
+Man 1: NickelBot, wat zijn de 5 meest voorkomende filmgenre's? *Typt tegelijkertijd op telefoon*
+NickleBot: *TELEGRAM BLEEP*
+
+Man 1 & Man 2: *Draaien naar camera, zetten een overgeacteerde glimlach op en hebben hun duim omhoog.
+
+== Scene 4 ==
+Buiten, zonnig.
+Man 1 is actief, blij.
+
+
+Man 3: Hey, je moet me helpen! Ik kom net uit de toekomst en als ik niet weet wie de oudste acteur was in Casa Blanca vergaat de aarde aan -Insert cheesy sci-fi shit hier-
+
+Man 1: Wie was de oudste acteur in Casa Blanca Nicklebot? *Typt tegelijkertijd op telefoon*
+NickleBot: *TELEGRAM BLEEP*
+
+Man 1 & Man 3: *Draaien naar camera, zetten een overgeacteerde glimlach op en hebben hun duim omhoog.
+
+== Scene 5 (outro) ==
+
+*Beeld vervaagt* iPhone met nicklebot (telgegram) komt in beeld: Voeg NickleBot toe op TeleGram!
