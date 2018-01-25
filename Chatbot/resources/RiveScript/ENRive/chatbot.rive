@@ -13,9 +13,6 @@
 + trailer [of] *
 - <call>trailer <star></call>
 
-+ test [of] *
-- <call>test <star></call>
-
 + *
 - Not sure I got that. Type /help for some example questions.
 
@@ -127,12 +124,19 @@
 
 //R question 1
 + does * have more violent movies than *
-- <call>system rscript Chatbot/resources/R/ENRScript/R1en.R '<star1>' '<star2>'</call>
+- <call>system rscript Chatbot/resources/R/ENRScript/R1en.R <star1> / <star2></call>
 ^ <call>send photo violence.jpg</call>
 
+//R question 2
 + is there a relation between the cost and duration of movies
 - <call>system rscript Chatbot/resources/R/ENRScript/R2en.R</call>
-^ <call>send photo MoviesBudget.jpg As you can see there is not really a relation between the budget and duration of a movie</call>
+^ <call>send photo MoviesBudget.jpg</call>
+
+//R question 3
+
+//R MPAA Question
++ mpaa *
+- <call>system rscript Chatbot/resources/R/ENRscript/MPAA.R <star1></call>
 
 // !Commands
 + /command
@@ -145,7 +149,7 @@
 
 
 + /m *
-- <call>jdbc SELECT Title, Plot, ReleaseYear, Rating, Votes, MPAA, Currency, Budget, Duration FROM Movies WHERE Title like'%<star1>%' LIMIT 1;</call>
+- <call>jdbc film_list SELECT ID, Title, Plot, ReleaseYear, Rating, Votes, MPAA, Currency, Budget, Duration FROM Movies WHERE Title like'%<star1>%' LIMIT 20;</call>
 
 + /a _ _
 - <call>jdbc SELECT Movies.Title FROM Movies LEFT JOIN Persons_Movies ON Persons_Movies.Movie_ID = Movies.ID LEFT JOIN Persons ON Persons_Movies.Person_ID = Persons.ID WHERE Persons.Name LIKE '%<star2>, <star1>%' LIMIT 50; </call>
@@ -161,6 +165,47 @@
 
 + /rmg *
 - <call>jdbc SELECT m.Title AS Movies FROM Movies_Genres AS mg LEFT JOIN Movies AS m ON m.ID = mg.Movie_ID WHERE mg.Genre_ID = (SELECT ID FROM Genres WHERE GenreName LIKE '%Drama%' LIMIT 1) ORDER BY RAND() LIMIT 25;</call>
+
+//Search movies by id
++ search movie id *
+- <call>jdbc film_info SELECT * FROM Movies WHERE ID = <star1></call>
+
++ search movie full id *
+- <call>jdbc film_info SELECT * FROM Movies WHERE ID = <star1></call>
+
++ search movie plot id *
+- <call>jdbc film_plot SELECT ID, Title, Plot FROM Movies WHERE ID = <star1></call>
+
++ search movie actor id *
+- <call>jdbc film_list SELECT Movies.*, Persons_Movies.Role FROM Persons_Movies LEFT JOIN Movies ON Movies.ID = Persons_Movies.Movie_ID WHERE Persons_Movies.Person_ID = <star1></call>
+
+//Search movies by name
++ search movie *
+- <call>jdbc film_list SELECT * FROM Movies WHERE INSTR(Title, '<star1>') > 0 LIMIT 10</call>
+
+//Search actor by id
++ search person id *
+- <call>jdbc person_info SELECT * FROM Persons WHERE ID = <star1> LIMIT 1</call>
+
+//Search person movie id
++ search actor movie id *
+- <call>jdbc person_list SELECT Persons.Name, Persons.ID FROM Persons_Movies RIGHT JOIN Persons ON Persons.ID = Persons_Movies.Person_ID WHERE Persons_Movies.Movie_ID = <star1> AND Persons_Movies.Role = 'actor'</call>
+
++ search non-actor movie id *
+- <call>jdbc person_list SELECT Persons.Name, Persons.ID FROM Persons_Movies RIGHT JOIN Persons ON Persons.ID = Persons_Movies.Person_ID WHERE Persons_Movies.Movie_ID = <star1> AND Persons_Movies.Role != 'actor'</call>
+
+//Search actor by name
++ search person _
+- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
++ search person _ _
+- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
++ search person _ _ _
+- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 AND INSTR(Name, '<star3>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
++ search person _ _ _ _
+- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 AND INSTR(Name, '<star3>') > 0 AND INSTR(Name, '<star4>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
++ search person _ _ _ _ _
+- <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 AND INSTR(Name, '<star3>') > 0 AND INSTR(Name, '<star4>') > 0 AND INSTR(Name, '<star5>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
+
 
 
 + all questions

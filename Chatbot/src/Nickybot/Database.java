@@ -28,6 +28,7 @@ public class Database {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
+        System.out.println(sql);
 
         try {
             connection = (Connection) DriverManager.getConnection(
@@ -38,7 +39,10 @@ public class Database {
                 int length = resultSet.getMetaData().getColumnCount();
                 for (int i = 1; i <= length; i++) {
                     if (i != 1) {
-                        result += ",\"" + resultSet.getMetaData().getColumnName(i) + "\":\"" + resultSet.getString(i) + "\"";
+                        if (resultSet.getMetaData().getColumnName(i).equals("Plot") && resultSet.getString(i) != null)
+                            result += ",\"" + resultSet.getMetaData().getColumnName(i) + "\":\"" + resultSet.getString(i).replaceAll("\"", "\'") + "\"";
+                        else
+                            result += ",\"" + resultSet.getMetaData().getColumnName(i) + "\":\"" + resultSet.getString(i) + "\"";
                     } else {
                         result += "\"" + resultSet.getMetaData().getColumnName(i) + "\":\"" + resultSet.getString(i) + "\"";
                     }

@@ -110,13 +110,40 @@ public class InlineKeyboardSubroutine implements Subroutine {
                 reply = bot.reply(String.valueOf(chat_id), "what are the top rated movies");
                 break;
             default:
-                if (call_data.startsWith("film_id_")) {
-                    String movieID = call_data.substring(8);
+                if (call_data.startsWith("movie_id_trailer_")) {
+                    String movieID = call_data.substring(17);
+                    String sql = "SELECT Title FROM Movies WHERE ID = " + movieID;
+                    String response = Database.query(sql);
+                    JSONObject jsonObject = new JSONArray(response).getJSONObject(0);
+                    reply = bot.reply(String.valueOf(chat_id), "trailer " + jsonObject.getString("Title"));
+                } else if (call_data.startsWith("movie_id_trailer_")) {
+                    String movieID = call_data.substring(16);
+                    System.out.println(movieID);
+                    reply = bot.reply(String.valueOf(chat_id), "search person movie id " + movieID);
+                } else if (call_data.startsWith("movie_id_staff_")) {
+                    String movieID = call_data.substring(15);
+                    reply = bot.reply(String.valueOf(chat_id), "search non-actor movie id " + movieID);
+                }  else if (call_data.startsWith("movie_id_cast_")) {
+                    String movieID = call_data.substring(14);
+                    reply = bot.reply(String.valueOf(chat_id), "search actor movie id " + movieID);
+                } else if (call_data.startsWith("movie_id_plot_")) {
+                    String movieID = call_data.substring(14);
+                    reply = bot.reply(String.valueOf(chat_id), "search movie plot id " + movieID);
+                } else if (call_data.startsWith("movie_id_mpaa_")) {
+                    String movieID = call_data.substring(14);
                     reply = bot.reply(String.valueOf(chat_id), "search movie id " + movieID);
-                }
-                if (call_data.startsWith("film_id_")) {
-                    String movieID = call_data.substring(8);
+                } else if (call_data.startsWith("movie_id_")) {
+                    String movieID = call_data.substring(9);
                     reply = bot.reply(String.valueOf(chat_id), "search movie id " + movieID);
+                } else if (call_data.startsWith("actor_id_movie_")) {
+                    String personID = call_data.substring(15);
+                    reply = bot.reply(String.valueOf(chat_id), "search movie actor id " + personID);
+                } else if (call_data.startsWith("actor_id_")) {
+                    String personID = call_data.substring(10);
+                    reply = bot.reply(String.valueOf(chat_id), "search actor id " + personID);
+                } else if (call_data.startsWith("person_id_")) {
+                    String personID = call_data.substring(10);
+                    reply = bot.reply(String.valueOf(chat_id), "search person id " + personID);
                 }
                 break;
         }

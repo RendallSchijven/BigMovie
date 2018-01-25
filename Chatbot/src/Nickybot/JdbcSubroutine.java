@@ -5,8 +5,13 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.telegram.telegrambots.bots.DefaultAbsSender;
 
-import java.util.Iterator;
-import java.util.Objects;
+import javax.xml.crypto.Data;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.*;
 
 
 /**
@@ -39,7 +44,11 @@ public class JdbcSubroutine implements Subroutine {
 
             sql = sql.trim();
             response = Database.query(sql);
+            if (response.equals("]"))
+                return "I can't find any information on that.";
+            System.out.println(response);
             JSONArray JsonArray = new JSONArray(response);
+            JSONObject jsonObject;
             String jsonButtonString;
 
             switch (args[0]) {
@@ -52,11 +61,11 @@ public class JdbcSubroutine implements Subroutine {
                     }
 
                     for (int i = 0; i < JsonArray.length(); i++) {
-                        JSONObject jsonObject = JsonArray.getJSONObject(i);
+                        jsonObject = JsonArray.getJSONObject(i);
                         if (i != 0)
                             jsonButtonString += ",";
 
-                        jsonButtonString += "[{\"text\":\"" + jsonObject.getString("Title") + "\",\"callback\":\"film_id_" + jsonObject.getInt("ID") + "\"}]";
+                        jsonButtonString += "[{\"text\":\"" + jsonObject.getString("Title") + "\",\"callback\":\"movie_id_" + jsonObject.getInt("ID") + "\"}]";
                     }
 
                     jsonButtonString += "]}";
@@ -66,27 +75,115 @@ public class JdbcSubroutine implements Subroutine {
                     break;
                 case "film_info":
                     System.out.println(args[0]);
-                    JSONObject movieObject = JsonArray.getJSONObject(0);
+                    jsonObject = JsonArray.getJSONObject(0);
                     jsonButtonString = "{\"text\":\"" +
-                            "<b>Title :</b> " + movieObject.getString("Title") + "\\n" +
-                            "<b>Release year :</b> " + movieObject.getString("ReleaseYear") + "\\n";
+                            "<b>Title :</b> " + jsonObject.getString("Title") + "\\n" +
+                            "<b>Release year :</b> " + jsonObject.getString("ReleaseYear") + "\\n";
 
-                    if (!movieObject.getString("MPAA").equals("null"))
-                        jsonButtonString += "<b>MPAA rating :</b> " + movieObject.getString("MPAA") + "\\n";
-                    if (!movieObject.getString("Duration").equals("null"))
-                        jsonButtonString += "<b>Duration :</b> " + movieObject.getString("Duration") + " minutes\\n";
-                    if (!movieObject.getString("Rating").equals("null"))
-                        jsonButtonString += "<b>Rating :</b> " + movieObject.getString("Rating") + " with " + movieObject.getString("Votes") + "votes\\n";
-                    if (!movieObject.getString("Budget").equals("null"))
-                        jsonButtonString += "<b>Budget :</b> " + movieObject.getString("Budget") + " " + movieObject.getString("Currency") + "\\n";
+                    if (!jsonObject.getString("MPAA").equals("null"))
+                        jsonButtonString += "<b>MPAA rating :</b> " + jsonObject.getString("MPAA") + "\\n";
+                    if (!jsonObject.getString("Duration").equals("null"))
+                        jsonButtonString += "<b>Duration :</b> " + jsonObject.getString("Duration") + " minutes\\n";
+                    if (!jsonObject.getString("Rating").equals("null"))
+                        jsonButtonString += "<b>Rating :</b> " + jsonObject.getString("Rating") + " with " + jsonObject.getString("Votes") + " votes\\n";
+                    if (!jsonObject.getString("Budget").equals("null"))
+                        jsonButtonString += "<b>Budget :</b> " + jsonObject.getString("Budget") + " " + jsonObject.getString("Currency") + "\\n";
 
                     jsonButtonString += "\",\"buttons\":[";
 
-                    jsonButtonString += "[{\"text\":\"Trailer\", \"callback\":\"trailer_id_" + movieObject.getInt("ID") + "\"}]";
+                    jsonButtonString += "[{\"text\":\"Show me the trailer?\", \"callback\":\"movie_id_trailer_" + jsonObject.getInt("ID") + "\"}]";
 
-                    if (!movieObject.getString("Plot").equals("null")) {
-                        jsonButtonString += "[{\"text\":\"More information\", \"callback\":\"plot_id_" + movieObject.getInt("ID") + "\"}]";
+                    jsonButtonString += ",[{\"text\":\"What is the cast?\", \"callback\":\"movie_id_cast_" + jsonObject.getInt("ID") + "\"}]";
+
+                    jsonButtonString += ",[{\"text\":\"Which people work on the movie?\", \"callback\":\"movie_id_staff_" + jsonObject.getInt("ID") + "\"}]";
+
+                    if (!jsonObject.getString("Plot").equals("null")) {
+                        jsonButtonString += ",[{\"text\":\"What is the story?\", \"callback\":\"movie_id_plot_" + jsonObject.getInt("ID") + "\"}";
+                        jsonButtonString += ",{\"text\":\"Calculate MPAA\", \"callback\":\"movie_id_mpaa_" + jsonObject.getInt("ID") + "\"}]";
                     }
+                    jsonButtonString += "]}";
+                    System.out.println(jsonButtonString);
+                    InlineKeyboardSubroutine.MakeButtonMessage(rs, das, jsonButtonString);
+                    break;
+                case "film_info_cast":
+                    System.out.println(args[0]);
+                    jsonObject = JsonArray.getJSONObject(0);
+                    jsonButtonString = "{\"text\":\"" +
+                            "<b>Title :</b> " + jsonObject.getString("Title") + "\\n" +
+                            "<b>Plot :</b> " + jsonObject.getString("Plot") + "\\n";
+
+                    jsonButtonString += "\",\"buttons\":[";
+                    jsonButtonString += "[{\"text\":\"Calculate MPAA\", \"callback\":\"movie_id_mpaa_" + jsonObject.getInt("ID") + "\"}]";
+
+                    jsonButtonString += "]}";
+                    System.out.println(jsonButtonString);
+                    InlineKeyboardSubroutine.MakeButtonMessage(rs, das, jsonButtonString);
+                    break;
+                case "film_plot":
+                    System.out.println(args[0]);
+                    jsonObject = JsonArray.getJSONObject(0);
+                    jsonButtonString = "{\"text\":\"" +
+                            "<b>Title :</b> " + jsonObject.getString("Title") + "\\n" +
+                            "<b>Plot :</b> " + jsonObject.getString("Plot") + "\\n";
+
+                    jsonButtonString += "\",\"buttons\":[";
+                    jsonButtonString += "[{\"text\":\"Calculate MPAA\", \"callback\":\"movie_id_mpaa_" + jsonObject.getInt("ID") + "\"}]";
+
+                    jsonButtonString += "]}";
+                    System.out.println(jsonButtonString);
+                    InlineKeyboardSubroutine.MakeButtonMessage(rs, das, jsonButtonString);
+                    break;
+                case "person_list":
+                    System.out.println(args[0]);
+                    if (message.isEmpty()) {
+                        jsonButtonString = "{\"text\":\"The persons are\",\"buttons\":[";
+                    } else {
+                        jsonButtonString = "{\"text\":\"" + message + "\",\"buttons\":[";
+                    }
+
+                    for (int i = 0; i < JsonArray.length(); i++) {
+                        jsonObject = JsonArray.getJSONObject(i);
+                        if (i != 0)
+                            jsonButtonString += ",";
+
+                        jsonButtonString += "[{\"text\":\"" + jsonObject.getString("Name") + "\",\"callback\":\"person_id_" + jsonObject.getInt("ID") + "\"}]";
+                    }
+
+                    jsonButtonString += "]}";
+                    System.out.println(jsonButtonString);
+                    InlineKeyboardSubroutine.MakeButtonMessage(rs, das, jsonButtonString);
+                    break;
+                case "person_info":
+
+                    System.out.println(args[0]);
+                    jsonObject = JsonArray.getJSONObject(0);
+                    jsonButtonString = "{\"text\":\"" +
+                            "<b>Name :</b> " + jsonObject.getString("Name") + "\\n";
+
+                    if (!jsonObject.getString("BirthDay").equals("null")) {
+                        int age = 0;
+                        LocalDate deathDay;
+                        LocalDate birthDay = LocalDate.parse(jsonObject.getString("BirthDay"));
+
+                        if (!jsonObject.getString("DeathDay").equals("null")) {
+                            deathDay = LocalDate.parse(jsonObject.getString("DeathDay"));
+                            age = Period.between(birthDay, deathDay).getYears();
+                        } else {
+                            age = Period.between(birthDay, LocalDate.now()).getYears();
+                        }
+
+                        jsonButtonString += "<b>Age :</b> " + age + "\\n";
+                        jsonButtonString += "<b>Birth day :</b> " + jsonObject.getString("BirthDay") + "\\n";
+
+                    }
+                    if (!jsonObject.getString("DeathDay").equals("null"))
+                        jsonButtonString += "<b>Death day :</b> " + jsonObject.getString("DeathDay") + "\\n";
+                    if (!jsonObject.getString("Sex").equals("null"))
+                        jsonButtonString += "<b>Sex :</b> " + jsonObject.getString("Sex") + "\\n";
+
+                    jsonButtonString += "\",\"buttons\":[";
+                    jsonButtonString += "[{\"text\":\"Movies worked on\", \"callback\":\"actor_id_movie_" + jsonObject.getInt("ID") + "\"}]";
+
                     jsonButtonString += "]}";
                     System.out.println(jsonButtonString);
                     InlineKeyboardSubroutine.MakeButtonMessage(rs, das, jsonButtonString);
@@ -116,8 +213,7 @@ public class JdbcSubroutine implements Subroutine {
             sql = sql.trim();
             response = Database.query(sql);
 
-            System.out.println(sql);
-
+            System.out.println(response);
 
             JSONArray JsonArray = new JSONArray(response);
             for (int i = 0; i < JsonArray.length(); i++) {
