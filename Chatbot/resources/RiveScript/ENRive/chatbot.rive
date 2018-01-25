@@ -152,7 +152,7 @@
 
 
 + /m *
-- <call>jdbc SELECT Title, Plot, ReleaseYear, Rating, Votes, MPAA, Currency, Budget, Duration FROM Movies WHERE Title like'%<star1>%' LIMIT 1;</call>
+- <call>jdbc film_list SELECT ID, Title, Plot, ReleaseYear, Rating, Votes, MPAA, Currency, Budget, Duration FROM Movies WHERE Title like'%<star1>%' LIMIT 20;</call>
 
 + /a _ _
 - <call>jdbc SELECT Movies.Title FROM Movies LEFT JOIN Persons_Movies ON Persons_Movies.Movie_ID = Movies.ID LEFT JOIN Persons ON Persons_Movies.Person_ID = Persons.ID WHERE Persons.Name LIKE '%<star2>, <star1>%' LIMIT 50; </call>
@@ -169,9 +169,55 @@
 + /rmg *
 - <call>jdbc SELECT m.Title AS Movies FROM Movies_Genres AS mg LEFT JOIN Movies AS m ON m.ID = mg.Movie_ID WHERE mg.Genre_ID = (SELECT ID FROM Genres WHERE GenreName LIKE '%Drama%' LIMIT 1) ORDER BY RAND() LIMIT 25;</call>
 
-
 + all questions
-- <call>inlineKeyboard {'text':'All questions are:', 'buttons':[[{'text':'Shortest movie highest rating', 'callback':'questions_1'}],[{'text':'In what year between 1990 and 2018 are the most films with the word beer in the title produced', 'callback':'questions_2'}],[{'text':'In which movies does (full actor name) play', 'callback':'questions_3'}],[{'text':'Which director has filmed the most movies with (full actor name)', 'callback':'questions_4'}],[{'text':'Which movie was the most expensive to create', 'callback':'questions_5'}],[{'text':'Which actor has the longest movie career', 'callback':'questions_6'}],[{'text':'What are the 5 most occuring genres', 'callback':'questions_7'}],[{'text':'what are the most occuring genres in (Country name)', 'callback':'questions_8'}],[{'text':'Which 5 countries made the most movies', 'callback':'questions_9'}],[{'text':'What are the top rated movies', 'callback':'questions_10'}],[{'text':'Who is the oldest living actor', 'callback':'questions_11'}]]}</call>
+- <call>inlineKeyboard {
+^   	'text': 'All questions are:',
+^   	'buttons': [[{
+^   				'text': 'Shortest movie highest rating',
+^   				'callback': 'questions_1'
+^   			}
+^   		], [{
+^   				'text': 'In what year between 1990 and 2018 are the most films with the word beer in the title produced',
+^   				'callback': 'questions_2'
+^   			}
+^   		], [{
+^   				'text': 'In which movies does (full actor name) play',
+^   				'callback': 'questions_3'
+^   			}
+^   		], [{
+^   				'text': 'Which director has filmed the most movies with (full actor name)',
+^   				'callback': 'questions_4'
+^   			}
+^   		], [{
+^   				'text': 'Which movie was the most expensive to create',
+^   				'callback': 'questions_5'
+^   			}
+^   		], [{
+^   				'text': 'Which actor has the longest movie career',
+^   				'callback': 'questions_6'
+^   			}
+^   		], [{
+^   				'text': 'What are the 5 most occuring genres',
+^   				'callback': 'questions_7'
+^   			}
+^   		], [{
+^   				'text': 'what are the most occuring genres in (Country name)',
+^   				'callback': 'questions_8'
+^   			}
+^   		], [{
+^   				'text': 'Which 5 countries made the most movies',
+^   				'callback': 'questions_9'
+^   			}
+^   		], [{
+^   				'text': 'What are the top rated movies',
+^   				'callback': 'questions_10'
+^   			}
+^   		], [{
+^   				'text': 'Who is the oldest living actor',
+^   				'callback': 'questions_11'
+^   			}
+^   		]]
+^   }</call>
 
 + [*] help [*]
 @ all questions

@@ -54,7 +54,7 @@ public class Nickybot extends TelegramLongPollingBot {
         } else if (update.hasCallbackQuery()) {
             message = InlineKeyboardSubroutine.CallBack(update, bot);
         }
-        if (message != null) {
+        if (message != null && !message.getText().equals("")) {
             try {
                 execute(message); // Sending our message object to user
             } catch (TelegramApiException e) {

@@ -33,6 +33,8 @@ public class JdbcSubroutine implements Subroutine {
 
             sql = sql.trim();
             response = Database.query(sql);
+            if(response.equals("]"))
+                return "I can't find any information on that.";
             System.out.println(response);
             JSONArray JsonArray = new JSONArray(response);
             String jsonButtonString;
