@@ -147,8 +147,9 @@
 ^ /a    for a quick actor search, returns all movies in wich (s)he has played\n
 ^ /k    for a quick keyword search, returns all the movies with that keyword\n
 ^ /rm   returns a random movie\n
-^ /rmc  returns 25 random movies from a chosen country\n
-^ /rmg  returns 25 random movies from a chosen genre\n
+^ /rmc  returns 10 random movies from a chosen country\n
+^ /rmg  returns 10 random movies from a chosen genre\n
+^ /rmg  returns 10 random movies higher then the chosen rating (rounded number)\n
 ^ /i    quick image search
 
 
@@ -159,16 +160,19 @@
 @ search person <star1>
 
 + /k *
-- <call>jdbc SELECT m.Title AS Movies FROM Movies_Keywords AS mk LEFT JOIN Movies AS m ON m.ID = mk.Movie_ID WHERE mk.Keyword_ID = (SELECT ID FROM Keywords WHERE Keyword LIKE '%<star1>%' LIMIT 1);</call>
+- <call>jdbc SELECT m.Title, m.ID AS Movies FROM Movies_Keywords AS mk LEFT JOIN Movies AS m ON m.ID = mk.Movie_ID WHERE mk.Keyword_ID = (SELECT ID FROM Keywords WHERE Keyword LIKE '%<star1>%' LIMIT 1);</call>
 
 + /rm
-- <call>jdbc SELECT Title FROM Movies ORDER BY RAND() LIMIT 1;</call>
+- <call>jdbc film_list -m I chose a random movie for you: SELECT Title, ID FROM Movies ORDER BY RAND() LIMIT 1;</call>
 
 + /rmc *
-- <call>jdbc SELECT m.Title AS Movies FROM Movies_Countries AS mc LEFT JOIN Movies AS m ON m.ID = mc.Movie_ID WHERE mc.Country_ID = (SELECT ID FROM Countries WHERE Country LIKE '%<star1>%' LIMIT 1) ORDER BY RAND() LIMIT 25;</call>
+- <call>jdbc film_list -m Some random movies from <star1> SELECT m.Title, m.ID AS Movies FROM Movies_Countries AS mc LEFT JOIN Movies AS m ON m.ID = mc.Movie_ID WHERE mc.Country_ID = (SELECT ID FROM Countries WHERE Country LIKE '%<star1>%' LIMIT 1) ORDER BY RAND() LIMIT 10;</call>
 
 + /rmg *
-- <call>jdbc SELECT m.Title AS Movies FROM Movies_Genres AS mg LEFT JOIN Movies AS m ON m.ID = mg.Movie_ID WHERE mg.Genre_ID = (SELECT ID FROM Genres WHERE GenreName LIKE '%Drama%' LIMIT 1) ORDER BY RAND() LIMIT 25;</call>
+- <call>jdbc film_list -m Some random movies with genre <star1> SELECT m.Title, m.ID AS Movies FROM Movies_Genres AS mg LEFT JOIN Movies AS m ON m.ID = mg.Movie_ID WHERE mg.Genre_ID = (SELECT ID FROM Genres WHERE GenreName LIKE '%<star1>%' LIMIT 1) ORDER BY RAND() LIMIT 10;</call>
+
++ /rmr *
+- <call>jdbc film_list -m Some random movies with rating higher then <star1> SELECT m.Title, m.ID AS Movies FROM Movies_Genres AS mg LEFT JOIN Movies AS m ON m.ID = mg.Movie_ID WHERE m.Rating > <star1> ORDER BY RAND() LIMIT 10;</call>
 
 + /i * *
 - <call>image <star1> <star2></call>
@@ -219,6 +223,22 @@
 + search person _ _ _ _ _
 - <call>jdbc person_list SELECT * FROM Persons WHERE INSTR(Name, '<star1>') > 0 AND INSTR(Name, '<star2>') > 0 AND INSTR(Name, '<star3>') > 0 AND INSTR(Name, '<star4>') > 0 AND INSTR(Name, '<star5>') > 0 ORDER BY LENGTH(Name) LIMIT 10</call>
 
+
+//Select random movies
++ [*] random (movie|movies) with rating # [*]
+@ /rmr <star2>
+
++ [*] random (movie|movies) with genre _ [*]
+@ /rmg <star2>
+
++ [*] random (movie|movies) with _ as genre [*]
+@ /rmg <star2>
+
++ [*] random (movie|movies) from *
+@ /rmc <star2>
+
++ [*] random movie [*]
+@ /rm
 
 
 + all questions
