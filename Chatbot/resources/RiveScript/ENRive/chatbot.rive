@@ -109,9 +109,16 @@
 - <call>system rscript Chatbot/resources/R/ENRScript/R1en.R <star1> / <star2></call>
 ^ <call>send photo violence.jpg</call>
 
+//R question 2
 + is there a relation between the cost and duration of movies
 - <call>system rscript Chatbot/resources/R/ENRScript/R2en.R</call>
-^ <call>send photo MoviesBudget.jpg As you can see there is not really a relation between the budget and duration of a movie</call>
+^ <call>send photo MoviesBudget.jpg</call>
+
+//R question 3
+
+//R MPAA Question
++ mpaa *
+- <call>system rscript Chatbot/resources/R/ENRscript/MPAA.R <star1></call>
 
 // !Commands
 + /command

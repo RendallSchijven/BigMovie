@@ -33,7 +33,6 @@ getPG13 <- ("SELECT ID, MPAA, Plot FROM Movies WHERE MPAA = 'PG-13' AND Plot IS 
 
 #Get the movie data from the movie the user entered
 getTestMovie <- sprintf("SELECT ID, Plot, MPAA FROM Movies WHERE Title LIKE '%%%s%%'", movieArgs)
-cat(getTestMovie)
 testMovie <- dbGetQuery(mydb, getTestMovie)
 
 #Make MPAA empty so we can predict it
@@ -92,6 +91,6 @@ prp(movieCart)
 MPAA <- predict(movieCart, newdata = test, type = "class")
 
 table <-data.frame(table(test$MPAA, MPAA))
-row <- table[table[,1] == 1,]
+row <- table[table[,3] == 1,]
 return <- sprintf("%s",row$MPAA)
 cat("The predicted MPAA is: ", return)

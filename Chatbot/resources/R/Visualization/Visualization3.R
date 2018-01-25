@@ -63,4 +63,4 @@ genrePlot <- plot_ly(moviesPerGenre, labels = ~slices, values = ~weight, type = 
 
 #Use the plotly api to export image to the current working directory
 plotly_IMAGE(genrePlot, format="png", out_file = "genreMovies.png")
-cat("There you go Rockstar")
+cat("Look at this graaaappphhh!")
