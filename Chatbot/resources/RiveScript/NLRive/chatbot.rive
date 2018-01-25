@@ -58,7 +58,7 @@
 ^ /rm   krijg een willekeurige film\n
 ^ /rmc  krijg een willekeurige film van een gekozen land\n
 ^ /rmg  krijg een willekeurige film van een gekozen genre\n
-
+^ /i    krijg een plaatje terug met de gezochte naam\n
 
 + /m *
 - <call>jdbc film_list SELECT ID, Title, Plot, ReleaseYear, Rating, Votes, MPAA, Currency, Budget, Duration FROM Movies WHERE Title like'%<star1>%' LIMIT 20;</call>
