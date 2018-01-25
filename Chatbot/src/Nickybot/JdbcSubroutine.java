@@ -190,7 +190,7 @@ public class JdbcSubroutine implements Subroutine {
                     break;
                 case "-m":
                     for (int i = 0; i < JsonArray.length(); i++) {
-                        JSONObject jsonObject = JsonArray.getJSONObject(i);
+                        jsonObject = JsonArray.getJSONObject(i);
                         Iterator jsonIterator = jsonObject.keys();
                         boolean isFirst = true;
                         while (jsonIterator.hasNext()) {
