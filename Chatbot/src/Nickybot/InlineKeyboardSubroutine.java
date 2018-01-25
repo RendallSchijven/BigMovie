@@ -101,12 +101,15 @@ public class InlineKeyboardSubroutine implements Subroutine {
                 reply = bot.reply(String.valueOf(chat_id), "what are the most occuring genres");
                 break;
             case "questions_7":
-                reply = bot.reply(String.valueOf(chat_id), "what are the most occuring genres in Netherlands");
+                reply = bot.reply(String.valueOf(chat_id), "what are 10 the most occuring genres");
                 break;
             case "questions_8":
-                reply = bot.reply(String.valueOf(chat_id), "which 5 countries made the most movies");
+                reply = bot.reply(String.valueOf(chat_id), "what are the most occuring genres in Netherlands");
                 break;
             case "questions_9":
+                reply = bot.reply(String.valueOf(chat_id), "which 5 countries made the most movies");
+                break;
+            case "questions_10":
                 reply = bot.reply(String.valueOf(chat_id), "what are the top rated movies");
                 break;
             default:
