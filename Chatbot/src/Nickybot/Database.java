@@ -38,7 +38,7 @@ public class Database {
                 int length = resultSet.getMetaData().getColumnCount();
                 for (int i = 1; i <= length; i++) {
                     if (i != 1) {
-                        if (resultSet.getMetaData().getColumnName(i).equals("Plot") && !resultSet.getString(i).equals(null))
+                        if (resultSet.getMetaData().getColumnName(i).equals("Plot") && resultSet.getString(i) != null)
                             result += ",\"" + resultSet.getMetaData().getColumnName(i) + "\":\"" + resultSet.getString(i).replaceAll("\"", "\'") + "\"";
                         else
                             result += ",\"" + resultSet.getMetaData().getColumnName(i) + "\":\"" + resultSet.getString(i) + "\"";
