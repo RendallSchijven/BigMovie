@@ -29,6 +29,8 @@ public class Database {
         Statement statement = null;
         ResultSet resultSet = null;
 
+        System.out.println(sql);
+
         try {
             connection = (Connection) DriverManager.getConnection(
                     "jdbc:mysql://" + appProps.getProperty("db_host") + ":" + appProps.getProperty("db_port") + "/" + appProps.getProperty("db_database") + "?autoReconnect=true&useSSL=false", appProps.getProperty("db_username"), appProps.getProperty("db_password"));

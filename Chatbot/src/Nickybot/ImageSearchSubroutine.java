@@ -1,7 +1,6 @@
 package Nickybot;
 
 import com.rivescript.macro.Subroutine;
-import com.sun.javafx.fxml.builder.URLBuilder;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.client.utils.URIBuilder;
@@ -12,8 +11,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 import java.util.Properties;
-import java.util.Scanner;
-import java.net.URL;
 
 /**
  * @author Groep 16
@@ -49,12 +46,12 @@ public class ImageSearchSubroutine implements Subroutine {
             url = new URIBuilder("https://api.qwant.com/api/search/images");
             url.addParameter("count", "1");
             url.addParameter("offset", "1");
-            url.addParameter("q", keyword);
+            url.addParameter("q", keyword.replaceAll("\\(.*\\)", ""));
 
             // Get JSON result from GET request
             JSONObject json = new JSONObject(IOUtils.toString(url.build(), Charset.forName("UTF-8")));
 
-            System.out.println(json.toString(4));
+//            System.out.println(json.toString(4));
             // Get Video ID from JSON
             thumbnail = json.getJSONObject("data").getJSONObject("result").getJSONArray("items").getJSONObject(0).getString("thumbnail");
 
