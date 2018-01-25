@@ -5,8 +5,13 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.telegram.telegrambots.bots.DefaultAbsSender;
 
-import java.util.Iterator;
-import java.util.Objects;
+import javax.xml.crypto.Data;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.*;
 
 
 /**
@@ -32,9 +37,9 @@ public class JdbcSubroutine implements Subroutine {
                 sql = sql + " " + args[i];
             }
 
-            if(args[1].equals("-m")){
-                message = sql.substring(4,sql.indexOf("SELECT")-1);
-                sql = sql.substring(sql.indexOf("SELECT"),sql.length()-1);
+            if (args[1].equals("-m")) {
+                message = sql.substring(4, sql.indexOf("SELECT") - 1);
+                sql = sql.substring(sql.indexOf("SELECT"), sql.length() - 1);
             }
 
             sql = sql.trim();
@@ -49,10 +54,9 @@ public class JdbcSubroutine implements Subroutine {
             switch (args[0]) {
                 case "film_list":
                     System.out.println(args[0]);
-                    if(message.isEmpty()){
+                    if (message.isEmpty()) {
                         jsonButtonString = "{\"text\":\"The answer is\",\"buttons\":[";
-                    }
-                    else{
+                    } else {
                         jsonButtonString = "{\"text\":\"" + message + "\",\"buttons\":[";
                     }
 
@@ -131,7 +135,11 @@ public class JdbcSubroutine implements Subroutine {
                     break;
                 case "person_list":
                     System.out.println(args[0]);
-                    jsonButtonString = "{\"text\":\"The persons are\",\"buttons\":[";
+                    if (message.isEmpty()) {
+                        jsonButtonString = "{\"text\":\"The persons are\",\"buttons\":[";
+                    } else {
+                        jsonButtonString = "{\"text\":\"" + message + "\",\"buttons\":[";
+                    }
 
                     for (int i = 0; i < JsonArray.length(); i++) {
                         jsonObject = JsonArray.getJSONObject(i);
@@ -150,13 +158,20 @@ public class JdbcSubroutine implements Subroutine {
                     System.out.println(args[0]);
                     jsonObject = JsonArray.getJSONObject(0);
                     jsonButtonString = "{\"text\":\"" +
-                            "<b>Title :</b> " + jsonObject.getString("Name") + "\\n";
+                            "<b>Name :</b> " + jsonObject.getString("Name") + "\\n";
 
                     if (!jsonObject.getString("BirthDay").equals("null")) {
                         int age = 0;
-                        if (!jsonObject.getString("DeathDay").equals("null")){
+                        LocalDate deathDay;
+                        LocalDate birthDay = LocalDate.parse(jsonObject.getString("BirthDay"));
 
+                        if (!jsonObject.getString("DeathDay").equals("null")) {
+                            deathDay = LocalDate.parse(jsonObject.getString("DeathDay"));
+                            age = Period.between(birthDay, deathDay).getYears();
+                        } else {
+                            age = Period.between(birthDay, LocalDate.now()).getYears();
                         }
+
                         jsonButtonString += "<b>Age :</b> " + age + "\\n";
                         jsonButtonString += "<b>Birth day :</b> " + jsonObject.getString("BirthDay") + "\\n";
 
