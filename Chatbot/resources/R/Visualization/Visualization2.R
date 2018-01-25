@@ -6,7 +6,7 @@
 #install.packages("RMySQL")
 library(RMySQL)
 
-mydb <- dbConnect(MySQL(), dbname="NickyBotUtf82", user="riley", password="jayden", host="db.sanderkastelein.nl")
+mydb <- dbConnect(MySQL(), dbname="NickyBotUtf8", user="riley", password="jayden", host="db.sanderkastelein.nl")
 
 args <- commandArgs(trailingOnly = TRUE)
 
@@ -23,7 +23,7 @@ values <- dbGetQuery(mydb, query)
 
 invisible(dbDisconnect(mydb))
 
-cat("There you go Rockstar")
+cat("Look at this graaaaaaaph!")
 
 invisible(jpeg('MoviesYear.jpg'))
 barplot(values$Movies, names.arg = values$Years, main="Movies per year in " + args[[1]] , col = c("lightblue","lightcyan",
