@@ -28,6 +28,7 @@ public class Database {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
+        System.out.println(sql);
 
         try {
             connection = (Connection) DriverManager.getConnection(
