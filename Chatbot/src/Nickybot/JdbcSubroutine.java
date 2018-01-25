@@ -32,9 +32,9 @@ public class JdbcSubroutine implements Subroutine {
                 sql = sql + " " + args[i];
             }
 
-            if(args[1].equals("-m")){
-                message = sql.substring(4,sql.indexOf("SELECT")-1);
-                sql = sql.substring(sql.indexOf("SELECT"),sql.length()-1);
+            if (args[0].equals("-m") || args[1].equals("-m")) {
+                message = sql.substring(sql.lastIndexOf("-m")+1, sql.indexOf("SELECT") - 1);
+                sql = sql.substring(sql.indexOf("SELECT"), sql.length() - 1);
             }
 
             sql = sql.trim();
@@ -45,10 +45,9 @@ public class JdbcSubroutine implements Subroutine {
             switch (args[0]) {
                 case "film_list":
                     System.out.println(args[0]);
-                    if(message.isEmpty()){
+                    if (message.isEmpty()) {
                         jsonButtonString = "{\"text\":\"The answer is\",\"buttons\":[";
-                    }
-                    else{
+                    } else {
                         jsonButtonString = "{\"text\":\"" + message + "\",\"buttons\":[";
                     }
 
@@ -91,6 +90,22 @@ public class JdbcSubroutine implements Subroutine {
                     jsonButtonString += "]}";
                     System.out.println(jsonButtonString);
                     InlineKeyboardSubroutine.MakeButtonMessage(rs, das, jsonButtonString);
+                    break;
+                case "-m":
+                    for (int i = 0; i < JsonArray.length(); i++) {
+                        JSONObject jsonObject = JsonArray.getJSONObject(i);
+                        Iterator jsonIterator = jsonObject.keys();
+                        boolean isFirst = true;
+                        while (jsonIterator.hasNext()) {
+                            String key = (String) jsonIterator.next();
+                            if (isFirst) {
+                                result += message + " " + jsonObject.getString(key);
+                                isFirst = false;
+                            } else
+                                result += " | " + message + " " + jsonObject.getString(key);
+                        }
+                        result += "\n";
+                    }
                     break;
             }
 
