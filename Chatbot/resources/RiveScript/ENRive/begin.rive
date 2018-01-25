@@ -1,6 +1,12 @@
 ! var birthyear = 1995
 ! var year = <call>rive year</call>
 ! var botpersonName = <call>rive name</call>
+! var holiday = <call>rive dateCheck </call>
+>begin
+  +request
+  - <bot holiday> \n {ok}
+<begin
+
 
 ! array goodbyes = bye goodbye farewell later see\syou\slater so\slong i\sam\sout
 ! array compliments = nice good amazing like well\sdone good\sjob great cool
@@ -28,7 +34,15 @@
 ! sub what'll = what will
 ! sub who's   = who is
 ! sub we'll   = we will
+! sub we'd    = we would
+! sub we're   = we are
 ! sub won't   = will not
 ! sub hasn't  = has not
 ! sub that's  = that has
 ! sub digger's= digger is
+! sub life's  = life is
+! sub she's   = she is
+! sub he's    = he is
+! sub can't   = can not
+! sub wouldn't= would not
+! sub haven't = have not
