@@ -24,7 +24,7 @@ public class TrailerSubroutine implements Subroutine {
 
         // Build search string
         String keyword = "";
-        for (String arg : args) keyword = keyword + arg + "%20";
+        for (String arg : args) keyword = keyword + arg + " ";
 
         // Init variables
         String id = "";
