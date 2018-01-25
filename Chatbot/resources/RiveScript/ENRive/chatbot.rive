@@ -45,7 +45,7 @@
 ^            LEFT JOIN Persons_Movies ON Persons_Movies.Movie_ID = Movies.ID\s
 ^            LEFT JOIN Persons ON Persons_Movies.Person_ID = Persons.ID\s
 ^            WHERE Persons.Name LIKE '%<star2>, <star1>%' ORDER BY RAND() LIMIT 10; </call>
-//TODO make it work for all names
+
 //Question 4
 + which director has filmed the most movies with _ _
 - <call>jdbc SELECT p.Name, COUNT(*) AS Movies FROM Persons AS p\s
