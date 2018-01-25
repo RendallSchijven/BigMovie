@@ -93,4 +93,4 @@ MPAA <- predict(movieCart, newdata = test, type = "class")
 table <-data.frame(table(test$MPAA, MPAA))
 row <- table[table[,3] == 1,]
 return <- sprintf("%s",row$MPAA)
-cat("The predicted MPAA is: ", return)
+cat("De voorspelde kijkwijzer is: ", return)

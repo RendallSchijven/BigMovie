@@ -21,10 +21,10 @@ Visualazation
 + 3. Geef een chart van de verdeling van genres
 
 R
-+ Er wordt wel eens gezegd dat Europese films meer ‘cultureel’ zijn dan Amerikaanse. 
++ 1. Er wordt wel eens gezegd dat Europese films meer ‘cultureel’ zijn dan Amerikaanse. 
   Maak een model in R waarmee je kunt nagaan of  Franse films minder vaak van het 
   genre geweld en/of horror zijn dan Amerikaanse. 
-- Maak een model waaruit je de MPAA-categorie afleidt uit de tekst van 
++ 2.Ga na met R of er een verband is tussen de kosten van een film en de lengte ervan. 
++ 3. Ga na met R of er een verband is tussen de kosten en de rating van een film.
++ 4.(MPAA) Maak een model waaruit je de MPAA-categorie afleidt uit de tekst van 
   de plot valideer het model.
-+ Ga na met R of er een verband is tussen de kosten van een film en de lengte ervan. 
-- Ga na met R of er een verband is tussen de kosten en de rating van een film.
