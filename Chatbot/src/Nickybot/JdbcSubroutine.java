@@ -34,7 +34,7 @@ public class JdbcSubroutine implements Subroutine {
             }
 
             if (args[0].equals("-m") || args[1].equals("-m")) {
-                message = sql.substring(sql.lastIndexOf("-m") + 1, sql.indexOf("SELECT") - 1);
+                message = sql.substring(sql.lastIndexOf("-m"), sql.indexOf("SELECT") - 1);
                 sql = sql.substring(sql.indexOf("SELECT"), sql.length() - 1);
             }
 
