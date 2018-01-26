@@ -136,7 +136,10 @@
 ^ /rmg  returns 10 random movies from a chosen genre\n
 ^ /rmr  returns 10 random movies higher then the chosen rating (rounded number)\n
 ^ /i    quick image search
+^ /help get help menu
 
++ /help
+@ all questions
 
 + /m *
 @ movie <star1>
@@ -226,7 +229,7 @@
 @ /rm
 
 + all questions
-- <call>inlineKeyboard {'text':'These are some of the things i can do','buttons':[[{'text':'Shortest movie with the highest rating','callback':'questions_1'}],[{'text':'What year from 1990 produced the most movies with beer in the title','callback':'questions_2'}],[{'text':'Give me the movies Liam Neeson played in','callback':'questions_3'}],[{'text':'Which director has filmed the most movies with Liam Neeson','callback':'questions_4'}],[{'text':'Which movie was the most expensive to create','callback':'questions_5'}],[{'text':'What are the most occuring genres','callback':'questions_6'}],[{'text':'what are the most occuring genres in France','callback':'questions_8'}],[{'text':'Which countries made the most movies','callback':'questions_9'}],[{'text':'What are the top rated movies','callback':'questions_10'}]]}</call>
+- <call>inlineKeyboard {'text':'These are some of the things i can do:','buttons':[[{'text':'Shortest movie with the highest rating','callback':'questions_1'}],[{'text':'What year from 1990 produced the most movies with beer in the title','callback':'questions_2'}],[{'text':'Give me the movies Liam Neeson played in','callback':'questions_3'}],[{'text':'Which director has filmed the most movies with Liam Neeson','callback':'questions_4'}],[{'text':'Which movie was the most expensive to create','callback':'questions_5'}],[{'text':'What are the most occuring genres','callback':'questions_6'}],[{'text':'what are the most occuring genres in France','callback':'questions_8'}],[{'text':'Which countries made the most movies','callback':'questions_9'}],[{'text':'What are the top rated movies','callback':'questions_10'}],[{'text':'Show me the distribution of genres','callback':'questions_11'}],[{'text':'Does France have more violent movies than New Zealand','callback':'questions_12'}]]}</call>
 
 + [*] help [*]
 @ all questions
