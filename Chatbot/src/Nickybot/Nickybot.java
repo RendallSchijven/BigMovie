@@ -56,7 +56,7 @@ public class Nickybot extends TelegramLongPollingBot {
         } else if (update.hasCallbackQuery()) {
             message = InlineKeyboardSubroutine.CallBack(update, bot);
         }
-        if (message != null && !message.getText().equals("") && !message.getText().equals("ERR: No Reply Found")) {
+        if (message != null && !message.getText().equals("") && !message.getText().contains("ERR: No Reply Found")) {
             try {
                 System.out.println(message.getText());
                 execute(message); // Sending our message object to user
