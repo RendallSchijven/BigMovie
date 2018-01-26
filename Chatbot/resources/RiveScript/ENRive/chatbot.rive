@@ -35,14 +35,14 @@
 
 //Question 4
 + which director has filmed the most movies with _ _
-- <call>jdbc SELECT p.Name, COUNT(*) AS Movies FROM Persons AS p\s
+- <call>jdbc person_info SELECT p.*, COUNT(*) AS Movies FROM Persons AS p\s
 ^            LEFT JOIN Persons_Movies AS pm ON pm.Person_ID = p.ID\s
 ^            WHERE pm.Role = 'director'\s
 ^            AND pm.Movie_ID IN (SELECT pm.Movie_ID FROM Persons_Movies AS pm\s
 ^                                LEFT JOIN Persons AS p ON p.ID = pm.Person_ID\s
 ^                                WHERE p.Name LIKE '%<star2>, <star1>%' AND pm.Role = 'actor')\s
 ^            GROUP BY p.Name\s
-^            ORDER BY Movies DESC LIMIT 1;</call>
+^            ORDER BY Movies DESC, p.Name LIMIT 1;</call>
 
 //Question 5
 + which movie [was|is] [the] most expensive [to] [make|create]
