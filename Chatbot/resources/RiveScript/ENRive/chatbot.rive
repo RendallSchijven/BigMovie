@@ -46,11 +46,11 @@
 
 //Question 5
 + which movie [was|is] [the] most expensive [to] [make|create]
-- <call>jdbc film_info -m The most expensive movie to create was SELECT * from Movies WHERE CURRENCY = 'USD' ORDER BY Budget DESC LIMIT 1;</call>
+- <call>jdbc film_info SELECT * from Movies WHERE CURRENCY = 'USD' ORDER BY Budget DESC LIMIT 1;</call>
 
 //Question 6
 + [what are the] # most occuring genres
-- <call>jdbc -m SELECT g.GenreName AS Genre, COUNT(mg.Genre_ID) AS Movies FROM Movies_Genres AS mg\s
+- <call>jdbc SELECT g.GenreName AS Genre, COUNT(mg.Genre_ID) AS Movies FROM Movies_Genres AS mg\s
 ^           LEFT JOIN Genres AS g ON g.ID = mg.Genre_ID\s
 ^           GROUP BY g.ID\s
 ^           ORDER BY Movies DESC LIMIT <star>; </call>
@@ -63,7 +63,7 @@
 
 //Question 7
 + [what are the] most occuring genres in *
-- <call>jdbc -m SELECT g.GenreName AS Genre, COUNT(mg.Genre_ID) AS Movies FROM Movies_Genres AS mg\s
+- <call>jdbc SELECT g.GenreName AS Genre, COUNT(mg.Genre_ID) AS Movies FROM Movies_Genres AS mg\s
 ^            LEFT JOIN Genres AS g ON g.ID = mg.Genre_ID\s
 ^            LEFT JOIN Movies_Countries as mc ON mc.Movie_ID = mg.Movie_ID\s
 ^            LEFT JOIN Countries AS c ON c.ID = mc.Country_ID\s
@@ -101,7 +101,7 @@
 ^ <call>send photo MoviesYear.jpg</call>
 
 //Visualization 2
-+ show me the distribution of genres
++ [show me the] distribution of genres
 - <call>system rscript Chatbot/resources/R/Visualization/Visualization2.R</call>
 ^ <call>send photo genreMovies.png</call>
 
@@ -113,12 +113,12 @@
 ^ <call>send photo violence.jpg</call>
 
 //R question 2
-+ is there a relation between the cost and duration of movies
++ [is there a] relation [between] [the] cost and duration [of movies]
 - <call>system rscript Chatbot/resources/R/ENRScript/R2en.R</call>
 ^ <call>send photo BudgetDuration.jpg</call>
 
 //R question 3
-+ is there a relation between the cost and rating of movies
++ [is there a] relation [between] [the] cost and rating [of movies]
 - <call>system rscript Chatbot/resources/R/ENRScript/R3en.R</call>
 ^ <call>send photo BudgetRating.jpg</call>
 
