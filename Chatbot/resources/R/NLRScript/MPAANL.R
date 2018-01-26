@@ -16,11 +16,8 @@ library(caTools)
 library(rpart)
 library(rpart.plot)
 
-#Get the arguments that java sent and put them in on variable
+#Get the arguments that java sent
 args <- commandArgs(trailingOnly = TRUE)
-movieArgs <- ""
-for(i in args){movieArgs <- paste(movieArgs, i)}
-movieArgs <- trimws(movieArgs)
 
 #The connection string for the database
 mydb <- dbConnect(MySQL(), dbname="NickyBotUtf82", user="riley", password="jayden", host="db.sanderkastelein.nl")
@@ -32,11 +29,15 @@ getPG <- ("SELECT ID, MPAA, Plot FROM Movies WHERE MPAA = 'PG' AND Plot IS NOT N
 getPG13 <- ("SELECT ID, MPAA, Plot FROM Movies WHERE MPAA = 'PG-13' AND Plot IS NOT NULL ORDER BY Plot LIMIT 1783")
 
 #Get the movie data from the movie the user entered
-getTestMovie <- sprintf("SELECT ID, Plot, MPAA FROM Movies WHERE Title LIKE '%%%s%%' LIMIT 1", movieArgs)
+getTestMovie <- sprintf("SELECT ID, Title, Plot, MPAA FROM Movies WHERE ID = %s LIMIT 1", args[[1]])
 testMovie <- dbGetQuery(mydb, getTestMovie)
 
 #Make MPAA empty so we can predict it
 testMovie$MPAA <- ""
+
+#Save the test movie title
+testMovieTitle <- testMovie$Title
+testMovie$Title <- NULL
 
 #Save the ID so we can use it for the split
 testMovieID <- testMovie$ID
@@ -98,7 +99,8 @@ table <-data.frame(table(test$MPAA, MPAA))
 row <- table[table[,3] == 1,]
 
 #Put the rating in a string
-return <- sprintf("%s",row$MPAA)
+calcRating <- sprintf("%s",row$MPAA)
+return <- sprintf("De voorspelde MPAA voor %s is: ", testMovieTitle)
 
 #Print this so it is returned to java
-cat("The predicted MPAA is: ", return)
+cat(return, calcRating)
