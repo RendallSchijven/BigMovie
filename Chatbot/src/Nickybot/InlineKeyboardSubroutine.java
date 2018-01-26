@@ -109,6 +109,12 @@ public class InlineKeyboardSubroutine implements Subroutine {
             case "questions_10":
                 reply = bot.reply(String.valueOf(chat_id), "what are the top rated movies");
                 break;
+            case "questions_11":
+                reply = bot.reply(String.valueOf(chat_id), "show me the distribution of genres");
+                break;
+            case "questions_12":
+                reply = bot.reply(String.valueOf(chat_id), "does france have more violent movies than new zealand");
+                break;
             default:
                 if (call_data.startsWith("movie_id_trailer_")) {
                     String movieID = call_data.substring(17);
