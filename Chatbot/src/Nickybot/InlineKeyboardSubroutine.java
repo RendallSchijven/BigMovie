@@ -86,13 +86,13 @@ public class InlineKeyboardSubroutine implements Subroutine {
                 reply = bot.reply(String.valueOf(chat_id), "shortest movie highest rating");
                 break;
             case "questions_2":
-                reply = bot.reply(String.valueOf(chat_id), "in what year between 1990 and 2018 are the most films with the word beer in the title produced");
+                reply = bot.reply(String.valueOf(chat_id), "what year from 1990 produced the most movies with beer in the title");
                 break;
             case "questions_3":
-                reply = bot.reply(String.valueOf(chat_id), "in which movies does Liam Neeson play");
+                reply = bot.reply(String.valueOf(chat_id), "give me movies liam neeson played in");
                 break;
             case "questions_4":
-                reply = bot.reply(String.valueOf(chat_id), "which director has filmed the most movies with dwayne johnson");
+                reply = bot.reply(String.valueOf(chat_id), "which director has filmed the most movies with liam neeson");
                 break;
             case "questions_5":
                 reply = bot.reply(String.valueOf(chat_id), "which movie was the most expensive to create");
@@ -100,17 +100,20 @@ public class InlineKeyboardSubroutine implements Subroutine {
             case "questions_6":
                 reply = bot.reply(String.valueOf(chat_id), "what are the most occuring genres");
                 break;
-            case "questions_7":
-                reply = bot.reply(String.valueOf(chat_id), "what are 10 the most occuring genres");
-                break;
             case "questions_8":
-                reply = bot.reply(String.valueOf(chat_id), "what are the most occuring genres in Netherlands");
+                reply = bot.reply(String.valueOf(chat_id), "what are the most occuring genres in france");
                 break;
             case "questions_9":
-                reply = bot.reply(String.valueOf(chat_id), "which 5 countries made the most movies");
+                reply = bot.reply(String.valueOf(chat_id), "which countries made the most movies");
                 break;
             case "questions_10":
                 reply = bot.reply(String.valueOf(chat_id), "what are the top rated movies");
+                break;
+            case "questions_11":
+                reply = bot.reply(String.valueOf(chat_id), "show me the distribution of genres");
+                break;
+            case "questions_12":
+                reply = bot.reply(String.valueOf(chat_id), "does france have more violent movies than new zealand");
                 break;
             default:
                 if (call_data.startsWith("movie_id_trailer_")) {
